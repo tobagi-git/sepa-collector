@@ -1,0 +1,3335 @@
+{
+ "entries": {
+  "TXG": {
+   "ticker": "TXG",
+   "name": "10x Genomics, Inc. - Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 98.9,
+   "from_52w_high": -4.2,
+   "dvol_50d": 169155616,
+   "earnings_raw": {
+    "ticker": "TXG",
+    "name": "10x Genomics, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 154883000,
+      "yoy": 9.8
+     },
+     {
+      "end": "2025-06-30",
+      "val": 172908000,
+      "yoy": 12.9
+     },
+     {
+      "end": "2025-09-30",
+      "val": 149002000,
+      "yoy": -1.7
+     },
+     {
+      "end": "2025-12-31",
+      "val": 166030000,
+      "yoy": 0.6
+     },
+     {
+      "end": "2026-03-31",
+      "val": 150843000,
+      "yoy": -2.6
+     },
+     {
+      "end": "2026-06-30",
+      "val": 151036000,
+      "yoy": -12.6
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.28,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": 0.28,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": -0.22,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": -0.13,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.1,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.14,
+      "yoy": -150.0
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     -2.6,
+     -12.6
+    ],
+    "eps_yoy_2q": [
+     -150.0
+    ],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "EPS적자·매출역성장"
+  },
+  "ECO": {
+   "ticker": "ECO",
+   "name": "Okeanis Eco Tankers Corp. Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 97.9,
+   "from_52w_high": -2.7,
+   "dvol_50d": 38016994,
+   "earnings_raw": {
+    "ticker": "ECO",
+    "name": "Okeanis Eco Tankers Corp.",
+    "rev_q": [],
+    "eps_q": [],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "error": "us-gaap XBRL 없음(20-F 외국계 가능) — 원문 수동"
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "해운·탱커",
+   "marked": "2026-09-18",
+   "note": "그룹추적·해운·원문"
+  },
+  "DK": {
+   "ticker": "DK",
+   "name": "Delek US Holdings, Inc. Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 97.1,
+   "from_52w_high": -5.0,
+   "dvol_50d": 123813513,
+   "earnings_raw": {
+    "ticker": "DK",
+    "name": "Delek US Holdings, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 2641900000,
+      "yoy": -15.5
+     },
+     {
+      "end": "2025-06-30",
+      "val": 2764600000,
+      "yoy": -16.4
+     },
+     {
+      "end": "2025-09-30",
+      "val": 2887000000,
+      "yoy": -5.1
+     },
+     {
+      "end": "2025-12-31",
+      "val": 2429400000,
+      "yoy": 2.3
+     },
+     {
+      "end": "2026-03-31",
+      "val": 2653100000,
+      "yoy": 0.4
+     },
+     {
+      "end": "2026-06-30",
+      "val": 4087000000,
+      "yoy": 47.8
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -2.78,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": -1.76,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": 2.93,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": 1.23,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": -3.34,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": 2.71,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     0.4,
+     47.8
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "정유",
+   "marked": "2026-09-18",
+   "note": "그룹추적·정유"
+  },
+  "MPC": {
+   "ticker": "MPC",
+   "name": "Marathon Petroleum Corporation Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.7,
+   "from_52w_high": -0.7,
+   "dvol_50d": 892056177,
+   "earnings_raw": {
+    "ticker": "MPC",
+    "name": "Marathon Petroleum Corp",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 31517000000,
+      "yoy": -3.6
+     },
+     {
+      "end": "2025-06-30",
+      "val": 33799000000,
+      "yoy": -10.9
+     },
+     {
+      "end": "2025-09-30",
+      "val": 34809000000,
+      "yoy": -0.8
+     },
+     {
+      "end": "2025-12-31",
+      "val": 32574000000,
+      "yoy": -1.7
+     },
+     {
+      "end": "2026-03-31",
+      "val": 34200000000,
+      "yoy": 8.5
+     },
+     {
+      "end": "2026-06-30",
+      "val": 51994000000,
+      "yoy": 53.8
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.24,
+      "yoy": -109.3
+     },
+     {
+      "end": "2025-06-30",
+      "val": 3.96,
+      "yoy": -8.5
+     },
+     {
+      "end": "2025-09-30",
+      "val": 4.51,
+      "yoy": 141.2
+     },
+     {
+      "end": "2025-12-31",
+      "val": 4.99,
+      "yoy": 283.8
+     },
+     {
+      "end": "2026-03-31",
+      "val": 1.73,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": 17.73,
+      "yoy": 347.7
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     8.5,
+     53.8
+    ],
+    "eps_yoy_2q": [
+     283.8,
+     347.7
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": true,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "정유",
+   "marked": "2026-09-18",
+   "note": "그룹추적·정유클러스터캡"
+  },
+  "LPG": {
+   "ticker": "LPG",
+   "name": "Dorian LPG Ltd. Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 95.5,
+   "from_52w_high": -3.0,
+   "dvol_50d": 28462549,
+   "earnings_raw": {
+    "ticker": "LPG",
+    "name": "DORIAN LPG LTD.",
+    "rev_q": [
+     {
+      "end": "2022-03-31",
+      "val": 79584070,
+      "yoy": -20.1
+     },
+     {
+      "end": "2022-06-30",
+      "val": 76823722,
+      "yoy": 22.0
+     },
+     {
+      "end": "2022-09-30",
+      "val": 75968187,
+      "yoy": 20.4
+     },
+     {
+      "end": "2022-12-31",
+      "val": 103322256,
+      "yoy": 50.6
+     },
+     {
+      "end": "2023-03-31",
+      "val": 133635050,
+      "yoy": 67.9
+     },
+     {
+      "end": "2023-06-30",
+      "val": 111562907,
+      "yoy": 45.2
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 0.19,
+      "yoy": -90.3
+     },
+     {
+      "end": "2025-06-30",
+      "val": 0.24,
+      "yoy": -80.8
+     },
+     {
+      "end": "2025-09-30",
+      "val": 1.3,
+      "yoy": 490.9
+     },
+     {
+      "end": "2025-12-31",
+      "val": 1.11,
+      "yoy": 122.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 1.9,
+      "yoy": 900.0
+     },
+     {
+      "end": "2026-06-30",
+      "val": 3.24,
+      "yoy": 1250.0
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2023-06-30",
+    "rev_yoy_2q": [
+     67.9,
+     45.2
+    ],
+    "eps_yoy_2q": [
+     900.0,
+     1250.0
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": false,
+    "code33_hint": true,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "해운·탱커",
+   "marked": "2026-09-18",
+   "note": "그룹추적·해운"
+  },
+  "DHT": {
+   "ticker": "DHT",
+   "name": "DHT Holdings, Inc.",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 92.9,
+   "from_52w_high": -1.0,
+   "dvol_50d": 64691448,
+   "earnings_raw": {
+    "ticker": "DHT",
+    "name": "DHT Holdings, Inc.",
+    "rev_q": [],
+    "eps_q": [],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "error": "us-gaap XBRL 없음(20-F 외국계 가능) — 원문 수동"
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "해운·탱커",
+   "marked": "2026-09-18",
+   "note": "그룹추적·해운·원문"
+  },
+  "MATX": {
+   "ticker": "MATX",
+   "name": "Matson, Inc. Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 92.3,
+   "from_52w_high": -3.3,
+   "dvol_50d": 63568557,
+   "earnings_raw": {
+    "ticker": "MATX",
+    "name": "Matson, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 782000000,
+      "yoy": 8.3
+     },
+     {
+      "end": "2025-06-30",
+      "val": 830500000,
+      "yoy": -2.0
+     },
+     {
+      "end": "2025-09-30",
+      "val": 880100000,
+      "yoy": -8.5
+     },
+     {
+      "end": "2025-12-31",
+      "val": 851900000,
+      "yoy": -4.3
+     },
+     {
+      "end": "2026-03-31",
+      "val": 757800000,
+      "yoy": -3.1
+     },
+     {
+      "end": "2026-06-30",
+      "val": 969400000,
+      "yoy": 16.7
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 2.18,
+      "yoy": 109.6
+     },
+     {
+      "end": "2025-06-30",
+      "val": 2.92,
+      "yoy": -11.8
+     },
+     {
+      "end": "2025-09-30",
+      "val": 4.24,
+      "yoy": -28.0
+     },
+     {
+      "end": "2025-12-31",
+      "val": 4.47,
+      "yoy": 21.1
+     },
+     {
+      "end": "2026-03-31",
+      "val": 1.85,
+      "yoy": -15.1
+     },
+     {
+      "end": "2026-06-30",
+      "val": 4.27,
+      "yoy": 46.2
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     -3.1,
+     16.7
+    ],
+    "eps_yoy_2q": [
+     -15.1,
+     46.2
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null
+  },
+  "TNK": {
+   "ticker": "TNK",
+   "name": "Teekay Tankers Ltd.",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 92.2,
+   "from_52w_high": -2.2,
+   "dvol_50d": 38217312,
+   "earnings_raw": {
+    "ticker": "TNK",
+    "name": "TEEKAY TANKERS LTD.",
+    "rev_q": [
+     {
+      "end": "2019-06-30",
+      "val": 207007000,
+      "yoy": 20.6
+     },
+     {
+      "end": "2019-09-30",
+      "val": 187444000,
+      "yoy": 6.6
+     },
+     {
+      "end": "2020-06-30",
+      "val": 246492000,
+      "yoy": 19.1
+     },
+     {
+      "end": "2020-09-30",
+      "val": 170240000,
+      "yoy": -9.2
+     },
+     {
+      "end": "2021-06-30",
+      "val": 123420000,
+      "yoy": -49.9
+     },
+     {
+      "end": "2021-09-30",
+      "val": 115890000,
+      "yoy": -31.9
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2019-06-30",
+      "val": -0.43,
+      "yoy": null
+     },
+     {
+      "end": "2019-09-30",
+      "val": -0.59,
+      "yoy": null
+     },
+     {
+      "end": "2020-06-30",
+      "val": 2.89,
+      "yoy": null
+     },
+     {
+      "end": "2020-09-30",
+      "val": -1.32,
+      "yoy": null
+     },
+     {
+      "end": "2021-06-30",
+      "val": -3.83,
+      "yoy": -232.5
+     },
+     {
+      "end": "2021-09-30",
+      "val": -1.54,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2021-09-30",
+    "rev_yoy_2q": [
+     -49.9,
+     -31.9
+    ],
+    "eps_yoy_2q": [
+     -232.5
+    ],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "해운·탱커",
+   "marked": "2026-09-18",
+   "note": "그룹추적·해운·적자"
+  },
+  "EQNR": {
+   "ticker": "EQNR",
+   "name": "Equinor ASA",
+   "status": "rejected",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 90.7,
+   "from_52w_high": -3.8,
+   "dvol_50d": 134567281,
+   "earnings_raw": {
+    "ticker": "EQNR",
+    "name": "EQUINOR ASA",
+    "rev_q": [],
+    "eps_q": [],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "error": "us-gaap XBRL 없음(20-F 외국계 가능) — 원문 수동"
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "원문외국계·대형E-P"
+  },
+  "CON": {
+   "ticker": "CON",
+   "name": "Concentra Group Holdings Parent, Inc. Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 90.3,
+   "from_52w_high": -3.4,
+   "dvol_50d": 31377563,
+   "earnings_raw": {
+    "ticker": "CON",
+    "name": "Concentra Group Holdings Parent, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 500752000,
+      "yoy": 7.1
+     },
+     {
+      "end": "2025-06-30",
+      "val": 550785000,
+      "yoy": 15.2
+     },
+     {
+      "end": "2025-09-30",
+      "val": 572800000,
+      "yoy": 17.0
+     },
+     {
+      "end": "2025-12-31",
+      "val": 539080000,
+      "yoy": 15.9
+     },
+     {
+      "end": "2026-03-31",
+      "val": 569555000,
+      "yoy": 13.7
+     },
+     {
+      "end": "2026-06-30",
+      "val": 606030000,
+      "yoy": 10.0
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 0.3,
+      "yoy": -36.2
+     },
+     {
+      "end": "2025-06-30",
+      "val": 0.35,
+      "yoy": -30.0
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.38,
+      "yoy": 2.7
+     },
+     {
+      "end": "2025-12-31",
+      "val": 0.27,
+      "yoy": 125.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 0.39,
+      "yoy": 30.0
+     },
+     {
+      "end": "2026-06-30",
+      "val": 0.51,
+      "yoy": 45.7
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     13.7,
+     10.0
+    ],
+    "eps_yoy_2q": [
+     30.0,
+     45.7
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null
+  },
+  "HTFL": {
+   "ticker": "HTFL",
+   "name": "Heartflow, Inc. - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-14",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가",
+    "전이"
+   ],
+   "rs": 93.5,
+   "from_52w_high": -2.8,
+   "dvol_50d": 76206870,
+   "earnings_raw": {
+    "ticker": "HTFL",
+    "name": "Heartflow, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 37205000,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": 43424000,
+      "yoy": 39.8
+     },
+     {
+      "end": "2025-09-30",
+      "val": 46276000,
+      "yoy": 40.5
+     },
+     {
+      "end": "2025-12-31",
+      "val": 49129000,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": 52587000,
+      "yoy": 41.3
+     },
+     {
+      "end": "2026-06-30",
+      "val": 64082000,
+      "yoy": 47.6
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -5.25,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": -1.46,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": -1.04,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": 4.58,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.32,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.18,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     41.3,
+     47.6
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "전이+신고가·매출가속"
+  },
+  "INSW": {
+   "ticker": "INSW",
+   "name": "International Seaways, Inc. Common Stock ",
+   "status": "deferred",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.6,
+   "from_52w_high": -1.8,
+   "dvol_50d": 57917967,
+   "earnings_raw": {
+    "ticker": "INSW",
+    "name": "International Seaways, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 183394000,
+      "yoy": -33.2
+     },
+     {
+      "end": "2025-06-30",
+      "val": 195641000,
+      "yoy": -24.0
+     },
+     {
+      "end": "2025-09-30",
+      "val": 196388000,
+      "yoy": -12.8
+     },
+     {
+      "end": "2025-12-31",
+      "val": 267879000,
+      "yoy": 37.6
+     },
+     {
+      "end": "2026-03-31",
+      "val": 325476000,
+      "yoy": 77.5
+     },
+     {
+      "end": "2026-06-30",
+      "val": 467287000,
+      "yoy": 138.8
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 1,
+      "yoy": -65.8
+     },
+     {
+      "end": "2025-06-30",
+      "val": 1.25,
+      "yoy": -57.0
+     },
+     {
+      "end": "2025-09-30",
+      "val": 1.42,
+      "yoy": -22.8
+     },
+     {
+      "end": "2025-12-31",
+      "val": 2.56,
+      "yoy": 260.6
+     },
+     {
+      "end": "2026-03-31",
+      "val": 5.75,
+      "yoy": 475.0
+     },
+     {
+      "end": "2026-06-30",
+      "val": 5.91,
+      "yoy": 372.8
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     77.5,
+     138.8
+    ],
+    "eps_yoy_2q": [
+     475.0,
+     372.8
+    ],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": true,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "해운·탱커",
+   "marked": "2026-09-18",
+   "note": "해운그룹예외후보—다음패스심층"
+  },
+  "GH": {
+   "ticker": "GH",
+   "name": "Guardant Health, Inc. - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.4,
+   "from_52w_high": -2.3,
+   "dvol_50d": 320351357,
+   "earnings_raw": {
+    "ticker": "GH",
+    "name": "Guardant Health, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 203471000,
+      "yoy": 20.8
+     },
+     {
+      "end": "2025-06-30",
+      "val": 232088000,
+      "yoy": 30.9
+     },
+     {
+      "end": "2025-09-30",
+      "val": 265196000,
+      "yoy": 38.5
+     },
+     {
+      "end": "2025-12-31",
+      "val": 281266000,
+      "yoy": 39.4
+     },
+     {
+      "end": "2026-03-31",
+      "val": 301665000,
+      "yoy": 48.3
+     },
+     {
+      "end": "2026-06-30",
+      "val": 334978000,
+      "yoy": 44.3
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.77,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": -0.8,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": -0.74,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": -1.01,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.85,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.9,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     48.3,
+     44.3
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "매출+44%·EPS없음—성장서사"
+  },
+  "ADPT": {
+   "ticker": "ADPT",
+   "name": "Adaptive Biotechnologies Corporation - Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 95.9,
+   "from_52w_high": -0.4,
+   "dvol_50d": 57086335,
+   "earnings_raw": {
+    "ticker": "ADPT",
+    "name": "Adaptive Biotechnologies Corp",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 52443000,
+      "yoy": 25.2
+     },
+     {
+      "end": "2025-06-30",
+      "val": 58879000,
+      "yoy": 36.3
+     },
+     {
+      "end": "2025-09-30",
+      "val": 93973000,
+      "yoy": 102.4
+     },
+     {
+      "end": "2025-12-31",
+      "val": 71681000,
+      "yoy": 51.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 70874000,
+      "yoy": 35.1
+     },
+     {
+      "end": "2026-06-30",
+      "val": 71553000,
+      "yoy": 21.5
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.2,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": -0.17,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.06,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": -0.08,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.13,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.25,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     35.1,
+     21.5
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "매출감속·EPS없음"
+  },
+  "CVI": {
+   "ticker": "CVI",
+   "name": "CVR Energy Inc. Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 94.8,
+   "from_52w_high": -1.7,
+   "dvol_50d": 41357458,
+   "earnings_raw": {
+    "ticker": "CVI",
+    "name": "CVR ENERGY INC",
+    "rev_q": [
+     {
+      "end": "2018-03-31",
+      "val": 1536500000,
+      "yoy": null
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -1.22,
+      "yoy": -250.6
+     },
+     {
+      "end": "2025-06-30",
+      "val": -1.14,
+      "yoy": -642.9
+     },
+     {
+      "end": "2025-09-30",
+      "val": 3.72,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": -1.09,
+      "yoy": -489.3
+     },
+     {
+      "end": "2026-03-31",
+      "val": -1.91,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.03,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2025-12-31",
+    "rev_yoy_2q": [],
+    "eps_yoy_2q": [
+     -642.9,
+     -489.3
+    ],
+    "profit_pos": false,
+    "accel_eps": true,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "정유유사·적자"
+  },
+  "FTNT": {
+   "ticker": "FTNT",
+   "name": "Fortinet, Inc. - Common Stock",
+   "status": "deferred",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.9,
+   "from_52w_high": -3.6,
+   "dvol_50d": 794984015,
+   "earnings_raw": {
+    "ticker": "FTNT",
+    "name": "Fortinet, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 1539700000,
+      "yoy": 13.8
+     },
+     {
+      "end": "2025-06-30",
+      "val": 1630000000,
+      "yoy": 13.6
+     },
+     {
+      "end": "2025-09-30",
+      "val": 1724900000,
+      "yoy": 14.4
+     },
+     {
+      "end": "2025-12-31",
+      "val": 1905000000,
+      "yoy": 14.8
+     },
+     {
+      "end": "2026-03-31",
+      "val": 1849600000,
+      "yoy": 20.1
+     },
+     {
+      "end": "2026-06-30",
+      "val": 2047900000,
+      "yoy": 25.6
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 0.56,
+      "yoy": 43.6
+     },
+     {
+      "end": "2025-06-30",
+      "val": 0.57,
+      "yoy": 16.3
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.62,
+      "yoy": -11.4
+     },
+     {
+      "end": "2025-12-31",
+      "val": 0.67,
+      "yoy": -1.5
+     },
+     {
+      "end": "2026-03-31",
+      "val": 0.72,
+      "yoy": 28.6
+     },
+     {
+      "end": "2026-06-30",
+      "val": 0.82,
+      "yoy": 43.9
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     20.1,
+     25.6
+    ],
+    "eps_yoy_2q": [
+     28.6,
+     43.9
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": true,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "09-22심층완료—등록제안·사용자확인대기"
+  },
+  "NTRA": {
+   "ticker": "NTRA",
+   "name": "Natera, Inc. - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 94.2,
+   "from_52w_high": -0.1,
+   "dvol_50d": 400547938,
+   "earnings_raw": {
+    "ticker": "NTRA",
+    "name": "Natera, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 501830000,
+      "yoy": 36.5
+     },
+     {
+      "end": "2025-06-30",
+      "val": 546600000,
+      "yoy": 32.2
+     },
+     {
+      "end": "2025-09-30",
+      "val": 592183000,
+      "yoy": 34.7
+     },
+     {
+      "end": "2025-12-31",
+      "val": 665500000,
+      "yoy": 39.8
+     },
+     {
+      "end": "2026-03-31",
+      "val": 696644000,
+      "yoy": 38.8
+     },
+     {
+      "end": "2026-06-30",
+      "val": 752750000,
+      "yoy": 37.7
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.5,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": -0.74,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": -0.64,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": 0.36,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.6,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.47,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     38.8,
+     37.7
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "매출+38%·EPS없음—성장서사"
+  },
+  "PSX": {
+   "ticker": "PSX",
+   "name": "Phillips 66 Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 94.9,
+   "from_52w_high": -1.4,
+   "dvol_50d": 666137641,
+   "earnings_raw": {
+    "ticker": "PSX",
+    "name": "Phillips 66",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 30430000000,
+      "yoy": -15.0
+     },
+     {
+      "end": "2025-06-30",
+      "val": 33323000000,
+      "yoy": -12.6
+     },
+     {
+      "end": "2025-09-30",
+      "val": 34515000000,
+      "yoy": -2.9
+     },
+     {
+      "end": "2025-12-31",
+      "val": 34108000000,
+      "yoy": 1.3
+     },
+     {
+      "end": "2026-03-31",
+      "val": 32540000000,
+      "yoy": 6.9
+     },
+     {
+      "end": "2026-06-30",
+      "val": 51004000000,
+      "yoy": 53.1
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 1.18,
+      "yoy": -31.8
+     },
+     {
+      "end": "2025-06-30",
+      "val": 2.15,
+      "yoy": -9.7
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.32,
+      "yoy": -61.0
+     },
+     {
+      "end": "2025-12-31",
+      "val": 7.14,
+      "yoy": 11800.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 0.51,
+      "yoy": -56.8
+     },
+     {
+      "end": "2026-06-30",
+      "val": 9.55,
+      "yoy": 344.2
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     6.9,
+     53.1
+    ],
+    "eps_yoy_2q": [
+     -56.8,
+     344.2
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": true,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "정유",
+   "marked": "2026-09-18",
+   "note": "그룹추적·정유"
+  },
+  "CXW": {
+   "ticker": "CXW",
+   "name": "CoreCivic, Inc. Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-15",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 90.7,
+   "from_52w_high": -3.6,
+   "dvol_50d": 50572932,
+   "earnings_raw": {
+    "ticker": "CXW",
+    "name": "CoreCivic, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 488627000,
+      "yoy": -2.4
+     },
+     {
+      "end": "2025-06-30",
+      "val": 538165000,
+      "yoy": 9.8
+     },
+     {
+      "end": "2025-09-30",
+      "val": 580437000,
+      "yoy": 18.1
+     },
+     {
+      "end": "2025-12-31",
+      "val": 603953000,
+      "yoy": 26.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 614729000,
+      "yoy": 25.8
+     },
+     {
+      "end": "2026-06-30",
+      "val": 684917000,
+      "yoy": 27.3
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 0.23,
+      "yoy": 187.5
+     },
+     {
+      "end": "2025-06-30",
+      "val": 0.35,
+      "yoy": 105.9
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.24,
+      "yoy": 26.3
+     },
+     {
+      "end": "2025-12-31",
+      "val": 0.26,
+      "yoy": 44.4
+     },
+     {
+      "end": "2026-03-31",
+      "val": 0.38,
+      "yoy": 65.2
+     },
+     {
+      "end": "2026-06-30",
+      "val": 0.37,
+      "yoy": 5.7
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     25.8,
+     27.3
+    ],
+    "eps_yoy_2q": [
+     65.2,
+     5.7
+    ],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "교정·시니어케어",
+   "marked": "2026-09-18",
+   "note": "그룹추적·교정·실적감속"
+  },
+  "ILMN": {
+   "ticker": "ILMN",
+   "name": "Illumina, Inc. - Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-16",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 94.8,
+   "from_52w_high": -4.2,
+   "dvol_50d": 547955815,
+   "earnings_raw": {
+    "ticker": "ILMN",
+    "name": "ILLUMINA, INC.",
+    "rev_q": [
+     {
+      "end": "2025-03-30",
+      "val": 1041000000,
+      "yoy": -3.3
+     },
+     {
+      "end": "2025-06-29",
+      "val": 1059000000,
+      "yoy": -4.8
+     },
+     {
+      "end": "2025-09-28",
+      "val": 1084000000,
+      "yoy": 0.4
+     },
+     {
+      "end": "2025-12-28",
+      "val": 1159000000,
+      "yoy": 5.0
+     },
+     {
+      "end": "2026-03-29",
+      "val": 1091000000,
+      "yoy": 4.8
+     },
+     {
+      "end": "2026-06-28",
+      "val": 1159000000,
+      "yoy": 9.4
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-30",
+      "val": 0.82,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-29",
+      "val": 1.49,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-28",
+      "val": 0.98,
+      "yoy": -77.8
+     },
+     {
+      "end": "2025-12-28",
+      "val": 2.16,
+      "yoy": 86.2
+     },
+     {
+      "end": "2026-03-29",
+      "val": 0.87,
+      "yoy": 6.1
+     },
+     {
+      "end": "2026-06-28",
+      "val": 1.35,
+      "yoy": -9.4
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-28",
+    "rev_yoy_2q": [
+     4.8,
+     9.4
+    ],
+    "eps_yoy_2q": [
+     6.1,
+     -9.4
+    ],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "실적미달"
+  },
+  "HNGE": {
+   "ticker": "HNGE",
+   "name": "Hinge Health, Inc. Class A Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-16",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.6,
+   "from_52w_high": -1.8,
+   "dvol_50d": 160909388,
+   "earnings_raw": {
+    "ticker": "HNGE",
+    "name": "Hinge Health, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 123825000,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": 139098000,
+      "yoy": 54.9
+     },
+     {
+      "end": "2025-09-30",
+      "val": 154211000,
+      "yoy": 53.3
+     },
+     {
+      "end": "2025-12-31",
+      "val": 170726000,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": 182307000,
+      "yoy": 47.2
+     },
+     {
+      "end": "2026-06-30",
+      "val": 212817000,
+      "yoy": 53.0
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 1.31,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": -13.1,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": -0.02,
+      "yoy": -300.0
+     },
+     {
+      "end": "2025-12-31",
+      "val": 4.04,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": 0.41,
+      "yoy": -68.7
+     },
+     {
+      "end": "2026-06-30",
+      "val": 0.52,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     47.2,
+     53.0
+    ],
+    "eps_yoy_2q": [
+     -300.0,
+     -68.7
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null
+  },
+  "NEOG": {
+   "ticker": "NEOG",
+   "name": "Neogen Corporation - Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-16",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.7,
+   "from_52w_high": -0.5,
+   "dvol_50d": 25438849,
+   "earnings_raw": {
+    "ticker": "NEOG",
+    "name": "NEOGEN CORP",
+    "rev_q": [
+     {
+      "end": "2025-02-28",
+      "val": 221000000,
+      "yoy": -3.4
+     },
+     {
+      "end": "2025-05-31",
+      "val": 225478000,
+      "yoy": -4.8
+     },
+     {
+      "end": "2025-08-31",
+      "val": 209189000,
+      "yoy": -3.6
+     },
+     {
+      "end": "2025-11-30",
+      "val": 224691000,
+      "yoy": -2.8
+     },
+     {
+      "end": "2026-02-28",
+      "val": 211200000,
+      "yoy": -4.4
+     },
+     {
+      "end": "2026-05-31",
+      "val": 225320000,
+      "yoy": -0.1
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-02-28",
+      "val": -0.05,
+      "yoy": null
+     },
+     {
+      "end": "2025-05-31",
+      "val": -2.82,
+      "yoy": null
+     },
+     {
+      "end": "2025-08-31",
+      "val": 0.17,
+      "yoy": null
+     },
+     {
+      "end": "2025-11-30",
+      "val": -0.07,
+      "yoy": null
+     },
+     {
+      "end": "2026-02-28",
+      "val": -0.08,
+      "yoy": null
+     },
+     {
+      "end": "2026-05-31",
+      "val": -0.06,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-05-31",
+    "rev_yoy_2q": [
+     -4.4,
+     -0.1
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "실적미달"
+  },
+  "TRMD": {
+   "ticker": "TRMD",
+   "name": "TORM plc - Class A Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-16",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.5,
+   "from_52w_high": -1.3,
+   "dvol_50d": 30147000,
+   "earnings_raw": {
+    "ticker": "TRMD",
+    "name": "TORM plc",
+    "rev_q": [],
+    "eps_q": [],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "error": "us-gaap XBRL 없음(20-F 외국계 가능) — 원문 수동"
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "해운·탱커",
+   "marked": "2026-09-18",
+   "note": "그룹추적·해운·원문"
+  },
+  "SMTC": {
+   "ticker": "SMTC",
+   "name": "Semtech Corporation - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-17",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.9,
+   "from_52w_high": -0.2,
+   "dvol_50d": 405451021,
+   "earnings_raw": {
+    "ticker": "SMTC",
+    "name": "SEMTECH CORP",
+    "rev_q": [
+     {
+      "end": "2025-01-26",
+      "val": 251002000,
+      "yoy": 30.1
+     },
+     {
+      "end": "2025-04-27",
+      "val": 251060000,
+      "yoy": 21.8
+     },
+     {
+      "end": "2025-07-27",
+      "val": 257589000,
+      "yoy": 19.6
+     },
+     {
+      "end": "2025-10-26",
+      "val": 266971000,
+      "yoy": 12.7
+     },
+     {
+      "end": "2026-01-25",
+      "val": 274355000,
+      "yoy": 9.3
+     },
+     {
+      "end": "2026-04-26",
+      "val": 291018000,
+      "yoy": 15.9
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-01-26",
+      "val": 0.81,
+      "yoy": null
+     },
+     {
+      "end": "2025-04-27",
+      "val": 0.22,
+      "yoy": null
+     },
+     {
+      "end": "2025-07-27",
+      "val": -0.31,
+      "yoy": null
+     },
+     {
+      "end": "2025-10-26",
+      "val": -0.03,
+      "yoy": null
+     },
+     {
+      "end": "2026-01-25",
+      "val": -0.34,
+      "yoy": -142.0
+     },
+     {
+      "end": "2026-04-26",
+      "val": 0.27,
+      "yoy": 22.7
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-04-26",
+    "rev_yoy_2q": [
+     9.3,
+     15.9
+    ],
+    "eps_yoy_2q": [
+     -142.0,
+     22.7
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": true
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null
+  },
+  "TH": {
+   "ticker": "TH",
+   "name": "Target Hospitality Corp. - Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-18",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 95.8,
+   "from_52w_high": -1.1,
+   "dvol_50d": 27327244,
+   "earnings_raw": {
+    "ticker": "TH",
+    "name": "Target Hospitality Corp.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 54902000,
+      "yoy": -24.2
+     },
+     {
+      "end": "2025-06-30",
+      "val": 54890000,
+      "yoy": -18.7
+     },
+     {
+      "end": "2025-09-30",
+      "val": 91571000,
+      "yoy": 39.2
+     },
+     {
+      "end": "2025-12-31",
+      "val": 73465000,
+      "yoy": 22.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 56205000,
+      "yoy": 2.4
+     },
+     {
+      "end": "2026-06-30",
+      "val": 54698000,
+      "yoy": -0.3
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.07,
+      "yoy": -135.0
+     },
+     {
+      "end": "2025-06-30",
+      "val": -0.15,
+      "yoy": -183.3
+     },
+     {
+      "end": "2025-09-30",
+      "val": -0.01,
+      "yoy": -105.0
+     },
+     {
+      "end": "2025-12-31",
+      "val": -0.14,
+      "yoy": -216.7
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.13,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.09,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     2.4,
+     -0.3
+    ],
+    "eps_yoy_2q": [
+     -105.0,
+     -216.7
+    ],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "marked": "2026-09-18",
+   "note": "적자확대"
+  },
+  "PARR": {
+   "ticker": "PARR",
+   "name": "Par Pacific Holdings, Inc.  Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-18",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 95.6,
+   "from_52w_high": -3.8,
+   "dvol_50d": 77969338,
+   "earnings_raw": {
+    "ticker": "PARR",
+    "name": "PAR PACIFIC HOLDINGS, INC.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 1745036000,
+      "yoy": -11.9
+     },
+     {
+      "end": "2025-06-30",
+      "val": 1893438000,
+      "yoy": -6.1
+     },
+     {
+      "end": "2025-09-30",
+      "val": 2012936000,
+      "yoy": -6.1
+     },
+     {
+      "end": "2025-12-31",
+      "val": 1813240000,
+      "yoy": -1.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 1823750000,
+      "yoy": 4.5
+     },
+     {
+      "end": "2026-06-30",
+      "val": 2968869000,
+      "yoy": 56.8
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.57,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": 1.17,
+      "yoy": 265.6
+     },
+     {
+      "end": "2025-09-30",
+      "val": 5.16,
+      "yoy": 3869.2
+     },
+     {
+      "end": "2025-12-31",
+      "val": 1.4,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": 1.1,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": 9.35,
+      "yoy": 699.1
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "group": "정유",
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     4.5,
+     56.8
+    ],
+    "eps_yoy_2q": [
+     3869.2,
+     699.1
+    ],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": true,
+    "pass_hint": true
+   },
+   "marked": "2026-09-18",
+   "note": "그룹추적·정유"
+  },
+  "HALO": {
+   "ticker": "HALO",
+   "name": "Halozyme Therapeutics, Inc. - Common Stock",
+   "status": "deferred",
+   "first_seen": "2026-09-18",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.1,
+   "from_52w_high": -0.2,
+   "dvol_50d": 201394743,
+   "earnings_raw": {
+    "ticker": "HALO",
+    "name": "HALOZYME THERAPEUTICS, INC.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 264861000,
+      "yoy": 35.2
+     },
+     {
+      "end": "2025-06-30",
+      "val": 325719000,
+      "yoy": 40.8
+     },
+     {
+      "end": "2025-09-30",
+      "val": 354264000,
+      "yoy": 22.1
+     },
+     {
+      "end": "2025-12-31",
+      "val": 451767000,
+      "yoy": 51.6
+     },
+     {
+      "end": "2026-03-31",
+      "val": 376708000,
+      "yoy": 42.2
+     },
+     {
+      "end": "2026-06-30",
+      "val": 480999000,
+      "yoy": 47.7
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 0.93,
+      "yoy": 55.0
+     },
+     {
+      "end": "2025-06-30",
+      "val": 1.33,
+      "yoy": 84.7
+     },
+     {
+      "end": "2025-09-30",
+      "val": 1.43,
+      "yoy": 36.2
+     },
+     {
+      "end": "2025-12-31",
+      "val": -1.13,
+      "yoy": -206.6
+     },
+     {
+      "end": "2026-03-31",
+      "val": 1.22,
+      "yoy": 31.2
+     },
+     {
+      "end": "2026-06-30",
+      "val": 1.9,
+      "yoy": 42.9
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     42.2,
+     47.7
+    ],
+    "eps_yoy_2q": [
+     31.2,
+     42.9
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": true,
+    "pass_hint": true
+   },
+   "marked": "2026-09-18",
+   "note": "09-22심층완료—등록제안·사용자확인대기"
+  },
+  "RBRK": {
+   "ticker": "RBRK",
+   "name": "Rubrik, Inc. Class A Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-18",
+   "last_seen": "2026-09-18",
+   "src": [
+    "신고가",
+    "전이"
+   ],
+   "rs": 91.9,
+   "from_52w_high": -2.1,
+   "dvol_50d": 301983711,
+   "earnings_raw": {
+    "ticker": "RBRK",
+    "name": "Rubrik, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-04-30",
+      "val": 278481000,
+      "yoy": 48.7
+     },
+     {
+      "end": "2025-07-31",
+      "val": 309860000,
+      "yoy": 51.2
+     },
+     {
+      "end": "2025-10-31",
+      "val": 350166000,
+      "yoy": 48.3
+     },
+     {
+      "end": "2026-01-31",
+      "val": 377684000,
+      "yoy": 46.3
+     },
+     {
+      "end": "2026-04-30",
+      "val": 387068000,
+      "yoy": 39.0
+     },
+     {
+      "end": "2026-07-31",
+      "val": 427260000,
+      "yoy": 37.9
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-04-30",
+      "val": -0.53,
+      "yoy": null
+     },
+     {
+      "end": "2025-07-31",
+      "val": -0.49,
+      "yoy": null
+     },
+     {
+      "end": "2025-10-31",
+      "val": -0.32,
+      "yoy": null
+     },
+     {
+      "end": "2026-01-31",
+      "val": -0.44,
+      "yoy": -107.7
+     },
+     {
+      "end": "2026-04-30",
+      "val": -0.21,
+      "yoy": null
+     },
+     {
+      "end": "2026-07-31",
+      "val": -0.3,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "earnings": {
+    "last_q": "2026-07-31",
+    "rev_yoy_2q": [
+     39.0,
+     37.9
+    ],
+    "eps_yoy_2q": [
+     -107.7
+    ],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "marked": "2026-09-18",
+   "note": "적자·전이관찰만"
+  },
+  "PAYC": {
+   "ticker": "PAYC",
+   "name": "Paycom Software, Inc. Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-18",
+   "last_seen": "2026-09-18",
+   "src": [
+    "전이"
+   ],
+   "rs": 91.8,
+   "from_52w_high": -7.6,
+   "dvol_50d": 167965449,
+   "earnings_raw": {
+    "ticker": "PAYC",
+    "name": "Paycom Software, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 530500000,
+      "yoy": 6.1
+     },
+     {
+      "end": "2025-06-30",
+      "val": 483600000,
+      "yoy": 10.5
+     },
+     {
+      "end": "2025-09-30",
+      "val": 493300000,
+      "yoy": 9.2
+     },
+     {
+      "end": "2025-12-31",
+      "val": 544300000,
+      "yoy": 10.2
+     },
+     {
+      "end": "2026-03-31",
+      "val": 571900000,
+      "yoy": 7.8
+     },
+     {
+      "end": "2026-06-30",
+      "val": 531200000,
+      "yoy": 9.8
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 2.48,
+      "yoy": -43.2
+     },
+     {
+      "end": "2025-06-30",
+      "val": 1.58,
+      "yoy": 31.7
+     },
+     {
+      "end": "2025-09-30",
+      "val": 1.96,
+      "yoy": 49.6
+     },
+     {
+      "end": "2025-12-31",
+      "val": 2.06,
+      "yoy": 1.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": 3.04,
+      "yoy": 22.6
+     },
+     {
+      "end": "2026-06-30",
+      "val": 2.34,
+      "yoy": 48.1
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     7.8,
+     9.8
+    ],
+    "eps_yoy_2q": [
+     22.6,
+     48.1
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": true
+   }
+  },
+  "RVTY": {
+   "ticker": "RVTY",
+   "name": "Revvity, Inc. Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-18",
+   "last_seen": "2026-09-18",
+   "src": [
+    "전이"
+   ],
+   "rs": 90.6,
+   "from_52w_high": -4.1,
+   "dvol_50d": 205088138,
+   "earnings_raw": {
+    "ticker": "RVTY",
+    "name": "REVVITY, INC.",
+    "rev_q": [
+     {
+      "end": "2025-03-30",
+      "val": 664762000,
+      "yoy": 2.3
+     },
+     {
+      "end": "2025-06-29",
+      "val": 720284000,
+      "yoy": 4.1
+     },
+     {
+      "end": "2025-09-28",
+      "val": 698949000,
+      "yoy": 2.2
+     },
+     {
+      "end": "2025-12-28",
+      "val": 772056000,
+      "yoy": 5.9
+     },
+     {
+      "end": "2026-04-05",
+      "val": 711118000,
+      "yoy": 7.0
+     },
+     {
+      "end": "2026-07-05",
+      "val": 729688000,
+      "yoy": 1.3
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-30",
+      "val": 0.35,
+      "yoy": 66.7
+     },
+     {
+      "end": "2025-06-29",
+      "val": 0.46,
+      "yoy": 2.2
+     },
+     {
+      "end": "2025-09-28",
+      "val": 0.4,
+      "yoy": -48.1
+     },
+     {
+      "end": "2025-12-28",
+      "val": 0.86,
+      "yoy": 11.7
+     },
+     {
+      "end": "2026-04-05",
+      "val": 0.36,
+      "yoy": 2.9
+     },
+     {
+      "end": "2026-07-05",
+      "val": 0.47,
+      "yoy": 2.2
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "group": null,
+   "earnings": {
+    "last_q": "2026-07-05",
+    "rev_yoy_2q": [
+     7.0,
+     1.3
+    ],
+    "eps_yoy_2q": [
+     2.9,
+     2.2
+    ],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "marked": "2026-09-18",
+   "note": "실적미달"
+  },
+  "TVTX": {
+   "ticker": "TVTX",
+   "name": "Travere Therapeutics, Inc. - Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-04",
+   "last_seen": "2026-09-04",
+   "src": [
+    "신고가"
+   ],
+   "rs": 94.6,
+   "from_52w_high": -8.7,
+   "dvol_50d": 89876836.0,
+   "group": null,
+   "note": "구이월·실적미달",
+   "earnings_raw": {
+    "ticker": "TVTX",
+    "name": "Travere Therapeutics, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 81732000,
+      "yoy": 97.5
+     },
+     {
+      "end": "2025-06-30",
+      "val": 114449000,
+      "yoy": 111.5
+     },
+     {
+      "end": "2025-09-30",
+      "val": 164859000,
+      "yoy": 162.1
+     },
+     {
+      "end": "2025-12-31",
+      "val": 129688000,
+      "yoy": 73.4
+     },
+     {
+      "end": "2026-03-31",
+      "val": 127199000,
+      "yoy": 55.6
+     },
+     {
+      "end": "2026-06-30",
+      "val": 169584000,
+      "yoy": 48.2
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.47,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": -0.14,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.28,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": 0.04,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.4,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": -0.37,
+      "yoy": null
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     55.6,
+     48.2
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "marked": "2026-09-18"
+  },
+  "RNG": {
+   "ticker": "RNG",
+   "name": "RingCentral, Inc. Class A Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-04",
+   "last_seen": "2026-09-04",
+   "src": [
+    "신고가"
+   ],
+   "rs": 97.3,
+   "from_52w_high": -7.8,
+   "dvol_50d": 112020816.0,
+   "group": null,
+   "note": "구이월승계·통과",
+   "earnings_raw": {
+    "ticker": "RNG",
+    "name": "RingCentral, Inc.",
+    "rev_q": [
+     {
+      "end": "2025-03-31",
+      "val": 612056000,
+      "yoy": 4.8
+     },
+     {
+      "end": "2025-06-30",
+      "val": 620398000,
+      "yoy": 4.6
+     },
+     {
+      "end": "2025-09-30",
+      "val": 638655000,
+      "yoy": 4.9
+     },
+     {
+      "end": "2025-12-31",
+      "val": 644033000,
+      "yoy": 4.8
+     },
+     {
+      "end": "2026-03-31",
+      "val": 644199000,
+      "yoy": 5.3
+     },
+     {
+      "end": "2026-06-30",
+      "val": 657011000,
+      "yoy": 5.9
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": -0.11,
+      "yoy": null
+     },
+     {
+      "end": "2025-06-30",
+      "val": 0.14,
+      "yoy": null
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.19,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": 0.26,
+      "yoy": null
+     },
+     {
+      "end": "2026-03-31",
+      "val": 0.35,
+      "yoy": null
+     },
+     {
+      "end": "2026-06-30",
+      "val": 0.45,
+      "yoy": 221.4
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [
+     5.3,
+     5.9
+    ],
+    "eps_yoy_2q": [
+     221.4
+    ],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": true
+   },
+   "marked": "2026-09-18"
+  },
+  "LFST": {
+   "ticker": "LFST",
+   "name": "LifeStance Health Group, Inc. - Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-09-04",
+   "last_seen": "2026-09-04",
+   "src": [
+    "신고가"
+   ],
+   "rs": 94.7,
+   "from_52w_high": -7.3,
+   "dvol_50d": 53475208.0,
+   "group": null,
+   "note": "구이월·실적미달",
+   "earnings_raw": {
+    "ticker": "LFST",
+    "name": "LifeStance Health Group, Inc.",
+    "rev_q": [
+     {
+      "end": "2020-06-30",
+      "val": 16000,
+      "yoy": null
+     },
+     {
+      "end": "2020-09-30",
+      "val": 44000,
+      "yoy": null
+     },
+     {
+      "end": "2021-06-30",
+      "val": 1356000,
+      "yoy": 8375.0
+     }
+    ],
+    "eps_q": [],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "earnings": {
+    "last_q": "2021-06-30",
+    "rev_yoy_2q": [
+     8375.0
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "marked": "2026-09-18"
+  },
+  "MRX": {
+   "ticker": "MRX",
+   "name": "Marex Group Limited - Ordinary Shares",
+   "status": "rejected",
+   "first_seen": "2026-09-04",
+   "last_seen": "2026-09-04",
+   "src": [
+    "신고가"
+   ],
+   "rs": 94.0,
+   "from_52w_high": -6.0,
+   "dvol_50d": 49491957.0,
+   "group": null,
+   "note": "구이월·원문외국계",
+   "earnings_raw": {
+    "ticker": "MRX",
+    "name": "Marex Group Ltd",
+    "rev_q": [],
+    "eps_q": [],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "earnings": {
+    "error": "us-gaap XBRL 없음(20-F 외국계 가능) — 원문 수동"
+   },
+   "marked": "2026-09-18"
+  },
+  "WT": {
+   "ticker": "WT",
+   "name": "WisdomTree, Inc. Common Stock",
+   "status": "pending",
+   "first_seen": "2026-09-04",
+   "last_seen": "2026-09-04",
+   "src": [
+    "신고가"
+   ],
+   "rs": 91.5,
+   "from_52w_high": -11.0,
+   "dvol_50d": 60353496.0,
+   "group": null,
+   "note": "구이월승계·통과",
+   "earnings_raw": {
+    "ticker": "WT",
+    "name": "WisdomTree, Inc.",
+    "rev_q": [
+     {
+      "end": "2018-03-31",
+      "val": 58756000,
+      "yoy": null
+     }
+    ],
+    "eps_q": [
+     {
+      "end": "2025-03-31",
+      "val": 0.17,
+      "yoy": 30.8
+     },
+     {
+      "end": "2025-06-30",
+      "val": 0.17,
+      "yoy": 30.8
+     },
+     {
+      "end": "2025-09-30",
+      "val": 0.13,
+      "yoy": null
+     },
+     {
+      "end": "2025-12-31",
+      "val": 0.28,
+      "yoy": 40.0
+     },
+     {
+      "end": "2026-03-31",
+      "val": -0.17,
+      "yoy": -200.0
+     },
+     {
+      "end": "2026-06-30",
+      "val": 0.28,
+      "yoy": 64.7
+     }
+    ],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "earnings": {
+    "last_q": "2026-06-30",
+    "rev_yoy_2q": [],
+    "eps_yoy_2q": [
+     -200.0,
+     64.7
+    ],
+    "profit_pos": true,
+    "accel_eps": true,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": true
+   },
+   "marked": "2026-09-18"
+  },
+  "MT": {
+   "ticker": "MT",
+   "name": "Arcelor Mittal NY Registry Shares NEW",
+   "status": "rejected",
+   "first_seen": "2026-09-04",
+   "last_seen": "2026-09-04",
+   "src": [
+    "신고가"
+   ],
+   "rs": 88.9,
+   "from_52w_high": -9.0,
+   "dvol_50d": 100910896.0,
+   "group": null,
+   "note": "구이월·RS컷미달",
+   "earnings_raw": {
+    "ticker": "MT",
+    "name": "ArcelorMittal",
+    "rev_q": [],
+    "eps_q": [],
+    "note": "rev 단위 USD. Q4는 FY−3분기 유도. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-09-18",
+   "earnings": {
+    "error": "us-gaap XBRL 없음(20-F 외국계 가능) — 원문 수동"
+   },
+   "marked": "2026-09-18"
+  }
+ },
+ "log": [
+  {
+   "d": "2026-09-18",
+   "t": "TXG",
+   "to": "deferred",
+   "note": "마크테스트"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "TXG",
+   "to": "pending",
+   "note": ""
+  },
+  {
+   "d": "2026-09-18",
+   "t": "TVTX",
+   "to": "deferred",
+   "note": "구 이월분 승계(2026-09-22)"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "RNG",
+   "to": "deferred",
+   "note": "구 이월분 승계(2026-09-22)"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "LFST",
+   "to": "deferred",
+   "note": "구 이월분 승계(2026-09-22)"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "MRX",
+   "to": "deferred",
+   "note": "구 이월분 승계(2026-09-22)"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "WT",
+   "to": "deferred",
+   "note": "구 이월분 승계(2026-09-22)"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "MT",
+   "to": "deferred",
+   "note": "구 이월분 승계(2026-09-22)"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "APGE,CHEF",
+   "to": "expired",
+   "note": "구 이월분 — 09-18 모수밖(수집 결측 또는 유동성 미달)이라 승계 불가"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "ECO",
+   "to": "rejected",
+   "note": "그룹추적·해운·원문"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "DK",
+   "to": "rejected",
+   "note": "그룹추적·정유"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "MPC",
+   "to": "rejected",
+   "note": "그룹추적·정유클러스터캡"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "PARR",
+   "to": "rejected",
+   "note": "그룹추적·정유"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "LPG",
+   "to": "rejected",
+   "note": "그룹추적·해운"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "PSX",
+   "to": "rejected",
+   "note": "그룹추적·정유"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "TRMD",
+   "to": "rejected",
+   "note": "그룹추적·해운·원문"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "DHT",
+   "to": "rejected",
+   "note": "그룹추적·해운·원문"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "TNK",
+   "to": "rejected",
+   "note": "그룹추적·해운·적자"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "CXW",
+   "to": "rejected",
+   "note": "그룹추적·교정·실적감속"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "TXG",
+   "to": "rejected",
+   "note": "EPS적자·매출역성장"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "TH",
+   "to": "rejected",
+   "note": "적자확대"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "ILMN",
+   "to": "rejected",
+   "note": "실적미달"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "NEOG",
+   "to": "rejected",
+   "note": "실적미달"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "CVI",
+   "to": "rejected",
+   "note": "정유유사·적자"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "EQNR",
+   "to": "rejected",
+   "note": "원문외국계·대형E"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "EQNR",
+   "to": "rejected",
+   "note": "원문외국계·대형E-P"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "ADPT",
+   "to": "rejected",
+   "note": "매출감속·EPS없음"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "RBRK",
+   "to": "rejected",
+   "note": "적자·전이관찰만"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "RVTY",
+   "to": "rejected",
+   "note": "실적미달"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "LFST",
+   "to": "rejected",
+   "note": "구이월·실적미달"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "TVTX",
+   "to": "rejected",
+   "note": "구이월·실적미달"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "MRX",
+   "to": "rejected",
+   "note": "구이월·원문외국계"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "MT",
+   "to": "rejected",
+   "note": "구이월·RS컷미달"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "INSW",
+   "to": "deferred",
+   "note": "해운그룹예외후보—다음패스심층"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "RNG",
+   "to": "pending",
+   "note": "구이월승계·통과"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "WT",
+   "to": "pending",
+   "note": "구이월승계·통과"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "GH",
+   "to": "pending",
+   "note": "매출+44%·EPS없음—성장서사"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "NTRA",
+   "to": "pending",
+   "note": "매출+38%·EPS없음—성장서사"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "HTFL",
+   "to": "pending",
+   "note": "전이+신고가·매출가속"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "FTNT",
+   "to": "deferred",
+   "note": "09-22심층완료—등록제안·사용자확인대기"
+  },
+  {
+   "d": "2026-09-18",
+   "t": "HALO",
+   "to": "deferred",
+   "note": "09-22심층완료—등록제안·사용자확인대기"
+  }
+ ]
+}

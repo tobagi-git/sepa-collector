@@ -1,0 +1,90 @@
+name: sepa-collect
+
+# 미너비니 수집·스크리닝·텔레그램 알림 — 맥이 자고 있어도 돈다 (토큰 0).
+#   us: 화~토 06:00 KST = 월~금 21:00 UTC (미국 전일 종가, 마감 +1h)
+#   kr: 월~금 16:40 KST = 월~금 07:40 UTC (한국 당일 종가, 마감 +70분)
+# 일봉은 매 실행 2년치를 새로 받는다(캐시 없음, 약 10분). 산출물(out/, 알림 상태)은 저장소에 커밋한다.
+
+on:
+  schedule:
+    - cron: "0 21 * * 1-5"    # us
+    - cron: "40 7 * * 1-5"    # kr
+  workflow_dispatch:
+    inputs:
+      market:
+        description: "us | kr | both"
+        default: "both"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sepa-collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      TZ: Asia/Seoul
+      SEPA_WS: ${{ github.workspace }}
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 시장 결정
+        id: mkt
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            m="${{ github.event.inputs.market }}"
+          elif [ "${{ github.event.schedule }}" = "0 21 * * 1-5" ]; then
+            m="us"
+          else
+            m="kr"
+          fi
+          [ "$m" = "both" ] && m="us kr"
+          echo "markets=$m" >> "$GITHUB_OUTPUT"
+          echo "대상: $m"
+
+      - name: 월 1회 유니버스·섹터 재구축 (1일)
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          if [ "$(date +%d)" = "01" ]; then
+            for m in ${{ steps.mkt.outputs.markets }}; do
+              python scripts/sepa.py universe $m || true
+              python scripts/sepa.py sectors $m || true
+            done
+          fi
+
+      - name: 수집 → 스크리닝 → 알림
+        run: |
+          set -o pipefail
+          for m in ${{ steps.mkt.outputs.markets }}; do
+            echo "=== $m fetch"
+            python scripts/sepa.py fetch $m --threads 6 2>&1 | tail -3
+            echo "=== $m screen"
+            python scripts/sepa.py screen $m 2>&1 | head -4
+            echo "=== $m notify"
+            python alerts/sepa_notify.py $m || echo "notify 실패(무시)"
+          done
+
+      - name: 산출물 커밋
+        run: |
+          git config user.name "sepa-bot"
+          git config user.email "sepa-bot@users.noreply.github.com"
+          # 30일 넘은 스크리닝 스냅샷 정리 (브레드스 이력은 jsonl에 영구 보존)
+          find out -name "screen_*_*.csv" -mtime +30 -delete || true
+          find out -name "screen_*_*.json" -mtime +30 -delete || true
+          git add -A out alerts/sepa_notify.state.json universe || true
+          if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
+          git commit -m "collect ${{ steps.mkt.outputs.markets }} $(date +%Y-%m-%d\ %H:%M)"
+          git pull --rebase -X ours origin main || true
+          git push

@@ -1,0 +1,29 @@
+# 일봉 캐시 — 매 실행 새로 받는다 (365MB, 저장소에 넣지 않음)
+data/
+# 로그·백업·실험 산출물
+*.log
+backup/
+_backfill_backup_*/
+_launchd_backup_*/
+iteration-1/
+evals/
+edgar/
+dart_corpcode.json
+out/*.bak
+out/*.bak_*
+out/krq_watch_*.jsonl
+out/usq_watch_*.jsonl
+alerts/*.log
+alerts/apr_breakout.state.json
+alerts/apr_breakout.py.bak
+scripts/*.bak-*
+scripts/__pycache__/
+alerts/__pycache__/
+__pycache__/
+.daily_last_session_*
+.DS_Store
+# 개인 판단 기록은 저장소에 넣지 않는다 (수집기에 불필요)
+reports/
+watch_*.md
+*.bak-*
+*.bak
