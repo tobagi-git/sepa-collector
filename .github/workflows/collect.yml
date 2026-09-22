@@ -74,6 +74,9 @@ jobs:
             python scripts/sepa.py screen $m 2>&1 | head -4
             echo "=== $m notify"
             python alerts/sepa_notify.py $m || echo "notify 실패(무시)"
+            # 맥은 일봉 캐시가 없으므로 모멘텀 랭킹 결과를 파일로 남긴다 (아침 브리핑이 이 파일을 읽는다)
+            python scripts/sepa.py momentum $m --json > out/momentum_$m.json || true
+            python scripts/sepa.py groupgate $m --holdings > out/groupgate_$m.md || true
           done
 
       - name: 산출물 커밋
