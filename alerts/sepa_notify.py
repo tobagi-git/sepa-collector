@@ -85,16 +85,16 @@ def momentum_messages(market):
     for h in ("1w", "1m", "3m"):
         hz = HORIZON[h]; k = RKEY[h]; d = m["by_horizon"][h]
         # --- 섹터 ---
-        L = [f"📊 {f} {hz} 섹터 모멘텀 · {m['as_of']}", f"{hz} 수익률 순, 괄호는 1주/1개월/3개월, 통과율은 추세템플릿 8/8 비율"]
+        L = [f"📊 {f} {hz} 섹터 모멘텀 · {m['as_of']}", f"{hz} 수익률 순. 괄호는 1주/1개월/3개월, 통과는 상승 추세 종목 비율"]
         for i, a in enumerate(d["sectors"], 1):
             lead = " ".join(l["ticker"].split(".")[0] for l in a["leaders"])
             L.append(f"{i}. {_gname(market, a['group'])} {_pct(a[k])} ({_pct(a['r1w'])}/{_pct(a['r1m'])}/{_pct(a['r3m'])}) {a['n']}종·통과 {a['pass_rate']:.0%}" + (f"·고점권 {a['near_high']:.0%}" if a["near_high"] else "") + (f" · {lead}" if lead else ""))
         if not d["sectors"]:
             L.append("해당 없음 — 통과율 10% 또는 50일선 위 60%를 넘는 업종이 없다")
-        L.append("자격: 구성 5종 이상, 통과율 10%+ 또는 50일선 위 60%+. 수익률은 구성 종목 중앙값.")
+        L.append("읽는 법: 수익률은 그 업종 종목들의 중앙값(한 종목 급등에 안 끌려감) · 통과=상승 추세 조건 8개 전부 만족 · 고점권=52주 고점 5% 안. 업종 종목이 5개 넘고 통과율 10% 이상이거나 50일선 위가 60% 이상인 업종만 올림.")
         out.append("\n".join(L))
         # --- 종목 ---
-        L = [f"📈 {f} {hz} 종목 모멘텀 · {m['as_of']}", f"{hz} 수익률 순, 추세템플릿 8/8·거래대금 컷 통과 종목만. 괄호는 1주/1개월/3개월"]
+        L = [f"📈 {f} {hz} 종목 모멘텀 · {m['as_of']}", f"{hz} 수익률 순. 상승 추세 조건을 전부 만족하고 거래대금이 충분한 종목만. 괄호는 1주/1개월/3개월"]
         for i, r in enumerate(d["stocks"], 1):
             t = r["ticker"].split(".")[0]
             nm = f" {r['name'][:8]}" if market == "kr" else ""
@@ -102,7 +102,7 @@ def momentum_messages(market):
             L.append(f"{i}. {t}{nm} {_pct(r[k])} ({_pct(r['r1w'])}/{_pct(r['r1m'])}/{_pct(r['r3m'])}) RS{r['rs']:.0f} 고점{r['hi']:+.0f}% {r['tag']}" + (f" {r['earn']}" if r["earn"] else "") + (f" · {ind}" if ind else ""))
         if not d["stocks"]:
             L.append("해당 없음")
-        L.append("연장=50일선 위 20%+ 추격 금지 / 신고가권=돌파 직후 / 50일선 근처=되돌림 자리 / 베이스=조정 중")
+        L.append("읽는 법: RS=최근 1년 상대강도(100이 최상) · 고점=52주 고점 대비 · 자리 표시 — 연장: 50일선보다 20% 넘게 위라 지금 사면 추격, 신고가권: 고점 3% 안(돌파 직후), 50일선 근처: 쉬어가는 재진입 자리, 베이스: 고점에서 내려와 조정 중")
         out.append("\n".join(L))
     return out
 
@@ -120,13 +120,13 @@ def main(market, dry=False):
     reg = json.loads((WS / f"registry_{market}.json").read_text()) if (WS / f"registry_{market}.json").exists() else {}
     zero = reg.get("0군", [])
     lines = [f"🧭 SEPA {f} {as_of} 수집 완료",
-             f"통과 {d['pass_all_count']} ({d['pass_all_delta']:+d}) · 신규 {d['new_entrants_count']} · 이탈 {d['dropped_count']}",
-             f"200MA위 {p.get('pct_above_200ma','-')}→{b['pct_above_200ma']}% · 50MA위 {b['pct_above_50ma']}% · 순신고가 {b['net_new_highs']:+d}",
-             f"모수 {b['pool']} ({pt['flag']}) 1일 {pt['vs_1d_pct']:+.1f}% / 20일 {pt['vs_20d_pct']:+.1f}% · 결측 {pt['stale_excluded']}"]
+             f"추세 통과 종목 {d['pass_all_count']}개 (전일 대비 {d['pass_all_delta']:+d}) · 새로 통과 {d['new_entrants_count']} · 빠짐 {d['dropped_count']}",
+             f"200일선 위 {p.get('pct_above_200ma','-')}→{b['pct_above_200ma']}% · 50일선 위 {b['pct_above_50ma']}% · 신고가−신저가 {b['net_new_highs']:+d}",
+             f"조사 대상 {b['pool']}종 ({pt['flag']}) 1일 {pt['vs_1d_pct']:+.1f}% / 20일 {pt['vs_20d_pct']:+.1f}% · 데이터 누락 {pt['stale_excluded']}"]
     if x:
-        lines.append("Stage2 전이: " + ", ".join(f"{c['ticker']}({c['rs']:.0f})" for c in x[:8]) + ("" if d["stage2_crossovers_reliable"] else " ⚠️판정불가"))
+        lines.append("오늘 상승 추세에 막 올라탄 종목: " + ", ".join(f"{c['ticker'].split('.')[0]}(RS{c['rs']:.0f})" for c in x[:8]) + ("" if d["stage2_crossovers_reliable"] else " ⚠️판정불가"))
     else:
-        lines.append("Stage2 전이: 없음" if d["stage2_crossovers_reliable"] else f"Stage2 전이: 판정 불가 — {d['stage2_crossovers_note']}")
+        lines.append("오늘 상승 추세에 막 올라탄 종목: 없음" if d["stage2_crossovers_reliable"] else f"막 올라탄 종목: 판정 불가 — {d['stage2_crossovers_note']}")
 
     # ---- 3. 0군 셋업 (vcp) ----
     zero_lines, prev_fail = [], set(ms.get("zero_fail", []))
@@ -143,25 +143,26 @@ def main(market, dry=False):
         zero_lines.append(f"{t.split('.')[0]} 피벗{v['pct_to_pivot']:+.1f}% {w['weeks_elapsed']}주 {tag}".strip())
         key = f"{t}:{as_of}"
         if cond and ms.get("setup_" + t) != as_of:
-            alerts.append(f"🟢 SEPA {f} 셋업 — {t} 50MA 되돌림 전조건 충족 (§7-1 A)\n50MA {pb['sma50']} 이격 {pb['pct_vs_sma50']:+.1f}% · 60일 터치 {pb['touch_episodes_60d']}회 · 하락일 거래량 {pb['pullback_downday_vol_over_v50']} · 반등확인 {'✓' if pb['bounce_hint'] else '✗'}\n0군이면 평일 예외로 actionable(50MA) 카드 대상 — 판정은 데일리에서.")
+            alerts.append(f"🟢 SEPA {f} 자리 신호 — {t}가 상승 중인 50일선까지 내려와 닿았다\n50일선 {pb['sma50']} · 지금 가격은 그 위 {pb['pct_vs_sma50']:+.1f}% · 최근 60일 안 이 자리에 온 게 {pb['touch_episodes_60d']}번째(1~2번째가 좋은 자리) · 내려올 때 거래량 평소의 {pb['pullback_downday_vol_over_v50']}배(1 미만이면 조용한 조정) · 반등 확인 {'됨' if pb['bounce_hint'] else '아직'}\n뜻: 달리던 종목이 쉬어가는 전형적 재진입 자리. 판정은 데일리 리포트에서.")
             ms["setup_" + t] = as_of
         if pb["status"] == "below_50ma":
             now_fail.add(t)
     for t in sorted(now_fail - prev_fail):
-        alerts.append(f"🔴 SEPA {f} 0군 {t} — 50MA 하회(종가 기준). 템플릿 기준5 이탈 가능, 데일리에서 §8 무효 신호 확인.")
+        alerts.append(f"🔴 SEPA {f} 후보 {t} — 종가가 50일선 아래로 내려갔다. 추세 종목이 50일선을 잃으면 셋업이 무효가 될 수 있어 데일리에서 확인한다.")
     ms["zero_fail"] = sorted(now_fail)
     if zero_lines:
-        lines.append("0군: " + " | ".join(zero_lines))
+        lines.append("지켜보는 후보(0군): " + " | ".join(zero_lines))
+    lines.append("읽는 법: 추세 통과=상승 추세 조건 8개를 전부 만족 · 200일선 위 비율이 60% 넘으면 시장 우호, 40% 아래면 악화 · 신고가−신저가가 음수면 힘이 빠지는 중 · 후보 표기: 피벗=돌파 기준가(+면 아직 그 아래), n주=조정 기간, 🟢=50일선 재진입 자리 🟡=50일선에 접근 🔴=50일선 아래(위험)")
     msgs.append("\n".join(lines))
     msgs.extend(momentum_messages(market))
 
     # ---- 2. 수집 사고 ----
     if pt["flag"] == "수집의심" or (pt["stale_excluded"] or 0) / max(1, b["pool"] + (pt["stale_excluded"] or 0)) >= 0.03:
-        alerts.append(f"⚠️ SEPA {f} 수집 의심 — 모수 1일 {pt['vs_1d_pct']:+.1f}%, 결측 {pt['stale_excluded']}. 이 세션 브레드스 %는 전일과 비교 금지. fetch_{market}.log 확인.")
+        alerts.append(f"⚠️ SEPA {f} 데이터 주의 — 조사 대상 종목 수가 하루 만에 {pt['vs_1d_pct']:+.1f}% 변했고 누락이 {pt['stale_excluded']}종이다. 시장이 아니라 수집 문제일 수 있으니 오늘 비율 수치는 어제와 비교하지 않는다.")
 
     # ---- 3b. Stage 2 전이 RS90+ ----
     if x90:
-        alerts.append(f"🚀 SEPA {f} Stage2 전이 RS90+ — " + ", ".join(f"{c['ticker']} {c['name'][:14]} (RS {c['rs']:.0f}, 고점比 {c['from_52w_high']:+.1f}%, 직전미달 {'·'.join(c['prev_fails']['fails'])})" for c in x90) + "\n베이스 0주 — 관찰 명단 재료, 매수 자리 아님.")
+        alerts.append(f"🚀 SEPA {f} 강한 종목이 오늘 상승 추세에 올라탐 — " + ", ".join(f"{c['ticker'].split('.')[0]} {c['name'][:14]} (RS {c['rs']:.0f}, 고점 대비 {c['from_52w_high']:+.1f}%)" for c in x90) + "\nRS는 최근 1년 상대강도(100이 최상, 90 이상이면 상위 10%). 방금 추세가 시작된 종목이라 아직 살 자리는 아니고 지켜볼 명단에 올릴 재료.")
 
     # ---- 4. 그룹 게이트 변화 ----
     gg = run("groupgate", market, "--holdings")
@@ -177,7 +178,7 @@ def main(market, dry=False):
         if pv and (pv["entry"] != v["entry"] or pv["warn"] != v["warn"]):
             changed.append(f"{g} {v['pass']}: 진입 {pv['entry']}→{v['entry']} · 경고 {pv['warn']}→{v['warn']}")
     if changed:
-        alerts.append(f"🧩 SEPA {f} 그룹 게이트 변화\n" + "\n".join(changed) + "\n(IPS v2.2: ✅열림=그룹 예외 자격 / 🟠🔴=보유 스탑 상향 카드 — invest-ops)")
+        alerts.append(f"🧩 SEPA {f} 업종 그룹 상태 변화\n" + "\n".join(changed) + "\n읽는 법: ✅열림=그 업종 종목 대부분이 추세를 타고 고점 근처라 시장이 나빠도 소액 진입 허용 / 🟠🔴=그 업종이 무너지는 중이라 보유 종목 손절선을 올릴 때")
     ms["groupgate"] = labels
     ms["last_as_of"] = as_of
 
