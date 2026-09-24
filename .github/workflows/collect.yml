@@ -5,10 +5,17 @@ name: sepa-collect
 #   kr: 월~금 16:40 KST = 월~금 07:40 UTC (한국 당일 종가, 마감 +70분)
 # 일봉은 매 실행 2년치를 새로 받는다(캐시 없음, 약 10분). 산출물(out/, 알림 상태)은 저장소에 커밋한다.
 
+# GitHub 크론은 수 시간 늦게 도는 일이 흔하다(실측 09-23·24: kr 07:40→12:53 UTC, us 21:00→23:23 UTC).
+# 슬롯을 여러 개 걸고, 이미 그 세션을 받았으면 즉시 종료하는 가드로 중복을 막는다. 정각은 피한다.
 on:
   schedule:
-    - cron: "0 21 * * 1-5"    # us
-    - cron: "40 7 * * 1-5"    # kr
+    - cron: "7 21 * * 1-5"    # us 1차 (06:07 KST)
+    - cron: "7 22 * * 1-5"    # us 2차
+    - cron: "7 23 * * 1-5"    # us 3차
+    - cron: "43 7 * * 1-5"    # kr 1차 (16:43 KST)
+    - cron: "13 8 * * 1-5"    # kr 2차
+    - cron: "43 8 * * 1-5"    # kr 3차
+    - cron: "43 9 * * 1-5"    # kr 4차
   workflow_dispatch:
     inputs:
       market:
@@ -45,10 +52,9 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             m="${{ github.event.inputs.market }}"
-          elif [ "${{ github.event.schedule }}" = "0 21 * * 1-5" ]; then
-            m="us"
           else
-            m="kr"
+            h=$(date -u +%H)                      # UTC 시각으로 시장 판별 (크론 문자열 비교보다 지연에 강함)
+            if [ "$h" -ge 19 ] || [ "$h" -lt 4 ]; then m="us"; else m="kr"; fi
           fi
           [ "$m" = "both" ] && m="us kr"
           echo "markets=$m" >> "$GITHUB_OUTPUT"
@@ -68,8 +74,15 @@ jobs:
         run: |
           set -o pipefail
           for m in ${{ steps.mkt.outputs.markets }}; do
+            # 가드 1: 이미 받은 세션이면 종료 (여러 크론 슬롯 중 첫 성공만 일한다)
+            target=$(python -c "import sys; sys.path.insert(0,'scripts'); import sepa; print(sepa.last_expected_session('$m'))")
+            have=$(python -c "import json; rows=[json.loads(l) for l in open('out/breadth_$m.jsonl') if l.strip()]; print(rows[-1]['as_of'])" 2>/dev/null || echo none)
+            echo "=== $m target=$target have=$have"
+            if [ "$have" = "$target" ]; then echo "$m: 이미 수집됨 — 스킵"; continue; fi
             echo "=== $m fetch"
-            python scripts/sepa.py fetch $m --threads 6 2>&1 | tail -3
+            out=$(python scripts/sepa.py fetch $m --threads 6 2>&1 | tail -3); echo "$out"
+            # 가드 2: 그 세션 봉이 하나도 없으면 휴장(또는 데이터 미공개) — 실패가 아니라 정상 종료
+            if echo "$out" | grep -q "최신=0 "; then echo "$m: $target 봉 없음 — 휴장 또는 미공개, 스킵"; continue; fi
             echo "=== $m screen"
             python scripts/sepa.py screen $m 2>&1 | head -4
             echo "=== $m notify"
