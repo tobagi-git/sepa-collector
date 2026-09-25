@@ -1,12 +1,14 @@
 {
- "_note": "등록 명부 — 2026-09-22 watch_us.md·reports/2026-09-18.md에서 시드. 0군/1군/2군/killed/hold 변경 때마다 모델이 갱신한다(§5). queue의 재발견 판정 근거. | 2026-09-25 ENVA·DNTH 0군→killed(사용자 확인). | 2026-09-25 FTNT·HALO 0군 등록(사용자 확인).",
+ "_note": "등록 명부 — 2026-09-22 watch_us.md·reports/2026-09-18.md에서 시드. 0군/1군/2군/killed/hold 변경 때마다 모델이 갱신한다(§5). queue의 재발견 판정 근거. | 2026-09-25 ENVA·DNTH 0군→killed(사용자 확인). | 2026-09-25 FTNT·HALO 0군 등록(사용자 확인). | 2026-09-25 INSW·AMD 0군 등록(사용자 확인, AMD 재등록).",
  "0군": [
   "RVMD",
   "MAN",
   "VLO",
   "DINO",
   "FTNT",
-  "HALO"
+  "HALO",
+  "INSW",
+  "AMD"
  ],
  "1군": [
   "OSCR"
