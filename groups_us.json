@@ -1,5 +1,5 @@
 {
- "_note": "sepa groups us 입력. rosters = 핵심 그룹(전원 통과 여부 감시), themes = 테마 분포 분류 시드(정규식보다 우선). 자유롭게 편집 — 스크립트는 여기 없는 티커를 이름 정규식으로 폴백 분류한다. 시드 기준일 2026-07-30. | holding_groups(2026-09-22): positions.json의 theme 이름을 키로 하는 보유 그룹 로스터 — groupgate --holdings가 그룹 붕괴 경고(IPS §3)를 매핑할 때 쓴다. 이름 기반 시드, 사용자 편집 가능.",
+ "_note": "sepa groups us 입력. rosters = 핵심 그룹(전원 통과 여부 감시), themes = 테마 분포 분류 시드(정규식보다 우선). 자유롭게 편집 — 스크립트는 여기 없는 티커를 이름 정규식으로 폴백 분류한다. 시드 기준일 2026-07-30. | holding_groups(2026-09-22): positions.json의 theme 이름을 키로 하는 보유 그룹 로스터 — groupgate --holdings가 그룹 붕괴 경고(IPS §3)를 매핑할 때 쓴다. 이름 기반 시드, 사용자 편집 가능. | 2026-09-25 구조 패스: 사이버보안(10/14)·생명과학툴·진단·CRO(6/17 + 전환 직전 8)·금광·로열티(4/14, WPM·AU·FNV 동반 전이) 로스터 신설.",
  "rosters": {
   "정유": [
    "DK",
@@ -78,6 +78,57 @@
    "LAD",
    "RUSHA",
    "OPLN"
+  ],
+  "사이버보안": [
+   "FTNT",
+   "PANW",
+   "CRWD",
+   "ZS",
+   "OKTA",
+   "S",
+   "RBRK",
+   "VRNS",
+   "OSPN",
+   "QLYS",
+   "TENB",
+   "NET",
+   "CHKP",
+   "RPD"
+  ],
+  "생명과학툴·진단·CRO": [
+   "TMO",
+   "DHR",
+   "A",
+   "BIO",
+   "RVTY",
+   "TXG",
+   "AVTR",
+   "RGEN",
+   "IQV",
+   "CRL",
+   "FTRE",
+   "NEO",
+   "DGX",
+   "LH",
+   "ILMN",
+   "MTD",
+   "WAT"
+  ],
+  "금광·로열티": [
+   "NEM",
+   "AEM",
+   "B",
+   "GOLD",
+   "WPM",
+   "FNV",
+   "RGLD",
+   "AU",
+   "KGC",
+   "AUGO",
+   "EGO",
+   "IAG",
+   "ARIS",
+   "SVM"
   ]
  },
  "themes": {
