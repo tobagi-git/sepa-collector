@@ -1263,7 +1263,7 @@
   "FTNT": {
    "ticker": "FTNT",
    "name": "Fortinet, Inc. - Common Stock",
-   "status": "deferred",
+   "status": "registered",
    "first_seen": "2026-09-15",
    "last_seen": "2026-09-18",
    "src": [
@@ -1359,8 +1359,8 @@
    },
    "earnings_asof": "2026-09-18",
    "group": null,
-   "marked": "2026-09-18",
-   "note": "09-22심층완료—등록제안·사용자확인대기"
+   "marked": "2026-09-24",
+   "note": "2026-09-25 사용자 확인·Notion Sourcing"
   },
   "NTRA": {
    "ticker": "NTRA",
@@ -2300,7 +2300,7 @@
   "HALO": {
    "ticker": "HALO",
    "name": "Halozyme Therapeutics, Inc. - Common Stock",
-   "status": "deferred",
+   "status": "registered",
    "first_seen": "2026-09-18",
    "last_seen": "2026-09-18",
    "src": [
@@ -2396,8 +2396,8 @@
     "code33_hint": true,
     "pass_hint": true
    },
-   "marked": "2026-09-18",
-   "note": "09-22심층완료—등록제안·사용자확인대기"
+   "marked": "2026-09-24",
+   "note": "2026-09-25 사용자 확인·CB 게이트 해소"
   },
   "RBRK": {
    "ticker": "RBRK",
@@ -3330,6 +3330,18 @@
    "t": "HALO",
    "to": "deferred",
    "note": "09-22심층완료—등록제안·사용자확인대기"
+  },
+  {
+   "d": "2026-09-24",
+   "t": "FTNT",
+   "to": "registered",
+   "note": "2026-09-25 사용자 확인·Notion Sourcing"
+  },
+  {
+   "d": "2026-09-24",
+   "t": "HALO",
+   "to": "registered",
+   "note": "2026-09-25 사용자 확인·CB 게이트 해소"
   }
  ]
 }
