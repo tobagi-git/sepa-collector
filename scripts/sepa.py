@@ -467,7 +467,45 @@ def load_bars(market, ticker):
     return j.get("bars")
 
 
-def cmd_screen(market, rs_cut=70, min_price=None, min_dvol=None, as_of=None):
+# ---- 수집 게이트 (2026-09-30) ----
+# fetch가 대부분 실패한 채 screen이 돌면 모수가 몇십 종목으로 쪼그라든 스냅샷이 브레드스 행·
+# rs_{market}.json(check가 읽는 RS 분포)에 그대로 굳는다. 2026-09-29 실측: 미국 09-28이 모수 26
+# (정상 ~2,360)으로 기록됐고, 워크플로 가드(have==target)가 그 손상 행을 '이미 수집됨'으로 읽어
+# 재실행까지 막았다. 그래서 산출물을 쓰기 *전에* 직전 모수와 비교해 급감이면 중단한다.
+# 중단 시 have가 그대로라 같은 날의 다음 크론 슬롯이 알아서 재시도한다(스로틀은 대개 일시적).
+GATE_MIN_RATIO = 0.7     # 직전 5행 모수 중앙값의 70% 미만이면 중단. 정상 일변동 ±1~5%, 09-18 저모수(2,230)도 94%라 통과
+GATE_LOOKBACK = 5
+GATE_MIN_HISTORY = 3     # 기준선이 될 이력이 이보다 적으면(신규 시장·초기화 직후) 게이트 없이 통과
+GATE_EXIT_CODE = 3       # 워크플로가 '게이트 발동'과 일반 실패를 가르는 코드
+
+
+def collection_gate(market, pool_n, stale_excluded=0):
+    """(통과 여부, 메시지). 이력 기준선 대비 모수가 급감했는지만 본다 — 판정은 산출물 기록 전에."""
+    hist_p = OUT / f"breadth_{market}.jsonl"
+    if not hist_p.exists():
+        return True, ""
+    pools = []
+    for line in hist_p.read_text().splitlines():
+        if line.strip():
+            try:
+                p = json.loads(line).get("pool")
+            except ValueError:
+                continue
+            if isinstance(p, int):
+                pools.append(p)
+    pools = pools[-GATE_LOOKBACK:]
+    if len(pools) < GATE_MIN_HISTORY:
+        return True, ""
+    base = sorted(pools)[len(pools) // 2]          # 중앙값 — 직전 1행이 이미 손상돼도 기준선이 안 무너진다
+    if not base or pool_n / base >= GATE_MIN_RATIO:
+        return True, ""
+    return False, (f"⛔ 수집 게이트 발동 [{market}] — 모수 {pool_n:,} (직전 {len(pools)}행 중앙값 {base:,}의 "
+                   f"{pool_n / base:.0%}, 하한 {GATE_MIN_RATIO:.0%}). 세션 봉 없어 제외 {stale_excluded:,}종목 → "
+                   f"fetch가 대량 실패(스로틀 의심)한 것으로 보고 산출물을 기록하지 않았다. "
+                   f"정상 급감이 확실하면 `screen {market} --allow-drop`")
+
+
+def cmd_screen(market, rs_cut=70, min_price=None, min_dvol=None, as_of=None, allow_drop=False):
     """as_of가 주어지면 그 세션까지로 봉을 잘라 '그날 시점의' 스크리닝을 재현한다(소급 계산).
     RS·52주 고저·MA·거래대금 모두 후행 윈도우라 절단만으로 정확히 재현된다.
     ⚠️ 단 시가총액은 현재값 캐시다 — 정렬용 보조 필드이므로 소급 모드에선 네트워크 조회를 건너뛴다."""
@@ -507,6 +545,12 @@ def cmd_screen(market, rs_cut=70, min_price=None, min_dvol=None, as_of=None):
         pool.append((s, raw, bars, dv))
     if not pool:
         sys.exit("스크리닝 모수 0 — fetch가 됐는지 확인")
+    # 소급(backfill) 모드는 과거 시점 재현이라 모수가 원래 작을 수 있어 게이트 대상이 아니다
+    if not backfill and not allow_drop:
+        gate_ok, gate_msg = collection_gate(market, len(pool), stale_excluded)
+        if not gate_ok:
+            print(gate_msg)
+            sys.exit(GATE_EXIT_CODE)   # rs_/mcap_/screen_/breadth_ 어느 것도 쓰기 전
     ranked = sorted(pool, key=lambda x: x[1])
     rs_pct_map = {s: round((i + 1) / len(ranked) * 99, 1) for i, (s, *_rest) in enumerate(ranked)}
     if not backfill:
@@ -1975,6 +2019,8 @@ def main():
     p_s = sub.add_parser("screen"); p_s.add_argument("market", choices=["us", "kr"])
     p_s.add_argument("--rs", type=float, default=70)
     p_s.add_argument("--min-price", type=float); p_s.add_argument("--min-dvol", type=float)
+    p_s.add_argument("--allow-drop", dest="allow_drop", action="store_true",
+                     help="수집 게이트 우회 — 모수 급감이 정상임을 확인했을 때만 (기본: 직전 중앙값의 70%% 미만이면 중단)")
     p_s.add_argument("--as-of", dest="as_of", metavar="YYYY-MM-DD",
                      help="그 세션까지로 봉을 잘라 소급 스크리닝 (브레드스 이력 보정용)")
     p_b = sub.add_parser("backfill"); p_b.add_argument("market", choices=["us", "kr"])
@@ -2003,7 +2049,7 @@ def main():
     elif a.cmd == "fetch":
         cmd_fetch(a.market, a.limit, a.threads, a.force)
     elif a.cmd == "screen":
-        cmd_screen(a.market, a.rs, a.min_price, a.min_dvol, a.as_of)
+        cmd_screen(a.market, a.rs, a.min_price, a.min_dvol, a.as_of, allow_drop=a.allow_drop)
     elif a.cmd == "backfill":
         cmd_backfill(a.market, a.days, a.force)
     elif a.cmd == "check":
