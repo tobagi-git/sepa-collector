@@ -163,6 +163,85 @@
    },
    "marked": "2026-09-23",
    "note": "영업익 역성장(-71→-17%)"
+  },
+  "222800.KQ": {
+   "ticker": "222800.KQ",
+   "name": "심텍",
+   "status": "pending",
+   "first_seen": "2026-10-02",
+   "last_seen": "2026-10-02",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.9,
+   "from_52w_high": -2.2,
+   "dvol_50d": 95404951200,
+   "group": null,
+   "earnings_raw": {
+    "code": "222800",
+    "name": "심텍",
+    "quarters": [
+     {
+      "q": "2025Q1",
+      "rev": 303597471102,
+      "rev_yoy": 3.3,
+      "op": -16323578724,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q2",
+      "rev": 340767377716,
+      "rev_yoy": 9.3,
+      "op": 5543628386,
+      "op_yoy": 53.6
+     },
+     {
+      "q": "2025Q3",
+      "rev": 372838724895,
+      "rev_yoy": 14.8,
+      "op": 12388778971,
+      "op_yoy": 2328.3
+     },
+     {
+      "q": "2025Q4",
+      "rev": 393356345738,
+      "rev_yoy": 30.6,
+      "op": 10259774286,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q1",
+      "rev": 422371419830,
+      "rev_yoy": 39.1,
+      "op": 13711017335,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q2",
+      "rev": 514564784270,
+      "rev_yoy": 51.0,
+      "op": 62889541310,
+      "op_yoy": 1034.4
+     }
+    ],
+    "note": "단위 원, 연결 우선. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-10-02",
+   "earnings": {
+    "last_q": "2026Q2",
+    "rev_yoy_2q": [
+     39.1,
+     51.0
+    ],
+    "eps_yoy_2q": [
+     1034.4
+    ],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": true,
+    "pass_hint": true
+   }
   }
  },
  "log": [
