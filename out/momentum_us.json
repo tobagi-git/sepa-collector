@@ -1,77 +1,37 @@
 {
  "market": "us",
- "as_of": "2026-10-02",
- "pool": 2358,
+ "as_of": "2026-10-05",
+ "pool": 2363,
  "by_horizon": {
   "1w": {
    "sectors": [
     {
-     "group": "Retail: Computer Software & Peripheral Equipment",
-     "n": 5,
-     "r1w": 5.8,
-     "r1m": 9.0,
-     "r3m": 16.7,
-     "pass_rate": 0.8,
-     "near_high": 0.2,
-     "above50": 1.0,
-     "leaders": [
-      {
-       "ticker": "HPE",
-       "rs": 97.7
-      },
-      {
-       "ticker": "SNX",
-       "rs": 89.0
-      }
-     ]
-    },
-    {
      "group": "Computer Communications Equipment",
      "n": 7,
-     "r1w": 5.6,
-     "r1m": 11.4,
-     "r3m": 3.3,
+     "r1w": 6.1,
+     "r1m": 8.1,
+     "r3m": 6.3,
      "pass_rate": 0.71,
      "near_high": 0.43,
      "above50": 0.86,
      "leaders": [
       {
        "ticker": "SILC",
-       "rs": 98.0
+       "rs": 98.2
       },
       {
        "ticker": "DGII",
-       "rs": 88.9
-      }
-     ]
-    },
-    {
-     "group": "Marine Transportation",
-     "n": 38,
-     "r1w": 5.5,
-     "r1m": 5.45,
-     "r3m": 21.15,
-     "pass_rate": 0.63,
-     "near_high": 0.45,
-     "above50": 0.71,
-     "leaders": [
-      {
-       "ticker": "EDRY",
-       "rs": 98.5
-      },
-      {
-       "ticker": "ECO",
-       "rs": 97.8
+       "rs": 88.2
       }
      ]
     },
     {
      "group": "Semiconductors",
      "n": 63,
-     "r1w": 4.3,
-     "r1m": 15.7,
-     "r3m": -8.8,
-     "pass_rate": 0.27,
+     "r1w": 6.0,
+     "r1m": 16.2,
+     "r3m": -2.6,
+     "pass_rate": 0.29,
      "near_high": 0.08,
      "above50": 0.78,
      "leaders": [
@@ -86,193 +46,233 @@
      ]
     },
     {
+     "group": "Water Sewer Pipeline Comm & Power Line Construction",
+     "n": 5,
+     "r1w": 5.8,
+     "r1m": 6.0,
+     "r3m": -27.8,
+     "pass_rate": 0.2,
+     "near_high": 0.0,
+     "above50": 0.4,
+     "leaders": [
+      {
+       "ticker": "PLPC",
+       "rs": 91.7
+      }
+     ]
+    },
+    {
+     "group": "Retail: Computer Software & Peripheral Equipment",
+     "n": 5,
+     "r1w": 5.6,
+     "r1m": 5.4,
+     "r3m": 17.9,
+     "pass_rate": 0.6,
+     "near_high": 0.2,
+     "above50": 0.8,
+     "leaders": [
+      {
+       "ticker": "HPE",
+       "rs": 97.7
+      },
+      {
+       "ticker": "SNX",
+       "rs": 88.0
+      }
+     ]
+    },
+    {
+     "group": "Computer Software: Prepackaged Software",
+     "n": 107,
+     "r1w": 5.4,
+     "r1m": -2.1,
+     "r3m": 13.8,
+     "pass_rate": 0.21,
+     "near_high": 0.09,
+     "above50": 0.62,
+     "leaders": [
+      {
+       "ticker": "BAND",
+       "rs": 98.2
+      },
+      {
+       "ticker": "OKTA",
+       "rs": 96.9
+      }
+     ]
+    },
+    {
+     "group": "Marine Transportation",
+     "n": 38,
+     "r1w": 5.050000000000001,
+     "r1m": 4.550000000000001,
+     "r3m": 20.15,
+     "pass_rate": 0.63,
+     "near_high": 0.45,
+     "above50": 0.71,
+     "leaders": [
+      {
+       "ticker": "EDRY",
+       "rs": 98.6
+      },
+      {
+       "ticker": "ECO",
+       "rs": 98.0
+      }
+     ]
+    },
+    {
      "group": "Electronic Components",
      "n": 15,
-     "r1w": 4.0,
-     "r1m": 16.3,
-     "r3m": 0.4,
-     "pass_rate": 0.33,
+     "r1w": 4.7,
+     "r1m": 13.9,
+     "r3m": 7.3,
+     "pass_rate": 0.4,
      "near_high": 0.33,
-     "above50": 0.8,
+     "above50": 0.87,
      "leaders": [
       {
        "ticker": "QMCO",
        "rs": 98.7
       },
       {
-       "ticker": "P",
-       "rs": 95.9
+       "ticker": "STX",
+       "rs": 97.1
       }
      ]
     },
     {
      "group": "Electrical Products",
      "n": 25,
-     "r1w": 3.4,
-     "r1m": 14.1,
-     "r3m": 2.3,
+     "r1w": 4.2,
+     "r1m": 12.9,
+     "r3m": 4.2,
      "pass_rate": 0.48,
      "near_high": 0.16,
-     "above50": 0.8,
+     "above50": 0.84,
      "leaders": [
       {
        "ticker": "COHU",
-       "rs": 97.6
+       "rs": 97.7
       },
       {
        "ticker": "ALNT",
-       "rs": 95.6
-      }
-     ]
-    },
-    {
-     "group": "Computer peripheral equipment",
-     "n": 5,
-     "r1w": 3.2,
-     "r1m": 14.0,
-     "r3m": 11.5,
-     "pass_rate": 0.6,
-     "near_high": 0.4,
-     "above50": 0.8,
-     "leaders": [
-      {
-       "ticker": "CRSR",
-       "rs": 95.5
-      },
-      {
-       "ticker": "PANW",
-       "rs": 94.5
-      }
-     ]
-    },
-    {
-     "group": "Engineering & Construction",
-     "n": 9,
-     "r1w": 3.2,
-     "r1m": 4.4,
-     "r3m": -19.1,
-     "pass_rate": 0.11,
-     "near_high": 0.0,
-     "above50": 0.44,
-     "leaders": [
-      {
-       "ticker": "IESC",
-       "rs": 85.0
+       "rs": 95.8
       }
      ]
     }
    ],
    "stocks": [
     {
-     "ticker": "KOD",
-     "name": "Kodiak Sciences Inc - Common Stock",
-     "rs": 98.6,
-     "hi": -9.2,
-     "r1w": 192.0,
-     "r1m": 151.9,
-     "r3m": 155.1,
-     "vs50": 116.4,
-     "tag": "연장",
-     "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
-     "sector": "Health Care",
-     "earn": ""
-    },
-    {
      "ticker": "IOVA",
      "name": "Iovance Biotherapeutics, Inc. - Common Stock",
-     "rs": 98.9,
-     "hi": -7.1,
-     "r1w": 29.3,
-     "r1m": 65.0,
-     "r3m": 239.4,
-     "vs50": 71.9,
+     "rs": 98.8,
+     "hi": -7.5,
+     "r1w": 28.8,
+     "r1m": 62.6,
+     "r3m": 225.3,
+     "vs50": 67.4,
      "tag": "연장",
      "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
      "sector": "Health Care",
      "earn": ""
     },
     {
-     "ticker": "LIND",
-     "name": "Lindblad Expeditions Holdings Inc.  - Common Stock",
-     "rs": 96.3,
-     "hi": -2.0,
-     "r1w": 22.2,
-     "r1m": 37.0,
-     "r3m": 36.5,
-     "vs50": 16.6,
-     "tag": "신고가권",
-     "industry": "Transportation Services",
-     "sector": "Consumer Discretionary",
-     "earn": ""
-    },
-    {
-     "ticker": "IBRX",
-     "name": "ImmunityBio, Inc. - Common Stock",
-     "rs": 98.1,
-     "hi": -17.3,
-     "r1w": 21.9,
-     "r1m": 29.4,
-     "r3m": 15.4,
-     "vs50": 28.6,
+     "ticker": "PCVX",
+     "name": "Vaxcyte, Inc. - Common Stock",
+     "rs": 86.2,
+     "hi": -18.7,
+     "r1w": 26.7,
+     "r1m": 20.7,
+     "r3m": 21.7,
+     "vs50": 25.3,
      "tag": "연장",
      "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
      "sector": "Health Care",
-     "earn": ""
-    },
-    {
-     "ticker": "RXO",
-     "name": "RXO, Inc. Common Stock",
-     "rs": 82.7,
-     "hi": -21.8,
-     "r1w": 18.1,
-     "r1m": 18.1,
-     "r3m": -12.1,
-     "vs50": 10.3,
-     "tag": "베이스",
-     "industry": "Transportation Services",
-     "sector": "Consumer Discretionary",
      "earn": ""
     },
     {
      "ticker": "MTRN",
      "name": "Materion Corporation",
-     "rs": 95.8,
-     "hi": -0.7,
-     "r1w": 17.8,
-     "r1m": 31.2,
-     "r3m": 19.3,
-     "vs50": 24.1,
+     "rs": 95.9,
+     "hi": -1.8,
+     "r1w": 21.8,
+     "r1m": 32.7,
+     "r3m": 29.2,
+     "vs50": 26.1,
      "tag": "연장",
      "industry": "Industrial Specialties",
      "sector": "Industrials",
      "earn": ""
     },
     {
-     "ticker": "TRMD",
-     "name": "TORM plc - Class A Common Stock",
-     "rs": 94.7,
-     "hi": 0.0,
-     "r1w": 16.6,
-     "r1m": 26.9,
-     "r3m": 53.4,
-     "vs50": 27.2,
+     "ticker": "IBRX",
+     "name": "ImmunityBio, Inc. - Common Stock",
+     "rs": 98.1,
+     "hi": -16.5,
+     "r1w": 21.8,
+     "r1m": 26.7,
+     "r3m": 18.5,
+     "vs50": 28.7,
      "tag": "연장",
-     "industry": "Marine Transportation",
+     "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
+     "sector": "Health Care",
+     "earn": ""
+    },
+    {
+     "ticker": "ABSI",
+     "name": "Absci Corporation - Common Stock",
+     "rs": 97.9,
+     "hi": -4.4,
+     "r1w": 21.5,
+     "r1m": 31.0,
+     "r3m": 1.8,
+     "vs50": 27.1,
+     "tag": "연장",
+     "industry": "Biotechnology: Commercial Physical & Biological Resarch",
+     "sector": "Health Care",
+     "earn": ""
+    },
+    {
+     "ticker": "VIRT",
+     "name": "Virtu Financial, Inc. Class A Common Stock",
+     "rs": 86.8,
+     "hi": -8.6,
+     "r1w": 21.0,
+     "r1m": -2.0,
+     "r3m": -0.2,
+     "vs50": 5.9,
+     "tag": "베이스",
+     "industry": "Investment Bankers/Brokers/Service",
+     "sector": "Finance",
+     "earn": ""
+    },
+    {
+     "ticker": "LIND",
+     "name": "Lindblad Expeditions Holdings Inc.  - Common Stock",
+     "rs": 96.5,
+     "hi": -1.2,
+     "r1w": 20.1,
+     "r1m": 36.8,
+     "r3m": 38.7,
+     "vs50": 18.6,
+     "tag": "신고가권",
+     "industry": "Transportation Services",
      "sector": "Consumer Discretionary",
      "earn": ""
     },
     {
-     "ticker": "ROG",
-     "name": "Rogers Corporation Common Stock",
-     "rs": 89.4,
-     "hi": -5.3,
-     "r1w": 16.1,
-     "r1m": 29.0,
-     "r3m": 13.4,
-     "vs50": 21.0,
+     "ticker": "LITE",
+     "name": "Lumentum Holdings Inc. - Common Stock",
+     "rs": 98.3,
+     "hi": -2.9,
+     "r1w": 18.5,
+     "r1m": 28.8,
+     "r3m": 56.2,
+     "vs50": 23.3,
      "tag": "연장",
-     "industry": "Major Chemicals",
-     "sector": "Industrials",
+     "industry": "Telecommunications Equipment",
+     "sector": "Telecommunications",
      "earn": ""
     }
    ]
@@ -280,32 +280,12 @@
   "1m": {
    "sectors": [
     {
-     "group": "Electronic Components",
-     "n": 15,
-     "r1w": 4.0,
-     "r1m": 16.3,
-     "r3m": 0.4,
-     "pass_rate": 0.33,
-     "near_high": 0.33,
-     "above50": 0.8,
-     "leaders": [
-      {
-       "ticker": "QMCO",
-       "rs": 98.7
-      },
-      {
-       "ticker": "P",
-       "rs": 95.9
-      }
-     ]
-    },
-    {
      "group": "Semiconductors",
      "n": 63,
-     "r1w": 4.3,
-     "r1m": 15.7,
-     "r3m": -8.8,
-     "pass_rate": 0.27,
+     "r1w": 6.0,
+     "r1m": 16.2,
+     "r3m": -2.6,
+     "pass_rate": 0.29,
      "near_high": 0.08,
      "above50": 0.78,
      "leaders": [
@@ -320,74 +300,130 @@
      ]
     },
     {
-     "group": "Electrical Products",
-     "n": 25,
-     "r1w": 3.4,
-     "r1m": 14.1,
-     "r3m": 2.3,
-     "pass_rate": 0.48,
-     "near_high": 0.16,
-     "above50": 0.8,
+     "group": "Electronic Components",
+     "n": 15,
+     "r1w": 4.7,
+     "r1m": 13.9,
+     "r3m": 7.3,
+     "pass_rate": 0.4,
+     "near_high": 0.33,
+     "above50": 0.87,
      "leaders": [
       {
-       "ticker": "COHU",
-       "rs": 97.6
+       "ticker": "QMCO",
+       "rs": 98.7
       },
       {
-       "ticker": "ALNT",
-       "rs": 95.6
+       "ticker": "STX",
+       "rs": 97.1
       }
      ]
     },
     {
-     "group": "Computer peripheral equipment",
-     "n": 5,
-     "r1w": 3.2,
-     "r1m": 14.0,
-     "r3m": 11.5,
-     "pass_rate": 0.6,
-     "near_high": 0.4,
-     "above50": 0.8,
+     "group": "Electrical Products",
+     "n": 25,
+     "r1w": 4.2,
+     "r1m": 12.9,
+     "r3m": 4.2,
+     "pass_rate": 0.48,
+     "near_high": 0.16,
+     "above50": 0.84,
      "leaders": [
       {
-       "ticker": "CRSR",
-       "rs": 95.5
+       "ticker": "COHU",
+       "rs": 97.7
       },
       {
-       "ticker": "PANW",
-       "rs": 94.5
+       "ticker": "ALNT",
+       "rs": 95.8
+      }
+     ]
+    },
+    {
+     "group": "Biotechnology: Laboratory Analytical Instruments",
+     "n": 8,
+     "r1w": 0.75,
+     "r1m": 10.649999999999999,
+     "r3m": 30.25,
+     "pass_rate": 0.5,
+     "near_high": 0.5,
+     "above50": 1.0,
+     "leaders": [
+      {
+       "ticker": "TXG",
+       "rs": 98.9
+      },
+      {
+       "ticker": "RVTY",
+       "rs": 91.2
       }
      ]
     },
     {
      "group": "Computer Communications Equipment",
      "n": 7,
-     "r1w": 5.6,
-     "r1m": 11.4,
-     "r3m": 3.3,
+     "r1w": 6.1,
+     "r1m": 8.1,
+     "r3m": 6.3,
      "pass_rate": 0.71,
      "near_high": 0.43,
      "above50": 0.86,
      "leaders": [
       {
        "ticker": "SILC",
-       "rs": 98.0
+       "rs": 98.2
       },
       {
        "ticker": "DGII",
-       "rs": 88.9
+       "rs": 88.2
+      }
+     ]
+    },
+    {
+     "group": "Computer peripheral equipment",
+     "n": 5,
+     "r1w": 2.8,
+     "r1m": 6.0,
+     "r3m": 16.0,
+     "pass_rate": 0.6,
+     "near_high": 0.4,
+     "above50": 0.8,
+     "leaders": [
+      {
+       "ticker": "CRSR",
+       "rs": 95.4
+      },
+      {
+       "ticker": "PANW",
+       "rs": 95.0
+      }
+     ]
+    },
+    {
+     "group": "Water Sewer Pipeline Comm & Power Line Construction",
+     "n": 5,
+     "r1w": 5.8,
+     "r1m": 6.0,
+     "r3m": -27.8,
+     "pass_rate": 0.2,
+     "near_high": 0.0,
+     "above50": 0.4,
+     "leaders": [
+      {
+       "ticker": "PLPC",
+       "rs": 91.7
       }
      ]
     },
     {
      "group": "Retail: Computer Software & Peripheral Equipment",
      "n": 5,
-     "r1w": 5.8,
-     "r1m": 9.0,
-     "r3m": 16.7,
-     "pass_rate": 0.8,
+     "r1w": 5.6,
+     "r1m": 5.4,
+     "r3m": 17.9,
+     "pass_rate": 0.6,
      "near_high": 0.2,
-     "above50": 1.0,
+     "above50": 0.8,
      "leaders": [
       {
        "ticker": "HPE",
@@ -395,43 +431,7 @@
       },
       {
        "ticker": "SNX",
-       "rs": 89.0
-      }
-     ]
-    },
-    {
-     "group": "Biotechnology: Laboratory Analytical Instruments",
-     "n": 8,
-     "r1w": -1.6,
-     "r1m": 7.949999999999999,
-     "r3m": 26.8,
-     "pass_rate": 0.5,
-     "near_high": 0.25,
-     "above50": 1.0,
-     "leaders": [
-      {
-       "ticker": "TXG",
-       "rs": 98.8
-      },
-      {
-       "ticker": "RVTY",
-       "rs": 90.2
-      }
-     ]
-    },
-    {
-     "group": "Water Sewer Pipeline Comm & Power Line Construction",
-     "n": 5,
-     "r1w": 1.4,
-     "r1m": 6.6,
-     "r3m": -31.2,
-     "pass_rate": 0.2,
-     "near_high": 0.0,
-     "above50": 0.4,
-     "leaders": [
-      {
-       "ticker": "PLPC",
-       "rs": 91.4
+       "rs": 88.0
       }
      ]
     }
@@ -441,11 +441,11 @@
      "ticker": "KOD",
      "name": "Kodiak Sciences Inc - Common Stock",
      "rs": 98.6,
-     "hi": -9.2,
-     "r1w": 192.0,
-     "r1m": 151.9,
-     "r3m": 155.1,
-     "vs50": 116.4,
+     "hi": -9.8,
+     "r1w": 4.3,
+     "r1m": 158.0,
+     "r3m": 144.9,
+     "vs50": 109.9,
      "tag": "연장",
      "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
      "sector": "Health Care",
@@ -455,11 +455,11 @@
      "ticker": "MXL",
      "name": "MaxLinear, Inc - Common Stock",
      "rs": 98.7,
-     "hi": -17.4,
-     "r1w": 12.9,
-     "r1m": 76.3,
-     "r3m": 10.7,
-     "vs50": 45.8,
+     "hi": -17.8,
+     "r1w": 17.2,
+     "r1m": 77.4,
+     "r3m": 22.9,
+     "vs50": 43.9,
      "tag": "연장",
      "industry": "Semiconductors",
      "sector": "Technology",
@@ -468,12 +468,12 @@
     {
      "ticker": "IOVA",
      "name": "Iovance Biotherapeutics, Inc. - Common Stock",
-     "rs": 98.9,
-     "hi": -7.1,
-     "r1w": 29.3,
-     "r1m": 65.0,
-     "r3m": 239.4,
-     "vs50": 71.9,
+     "rs": 98.8,
+     "hi": -7.5,
+     "r1w": 28.8,
+     "r1m": 62.6,
+     "r3m": 225.3,
+     "vs50": 67.4,
      "tag": "연장",
      "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
      "sector": "Health Care",
@@ -482,26 +482,54 @@
     {
      "ticker": "COHU",
      "name": "Cohu, Inc. - Common Stock",
-     "rs": 97.6,
-     "hi": -1.6,
-     "r1w": 9.7,
-     "r1m": 60.6,
-     "r3m": 25.2,
-     "vs50": 34.6,
+     "rs": 97.7,
+     "hi": -2.6,
+     "r1w": 11.6,
+     "r1m": 60.4,
+     "r3m": 44.7,
+     "vs50": 33.9,
      "tag": "연장",
      "industry": "Electrical Products",
      "sector": "Industrials",
      "earn": ""
     },
     {
+     "ticker": "TWST",
+     "name": "Twist Bioscience Corporation - Common Stock",
+     "rs": 98.7,
+     "hi": -1.4,
+     "r1w": 14.1,
+     "r1m": 59.3,
+     "r3m": 125.2,
+     "vs50": 48.5,
+     "tag": "연장",
+     "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
+     "sector": "Health Care",
+     "earn": ""
+    },
+    {
+     "ticker": "SDGR",
+     "name": "Schrodinger, Inc. - Common Stock",
+     "rs": 96.4,
+     "hi": -1.5,
+     "r1w": 10.5,
+     "r1m": 57.4,
+     "r3m": 97.7,
+     "vs50": 50.5,
+     "tag": "연장",
+     "industry": "Biotechnology: Pharmaceutical Preparations",
+     "sector": "Health Care",
+     "earn": ""
+    },
+    {
      "ticker": "TXG",
      "name": "10x Genomics, Inc. - Common Stock",
-     "rs": 98.8,
-     "hi": -1.7,
-     "r1w": 9.1,
-     "r1m": 51.7,
-     "r3m": 133.8,
-     "vs50": 44.3,
+     "rs": 98.9,
+     "hi": -0.6,
+     "r1w": 10.4,
+     "r1m": 54.6,
+     "r3m": 158.4,
+     "vs50": 48.5,
      "tag": "연장",
      "industry": "Biotechnology: Laboratory Analytical Instruments",
      "sector": "Industrials",
@@ -510,44 +538,16 @@
     {
      "ticker": "P",
      "name": "Everpure, Inc. Class A common stock",
-     "rs": 95.9,
-     "hi": -0.5,
+     "rs": 95.8,
+     "hi": -0.1,
      "r1w": 11.2,
-     "r1m": 51.6,
-     "r3m": 80.3,
-     "vs50": 37.3,
+     "r1m": 46.6,
+     "r3m": 83.9,
+     "vs50": 39.1,
      "tag": "연장",
      "industry": "Electronic Components",
      "sector": "Technology",
      "earn": ""
-    },
-    {
-     "ticker": "QMCO",
-     "name": "Quantum Corporation - Common Stock",
-     "rs": 98.7,
-     "hi": -1.9,
-     "r1w": 8.9,
-     "r1m": 51.4,
-     "r3m": 227.6,
-     "vs50": 58.3,
-     "tag": "연장",
-     "industry": "Electronic Components",
-     "sector": "Technology",
-     "earn": ""
-    },
-    {
-     "ticker": "SMTC",
-     "name": "Semtech Corporation - Common Stock",
-     "rs": 97.0,
-     "hi": -3.5,
-     "r1w": 6.9,
-     "r1m": 45.6,
-     "r3m": 40.3,
-     "vs50": 33.5,
-     "tag": "연장",
-     "industry": "Semiconductors",
-     "sector": "Technology",
-     "earn": "실적↑"
     }
    ]
   },
@@ -556,12 +556,12 @@
     {
      "group": "Integrated oil Companies",
      "n": 14,
-     "r1w": 2.65,
-     "r1m": 2.8499999999999996,
-     "r3m": 37.3,
-     "pass_rate": 0.86,
+     "r1w": 4.15,
+     "r1m": 3.25,
+     "r3m": 35.400000000000006,
+     "pass_rate": 0.93,
      "near_high": 0.43,
-     "above50": 0.86,
+     "above50": 0.93,
      "leaders": [
       {
        "ticker": "PBF",
@@ -569,36 +569,56 @@
       },
       {
        "ticker": "CLMT",
-       "rs": 96.8
+       "rs": 96.9
       }
      ]
     },
     {
      "group": "Biotechnology: Laboratory Analytical Instruments",
      "n": 8,
-     "r1w": -1.6,
-     "r1m": 7.949999999999999,
-     "r3m": 26.8,
+     "r1w": 0.75,
+     "r1m": 10.649999999999999,
+     "r3m": 30.25,
      "pass_rate": 0.5,
-     "near_high": 0.25,
+     "near_high": 0.5,
      "above50": 1.0,
      "leaders": [
       {
        "ticker": "TXG",
-       "rs": 98.8
+       "rs": 98.9
       },
       {
        "ticker": "RVTY",
-       "rs": 90.2
+       "rs": 91.2
+      }
+     ]
+    },
+    {
+     "group": "Marine Transportation",
+     "n": 38,
+     "r1w": 5.050000000000001,
+     "r1m": 4.550000000000001,
+     "r3m": 20.15,
+     "pass_rate": 0.63,
+     "near_high": 0.45,
+     "above50": 0.71,
+     "leaders": [
+      {
+       "ticker": "EDRY",
+       "rs": 98.6
+      },
+      {
+       "ticker": "ECO",
+       "rs": 98.0
       }
      ]
     },
     {
      "group": "Computer Manufacturing",
      "n": 6,
-     "r1w": -0.15000000000000002,
-     "r1m": 2.05,
-     "r3m": 21.799999999999997,
+     "r1w": 1.05,
+     "r1m": 0.44999999999999996,
+     "r3m": 19.900000000000002,
      "pass_rate": 0.5,
      "near_high": 0.17,
      "above50": 0.67,
@@ -609,39 +629,19 @@
       },
       {
        "ticker": "HPQ",
-       "rs": 88.2
-      }
-     ]
-    },
-    {
-     "group": "Marine Transportation",
-     "n": 38,
-     "r1w": 5.5,
-     "r1m": 5.45,
-     "r3m": 21.15,
-     "pass_rate": 0.63,
-     "near_high": 0.45,
-     "above50": 0.71,
-     "leaders": [
-      {
-       "ticker": "EDRY",
-       "rs": 98.5
-      },
-      {
-       "ticker": "ECO",
-       "rs": 97.8
+       "rs": 86.9
       }
      ]
     },
     {
      "group": "Retail: Computer Software & Peripheral Equipment",
      "n": 5,
-     "r1w": 5.8,
-     "r1m": 9.0,
-     "r3m": 16.7,
-     "pass_rate": 0.8,
+     "r1w": 5.6,
+     "r1m": 5.4,
+     "r3m": 17.9,
+     "pass_rate": 0.6,
      "near_high": 0.2,
-     "above50": 1.0,
+     "above50": 0.8,
      "leaders": [
       {
        "ticker": "HPE",
@@ -649,109 +649,95 @@
       },
       {
        "ticker": "SNX",
-       "rs": 89.0
+       "rs": 88.0
       }
      ]
     },
     {
      "group": "Metal Mining",
      "n": 12,
-     "r1w": -1.35,
-     "r1m": -5.6499999999999995,
-     "r3m": 12.850000000000001,
-     "pass_rate": 0.25,
+     "r1w": 1.3,
+     "r1m": -2.4,
+     "r3m": 17.85,
+     "pass_rate": 0.33,
      "near_high": 0.0,
      "above50": 0.5,
      "leaders": [
       {
-       "ticker": "SCCO",
-       "rs": 84.8
+       "ticker": "AUGO",
+       "rs": 90.6
       },
       {
        "ticker": "FCX",
-       "rs": 84.4
-      }
-     ]
-    },
-    {
-     "group": "Oil & Gas Production",
-     "n": 53,
-     "r1w": 0.3,
-     "r1m": -7.4,
-     "r3m": 12.3,
-     "pass_rate": 0.28,
-     "near_high": 0.04,
-     "above50": 0.38,
-     "leaders": [
-      {
-       "ticker": "GTE",
-       "rs": 95.6
-      },
-      {
-       "ticker": "PARR",
-       "rs": 94.5
+       "rs": 84.8
       }
      ]
     },
     {
      "group": "Biotechnology: Electromedical & Electrotherapeutic Apparatus",
      "n": 9,
-     "r1w": -2.0,
-     "r1m": -5.5,
-     "r3m": 12.0,
+     "r1w": -0.5,
+     "r1m": -4.6,
+     "r3m": 16.7,
      "pass_rate": 0.22,
-     "near_high": 0.11,
+     "near_high": 0.22,
      "above50": 0.33,
      "leaders": [
       {
        "ticker": "BLFS",
-       "rs": 90.0
+       "rs": 91.0
       },
       {
        "ticker": "ITGR",
-       "rs": 85.9
+       "rs": 86.3
+      }
+     ]
+    },
+    {
+     "group": "Computer peripheral equipment",
+     "n": 5,
+     "r1w": 2.8,
+     "r1m": 6.0,
+     "r3m": 16.0,
+     "pass_rate": 0.6,
+     "near_high": 0.4,
+     "above50": 0.8,
+     "leaders": [
+      {
+       "ticker": "CRSR",
+       "rs": 95.4
+      },
+      {
+       "ticker": "PANW",
+       "rs": 95.0
       }
      ]
     }
    ],
    "stocks": [
     {
-     "ticker": "IOVA",
-     "name": "Iovance Biotherapeutics, Inc. - Common Stock",
-     "rs": 98.9,
-     "hi": -7.1,
-     "r1w": 29.3,
-     "r1m": 65.0,
-     "r3m": 239.4,
-     "vs50": 71.9,
-     "tag": "연장",
-     "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
-     "sector": "Health Care",
-     "earn": ""
-    },
-    {
      "ticker": "QMCO",
      "name": "Quantum Corporation - Common Stock",
      "rs": 98.7,
-     "hi": -1.9,
-     "r1w": 8.9,
-     "r1m": 51.4,
-     "r3m": 227.6,
-     "vs50": 58.3,
+     "hi": -4.6,
+     "r1w": 8.3,
+     "r1m": 40.0,
+     "r3m": 235.7,
+     "vs50": 52.8,
      "tag": "연장",
      "industry": "Electronic Components",
      "sector": "Technology",
      "earn": ""
     },
     {
-     "ticker": "KOD",
-     "name": "Kodiak Sciences Inc - Common Stock",
-     "rs": 98.6,
-     "hi": -9.2,
-     "r1w": 192.0,
-     "r1m": 151.9,
-     "r3m": 155.1,
-     "vs50": 116.4,
+     "ticker": "IOVA",
+     "name": "Iovance Biotherapeutics, Inc. - Common Stock",
+     "rs": 98.8,
+     "hi": -7.5,
+     "r1w": 28.8,
+     "r1m": 62.6,
+     "r3m": 225.3,
+     "vs50": 67.4,
      "tag": "연장",
      "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
      "sector": "Health Care",
@@ -760,12 +746,12 @@
     {
      "ticker": "TXG",
      "name": "10x Genomics, Inc. - Common Stock",
-     "rs": 98.8,
-     "hi": -1.7,
-     "r1w": 9.1,
-     "r1m": 51.7,
-     "r3m": 133.8,
-     "vs50": 44.3,
+     "rs": 98.9,
+     "hi": -0.6,
+     "r1w": 10.4,
+     "r1m": 54.6,
+     "r3m": 158.4,
+     "vs50": 48.5,
      "tag": "연장",
      "industry": "Biotechnology: Laboratory Analytical Instruments",
      "sector": "Industrials",
@@ -775,11 +761,11 @@
      "ticker": "MRNA",
      "name": "Moderna, Inc. - Common Stock",
      "rs": 98.8,
-     "hi": -9.0,
-     "r1w": -4.5,
-     "r1m": 26.0,
-     "r3m": 132.3,
-     "vs50": 53.7,
+     "hi": -2.7,
+     "r1w": 3.0,
+     "r1m": 36.5,
+     "r3m": 154.7,
+     "vs50": 60.5,
      "tag": "연장",
      "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
      "sector": "Health Care",
@@ -789,132 +775,131 @@
      "ticker": "CDNA",
      "name": "CareDx, Inc. - Common Stock",
      "rs": 98.5,
-     "hi": -3.8,
-     "r1w": 5.4,
-     "r1m": 35.4,
-     "r3m": 131.1,
-     "vs50": 33.6,
+     "hi": -1.3,
+     "r1w": 8.1,
+     "r1m": 40.1,
+     "r3m": 146.7,
+     "vs50": 37.2,
      "tag": "연장",
      "industry": "Medical Specialities",
      "sector": "Health Care",
      "earn": ""
     },
     {
-     "ticker": "RNG",
-     "name": "RingCentral, Inc. Class A Common Stock",
-     "rs": 97.7,
-     "hi": -4.4,
-     "r1w": 2.8,
-     "r1m": 7.9,
-     "r3m": 99.9,
-     "vs50": 15.3,
-     "tag": "베이스",
-     "industry": "EDP Services",
-     "sector": "Technology",
-     "earn": "실적↑"
+     "ticker": "KOD",
+     "name": "Kodiak Sciences Inc - Common Stock",
+     "rs": 98.6,
+     "hi": -9.8,
+     "r1w": 4.3,
+     "r1m": 158.0,
+     "r3m": 144.9,
+     "vs50": 109.9,
+     "tag": "연장",
+     "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
+     "sector": "Health Care",
+     "earn": ""
     },
     {
-     "ticker": "HELP",
-     "name": "Cybin Inc. - Common Stock",
-     "rs": 95.9,
-     "hi": -22.8,
-     "r1w": -7.2,
-     "r1m": -2.1,
-     "r3m": 98.6,
-     "vs50": 0.3,
-     "tag": "50일선 근처",
-     "industry": "Biotechnology: Pharmaceutical Preparations",
+     "ticker": "TWST",
+     "name": "Twist Bioscience Corporation - Common Stock",
+     "rs": 98.7,
+     "hi": -1.4,
+     "r1w": 14.1,
+     "r1m": 59.3,
+     "r3m": 125.2,
+     "vs50": 48.5,
+     "tag": "연장",
+     "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
      "sector": "Health Care",
+     "earn": ""
+    },
+    {
+     "ticker": "CVI",
+     "name": "CVR Energy Inc. Common Stock",
+     "rs": 95.6,
+     "hi": -0.5,
+     "r1w": 12.2,
+     "r1m": 30.7,
+     "r3m": 99.4,
+     "vs50": 33.2,
+     "tag": "연장",
+     "industry": "Integrated oil Companies",
+     "sector": "Energy",
      "earn": ""
     }
    ]
   }
  },
- "stocks_buyable": [
-  {
-   "ticker": "PBF",
-   "name": "PBF Energy Inc. Class A Common Stock",
-   "rs": 97.3,
-   "hi": -3.1,
-   "r1w": 9.6,
-   "r1m": 7.0,
-   "r3m": 64.6,
-   "vs50": 12.8,
-   "tag": "베이스",
-   "industry": "Integrated oil Companies",
-   "sector": "Energy",
-   "earn": ""
-  }
- ],
+ "stocks_buyable": [],
  "sectors_top": [
   {
    "group": "Integrated oil Companies",
    "n": 14,
-   "r1w": 2.65,
-   "r1m": 2.8499999999999996,
-   "r3m": 37.3,
-   "pass_rate": 0.86,
-   "above50": 0.86,
+   "r1w": 4.15,
+   "r1m": 3.25,
+   "r3m": 35.400000000000006,
+   "pass_rate": 0.93,
+   "above50": 0.93,
    "near_high": 0.43,
    "leaders": [
     {
      "ticker": "PBF",
      "name": "PBF Energy Inc. Class A Common Stock",
      "rs": 97.3,
-     "hi": -3.1
+     "hi": -1.1
     },
     {
      "ticker": "CLMT",
      "name": "Calumet, Inc - Common Stock",
-     "rs": 96.8,
-     "hi": -7.7
+     "rs": 96.9,
+     "hi": -6.4
     },
     {
-     "ticker": "MPC",
-     "name": "Marathon Petroleum Corporation Common Stock",
-     "rs": 96.1,
-     "hi": -2.0
+     "ticker": "VLO",
+     "name": "Valero Energy Corporation Common Stock",
+     "rs": 96.3,
+     "hi": -0.6
     }
    ],
-   "score": 4.48
+   "score": 4.63
   },
   {
-   "group": "Retail: Computer Software & Peripheral Equipment",
-   "n": 5,
-   "r1w": 5.8,
-   "r1m": 9.0,
-   "r3m": 16.7,
-   "pass_rate": 0.8,
+   "group": "Biotechnology: Laboratory Analytical Instruments",
+   "n": 8,
+   "r1w": 0.75,
+   "r1m": 10.649999999999999,
+   "r3m": 30.25,
+   "pass_rate": 0.5,
    "above50": 1.0,
-   "near_high": 0.2,
+   "near_high": 0.5,
    "leaders": [
     {
-     "ticker": "HPE",
-     "name": "Hewlett Packard Enterprise Company Common Stock",
-     "rs": 97.7,
-     "hi": -1.4
+     "ticker": "TXG",
+     "name": "10x Genomics, Inc. - Common Stock",
+     "rs": 98.9,
+     "hi": -0.6
     },
     {
-     "ticker": "SNX",
-     "name": "TD SYNNEX Corporation Common Stock",
-     "rs": 89.0,
-     "hi": -6.8
+     "ticker": "RVTY",
+     "name": "Revvity, Inc. Common Stock",
+     "rs": 91.2,
+     "hi": -0.6
     },
     {
-     "ticker": "SCSC",
-     "name": "ScanSource, Inc. - Common Stock",
-     "rs": 86.5,
-     "hi": -7.6
+     "ticker": "BRKR",
+     "name": "Bruker Corporation - Common Stock",
+     "rs": 86.4,
+     "hi": -4.7
     }
    ],
-   "score": 3.98
+   "score": 3.83
   },
   {
    "group": "Marine Transportation",
    "n": 38,
-   "r1w": 5.5,
-   "r1m": 5.45,
-   "r3m": 21.15,
+   "r1w": 5.050000000000001,
+   "r1m": 4.550000000000001,
+   "r3m": 20.15,
    "pass_rate": 0.63,
    "above50": 0.71,
    "near_high": 0.45,
@@ -922,61 +907,30 @@
     {
      "ticker": "EDRY",
      "name": "EuroDry Ltd. - Common Shares",
-     "rs": 98.5,
-     "hi": -23.5
+     "rs": 98.6,
+     "hi": -20.0
     },
     {
      "ticker": "ECO",
      "name": "Okeanis Eco Tankers Corp. Common Stock",
-     "rs": 97.8,
-     "hi": -0.5
+     "rs": 98.0,
+     "hi": -2.3
     },
     {
-     "ticker": "INSW",
-     "name": "International Seaways, Inc. Common Stock ",
-     "rs": 96.5,
-     "hi": -0.3
+     "ticker": "FRO",
+     "name": "Frontline Plc Ordinary Shares",
+     "rs": 96.7,
+     "hi": -2.1
     }
    ],
-   "score": 3.81
-  },
-  {
-   "group": "Computer peripheral equipment",
-   "n": 5,
-   "r1w": 3.2,
-   "r1m": 14.0,
-   "r3m": 11.5,
-   "pass_rate": 0.6,
-   "above50": 0.8,
-   "near_high": 0.4,
-   "leaders": [
-    {
-     "ticker": "CRSR",
-     "name": "Corsair Gaming, Inc. - Common Stock",
-     "rs": 95.5,
-     "hi": -7.9
-    },
-    {
-     "ticker": "PANW",
-     "name": "Palo Alto Networks, Inc. - Common Stock",
-     "rs": 94.5,
-     "hi": -1.5
-    },
-    {
-     "ticker": "FTNT",
-     "name": "Fortinet, Inc. - Common Stock",
-     "rs": 94.4,
-     "hi": -1.2
-    }
-   ],
-   "score": 3.66
+   "score": 3.63
   },
   {
    "group": "Computer Communications Equipment",
    "n": 7,
-   "r1w": 5.6,
-   "r1m": 11.4,
-   "r3m": 3.3,
+   "r1w": 6.1,
+   "r1m": 8.1,
+   "r3m": 6.3,
    "pass_rate": 0.71,
    "above50": 0.86,
    "near_high": 0.43,
@@ -984,161 +938,185 @@
     {
      "ticker": "SILC",
      "name": "Silicom Ltd - Ordinary Shares",
-     "rs": 98.0,
-     "hi": -1.2
+     "rs": 98.2,
+     "hi": -2.5
     },
     {
      "ticker": "DGII",
      "name": "Digi International Inc. - Common Stock",
-     "rs": 88.9,
-     "hi": -12.9
+     "rs": 88.2,
+     "hi": -14.1
     },
     {
      "ticker": "ANET",
      "name": "Arista Networks, Inc. Common Stock",
-     "rs": 85.8,
-     "hi": -3.5
+     "rs": 86.3,
+     "hi": -3.7
     }
    ],
-   "score": 3.62
+   "score": 3.57
   },
   {
-   "group": "Biotechnology: Laboratory Analytical Instruments",
-   "n": 8,
-   "r1w": -1.6,
-   "r1m": 7.949999999999999,
-   "r3m": 26.8,
-   "pass_rate": 0.5,
-   "above50": 1.0,
-   "near_high": 0.25,
-   "leaders": [
-    {
-     "ticker": "TXG",
-     "name": "10x Genomics, Inc. - Common Stock",
-     "rs": 98.8,
-     "hi": -1.7
-    },
-    {
-     "ticker": "RVTY",
-     "name": "Revvity, Inc. Common Stock",
-     "rs": 90.2,
-     "hi": -4.3
-    },
-    {
-     "ticker": "BRKR",
-     "name": "Bruker Corporation - Common Stock",
-     "rs": 85.4,
-     "hi": -5.6
-    }
-   ],
-   "score": 3.1
-  },
-  {
-   "group": "Electrical Products",
-   "n": 25,
-   "r1w": 3.4,
-   "r1m": 14.1,
-   "r3m": 2.3,
-   "pass_rate": 0.48,
+   "group": "Retail: Computer Software & Peripheral Equipment",
+   "n": 5,
+   "r1w": 5.6,
+   "r1m": 5.4,
+   "r3m": 17.9,
+   "pass_rate": 0.6,
    "above50": 0.8,
-   "near_high": 0.16,
+   "near_high": 0.2,
    "leaders": [
     {
-     "ticker": "COHU",
-     "name": "Cohu, Inc. - Common Stock",
-     "rs": 97.6,
-     "hi": -1.6
+     "ticker": "HPE",
+     "name": "Hewlett Packard Enterprise Company Common Stock",
+     "rs": 97.7,
+     "hi": -2.7
     },
     {
-     "ticker": "ALNT",
-     "name": "Allient Inc. - Common Stock",
-     "rs": 95.6,
-     "hi": -2.6
+     "ticker": "SNX",
+     "name": "TD SYNNEX Corporation Common Stock",
+     "rs": 88.0,
+     "hi": -7.2
     },
     {
-     "ticker": "TER",
-     "name": "Teradyne, Inc. - Common Stock",
-     "rs": 95.4,
-     "hi": -8.0
+     "ticker": "SCSC",
+     "name": "ScanSource, Inc. - Common Stock",
+     "rs": 85.0,
+     "hi": -8.6
     }
    ],
-   "score": 2.83
+   "score": 3.34
+  },
+  {
+   "group": "Computer peripheral equipment",
+   "n": 5,
+   "r1w": 2.8,
+   "r1m": 6.0,
+   "r3m": 16.0,
+   "pass_rate": 0.6,
+   "above50": 0.8,
+   "near_high": 0.4,
+   "leaders": [
+    {
+     "ticker": "CRSR",
+     "name": "Corsair Gaming, Inc. - Common Stock",
+     "rs": 95.4,
+     "hi": -9.7
+    },
+    {
+     "ticker": "PANW",
+     "name": "Palo Alto Networks, Inc. - Common Stock",
+     "rs": 95.0,
+     "hi": -0.7
+    },
+    {
+     "ticker": "FTNT",
+     "name": "Fortinet, Inc. - Common Stock",
+     "rs": 94.9,
+     "hi": -0.3
+    }
+   ],
+   "score": 3.23
   },
   {
    "group": "Electronic Components",
    "n": 15,
-   "r1w": 4.0,
-   "r1m": 16.3,
-   "r3m": 0.4,
-   "pass_rate": 0.33,
-   "above50": 0.8,
+   "r1w": 4.7,
+   "r1m": 13.9,
+   "r3m": 7.3,
+   "pass_rate": 0.4,
+   "above50": 0.87,
    "near_high": 0.33,
    "leaders": [
     {
      "ticker": "QMCO",
      "name": "Quantum Corporation - Common Stock",
      "rs": 98.7,
-     "hi": -1.9
+     "hi": -4.6
+    },
+    {
+     "ticker": "STX",
+     "name": "Seagate Technology Holdings PLC - Ordinary Shares (Ireland)",
+     "rs": 97.1,
+     "hi": -22.5
     },
     {
      "ticker": "P",
      "name": "Everpure, Inc. Class A common stock",
-     "rs": 95.9,
-     "hi": -0.5
-    },
-    {
-     "ticker": "NTAP",
-     "name": "NetApp, Inc. - Common Stock",
-     "rs": 94.8,
-     "hi": -2.4
+     "rs": 95.8,
+     "hi": -0.1
     }
    ],
-   "score": 2.82
+   "score": 3.17
+  },
+  {
+   "group": "Electrical Products",
+   "n": 25,
+   "r1w": 4.2,
+   "r1m": 12.9,
+   "r3m": 4.2,
+   "pass_rate": 0.48,
+   "above50": 0.84,
+   "near_high": 0.16,
+   "leaders": [
+    {
+     "ticker": "COHU",
+     "name": "Cohu, Inc. - Common Stock",
+     "rs": 97.7,
+     "hi": -2.6
+    },
+    {
+     "ticker": "ALNT",
+     "name": "Allient Inc. - Common Stock",
+     "rs": 95.8,
+     "hi": -2.3
+    },
+    {
+     "ticker": "TER",
+     "name": "Teradyne, Inc. - Common Stock",
+     "rs": 95.2,
+     "hi": -8.9
+    }
+   ],
+   "score": 2.91
   }
  ],
  "sectors_bottom": [
   {
    "group": "RETAIL: Building Materials",
    "n": 9,
-   "r1w": -3.3,
-   "r1m": -8.8,
-   "r3m": -18.7,
+   "r1w": -2.3,
+   "r1m": -9.2,
+   "r3m": -17.7,
    "pass_rate": 0.0,
    "above50": 0.11,
    "near_high": 0.0,
    "leaders": [],
-   "score": -1.23
+   "score": -1.3
   },
   {
-   "group": "Mining & Quarrying of Nonmetallic Minerals (No Fuels)",
-   "n": 13,
-   "r1w": -3.4,
-   "r1m": -13.2,
-   "r3m": -12.9,
-   "pass_rate": 0.08,
-   "above50": 0.08,
-   "near_high": 0.0,
-   "leaders": [
-    {
-     "ticker": "TECK",
-     "name": "Teck Resources Ltd Ordinary Shares",
-     "rs": 80.8,
-     "hi": -5.5
-    }
-   ],
-   "score": -1.13
-  },
-  {
-   "group": "[Basic Materials]",
-   "n": 6,
-   "r1w": -3.55,
-   "r1m": -9.85,
-   "r3m": -13.7,
+   "group": "Real Estate",
+   "n": 19,
+   "r1w": -1.8,
+   "r1m": -11.7,
+   "r3m": -12.1,
    "pass_rate": 0.0,
-   "above50": 0.17,
+   "above50": 0.05,
    "near_high": 0.0,
    "leaders": [],
-   "score": -1.12
+   "score": -1.21
+  },
+  {
+   "group": "Aerospace",
+   "n": 14,
+   "r1w": -2.05,
+   "r1m": -6.300000000000001,
+   "r3m": -15.05,
+   "pass_rate": 0.0,
+   "above50": 0.21,
+   "near_high": 0.0,
+   "leaders": [],
+   "score": -0.97
   }
  ],
  "stocks_top": [
@@ -1146,170 +1124,170 @@
    "ticker": "KOD",
    "name": "Kodiak Sciences Inc - Common Stock",
    "rs": 98.6,
-   "hi": -9.2,
-   "r1w": 192.0,
-   "r1m": 151.9,
-   "r3m": 155.1,
-   "vs50": 116.4,
+   "hi": -9.8,
+   "r1w": 4.3,
+   "r1m": 158.0,
+   "r3m": 144.9,
+   "vs50": 109.9,
    "tag": "연장",
-   "score": 4.27,
+   "score": 4.34,
    "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
    "sector": "Health Care",
-   "dvol": 125447795.0,
-   "mcap": 6188157536.0,
+   "dvol": 131091768.0,
+   "mcap": 5936131214.0,
    "earn": ""
   },
   {
    "ticker": "IOVA",
    "name": "Iovance Biotherapeutics, Inc. - Common Stock",
-   "rs": 98.9,
-   "hi": -7.1,
-   "r1w": 29.3,
-   "r1m": 65.0,
-   "r3m": 239.4,
-   "vs50": 71.9,
+   "rs": 98.8,
+   "hi": -7.5,
+   "r1w": 28.8,
+   "r1m": 62.6,
+   "r3m": 225.3,
+   "vs50": 67.4,
    "tag": "연장",
-   "score": 3.54,
+   "score": 3.4,
    "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
    "sector": "Health Care",
-   "dvol": 155067008.0,
-   "mcap": 6445783477.0,
+   "dvol": 157447270.0,
+   "mcap": 6438988906.0,
    "earn": ""
   },
   {
    "ticker": "QMCO",
    "name": "Quantum Corporation - Common Stock",
    "rs": 98.7,
-   "hi": -1.9,
-   "r1w": 8.9,
-   "r1m": 51.4,
-   "r3m": 227.6,
-   "vs50": 58.3,
+   "hi": -4.6,
+   "r1w": 8.3,
+   "r1m": 40.0,
+   "r3m": 235.7,
+   "vs50": 52.8,
    "tag": "연장",
-   "score": 3.18,
+   "score": 3.09,
    "industry": "Electronic Components",
    "sector": "Technology",
-   "dvol": 44318738.0,
-   "mcap": 1256587882.0,
+   "dvol": 45416350.0,
+   "mcap": 1359645035.0,
    "earn": ""
   },
   {
    "ticker": "TXG",
    "name": "10x Genomics, Inc. - Common Stock",
-   "rs": 98.8,
-   "hi": -1.7,
-   "r1w": 9.1,
-   "r1m": 51.7,
-   "r3m": 133.8,
-   "vs50": 44.3,
+   "rs": 98.9,
+   "hi": -0.6,
+   "r1w": 10.4,
+   "r1m": 54.6,
+   "r3m": 158.4,
+   "vs50": 48.5,
    "tag": "연장",
-   "score": 2.3,
+   "score": 2.62,
    "industry": "Biotechnology: Laboratory Analytical Instruments",
    "sector": "Industrials",
-   "dvol": 199122459.0,
-   "mcap": 11564644072.0,
-   "earn": ""
-  },
-  {
-   "ticker": "CDNA",
-   "name": "CareDx, Inc. - Common Stock",
-   "rs": 98.5,
-   "hi": -3.8,
-   "r1w": 5.4,
-   "r1m": 35.4,
-   "r3m": 131.1,
-   "vs50": 33.6,
-   "tag": "연장",
-   "score": 1.97,
-   "industry": "Medical Specialities",
-   "sector": "Health Care",
-   "dvol": 64078561.0,
-   "mcap": 3426357589.0,
-   "earn": ""
-  },
-  {
-   "ticker": "MRNA",
-   "name": "Moderna, Inc. - Common Stock",
-   "rs": 98.8,
-   "hi": -9.0,
-   "r1w": -4.5,
-   "r1m": 26.0,
-   "r3m": 132.3,
-   "vs50": 53.7,
-   "tag": "연장",
-   "score": 1.83,
-   "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
-   "sector": "Health Care",
-   "dvol": 2999234481.0,
-   "mcap": 75431628868.0,
+   "dvol": 202704865.0,
+   "mcap": 12182224208.0,
    "earn": ""
   },
   {
    "ticker": "TWST",
    "name": "Twist Bioscience Corporation - Common Stock",
    "rs": 98.7,
-   "hi": -5.8,
-   "r1w": 3.2,
-   "r1m": 44.0,
-   "r3m": 88.8,
-   "vs50": 39.0,
+   "hi": -1.4,
+   "r1w": 14.1,
+   "r1m": 59.3,
+   "r3m": 125.2,
+   "vs50": 48.5,
    "tag": "연장",
-   "score": 1.73,
+   "score": 2.38,
    "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
    "sector": "Health Care",
-   "dvol": 275232463.0,
-   "mcap": 12467935771.0,
+   "dvol": 286485598.0,
+   "mcap": 12509042499.0,
    "earn": ""
   },
   {
-   "ticker": "P",
-   "name": "Everpure, Inc. Class A common stock",
-   "rs": 95.9,
-   "hi": -0.5,
-   "r1w": 11.2,
-   "r1m": 51.6,
-   "r3m": 80.3,
-   "vs50": 37.3,
+   "ticker": "MRNA",
+   "name": "Moderna, Inc. - Common Stock",
+   "rs": 98.8,
+   "hi": -2.7,
+   "r1w": 3.0,
+   "r1m": 36.5,
+   "r3m": 154.7,
+   "vs50": 60.5,
    "tag": "연장",
-   "score": 1.64,
-   "industry": "Electronic Components",
-   "sector": "Technology",
-   "dvol": 532228252.0,
-   "mcap": 44695771177.0,
+   "score": 2.26,
+   "industry": "Biotechnology: Biological Products (No Diagnostic Substances)",
+   "sector": "Health Care",
+   "dvol": 3072841017.0,
+   "mcap": 75858811269.0,
+   "earn": ""
+  },
+  {
+   "ticker": "CDNA",
+   "name": "CareDx, Inc. - Common Stock",
+   "rs": 98.5,
+   "hi": -1.3,
+   "r1w": 8.1,
+   "r1m": 40.1,
+   "r3m": 146.7,
+   "vs50": 37.2,
+   "tag": "연장",
+   "score": 2.23,
+   "industry": "Medical Specialities",
+   "sector": "Health Care",
+   "dvol": 66007036.0,
+   "mcap": 3473953074.0,
+   "earn": ""
+  },
+  {
+   "ticker": "SDGR",
+   "name": "Schrodinger, Inc. - Common Stock",
+   "rs": 96.4,
+   "hi": -1.5,
+   "r1w": 10.5,
+   "r1m": 57.4,
+   "r3m": 97.7,
+   "vs50": 50.5,
+   "tag": "연장",
+   "score": 1.97,
+   "industry": "Biotechnology: Pharmaceutical Preparations",
+   "sector": "Health Care",
+   "dvol": 45358652.0,
+   "mcap": 2267358585.0,
    "earn": ""
   },
   {
    "ticker": "MXL",
    "name": "MaxLinear, Inc - Common Stock",
    "rs": 98.7,
-   "hi": -17.4,
-   "r1w": 12.9,
-   "r1m": 76.3,
-   "r3m": 10.7,
-   "vs50": 45.8,
+   "hi": -17.8,
+   "r1w": 17.2,
+   "r1m": 77.4,
+   "r3m": 22.9,
+   "vs50": 43.9,
    "tag": "연장",
-   "score": 1.57,
+   "score": 1.73,
    "industry": "Semiconductors",
    "sector": "Technology",
-   "dvol": 217868102.0,
-   "mcap": 8354656755.0,
+   "dvol": 208788367.0,
+   "mcap": 9607129723.0,
    "earn": ""
   },
   {
-   "ticker": "SDGR",
-   "name": "Schrodinger, Inc. - Common Stock",
-   "rs": 95.3,
-   "hi": -6.6,
-   "r1w": 5.1,
-   "r1m": 45.2,
-   "r3m": 78.3,
-   "vs50": 42.2,
+   "ticker": "P",
+   "name": "Everpure, Inc. Class A common stock",
+   "rs": 95.8,
+   "hi": -0.1,
+   "r1w": 11.2,
+   "r1m": 46.6,
+   "r3m": 83.9,
+   "vs50": 39.1,
    "tag": "연장",
-   "score": 1.48,
-   "industry": "Biotechnology: Pharmaceutical Preparations",
-   "sector": "Health Care",
-   "dvol": 42644506.0,
-   "mcap": 2278579429.0,
+   "score": 1.61,
+   "industry": "Electronic Components",
+   "sector": "Technology",
+   "dvol": 544458214.0,
+   "mcap": 46698466955.0,
    "earn": ""
   }
  ]
