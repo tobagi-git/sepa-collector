@@ -15,7 +15,7 @@ from datetime import datetime
 
 WS = Path.home() / ".claude" / "skills" / "minervini-workspace"
 CACHE = WS / "edgar"
-UA = "personal-research [메일]"
+UA = "personal-research sepa-collector (github.com/tobagi-git/sepa-collector)"
 
 REV_TAGS = ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues",
             "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet"]
