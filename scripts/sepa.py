@@ -228,6 +228,18 @@ def last_expected_session(market):
     return d.strftime("%Y-%m-%d")
 
 
+def settled_bars(bars, market):
+    """캐시에 쓸 수 있는 **확정** 봉만 남긴다 — 마지막 끝난 세션보다 뒤의 봉(진행 중인
+    장중 봉)과 종가가 비어 있는 봉을 버린다.
+    ⚠️ 신선도 게이트(last_expected_session)만으로는 부족하다: 게이트는 '다시 받을지'만
+    정하고, 받은 응답에 오늘 장중 봉이 섞여 오면 그대로 써 버린다. 그러면 bars[-1]["d"]가
+    target 이상이 돼 다시는 재수집되지 않고 장중가가 영구 '종가'로 굳는다. 2026-09-30
+    10:20 KST 실측 — 전일 봉이 없던 078930.KS·031980.KQ·278470.KS·222040.KQ에 09-30
+    장중 봉이 캐시됐다(같은 시각 미국 09-29 봉은 close=null로 왔다)."""
+    cutoff = last_expected_session(market)
+    return [b for b in bars if b["d"] <= cutoff and b.get("c") is not None]
+
+
 # 영구 실패(상장폐지·신규상장·심볼 오류)와 일시 실패(스로틀·타임아웃)를 가른다.
 # 영구만 쿨다운을 주고, 일시 실패는 다음 회차에 바로 재시도한다.
 # ⚠️ 429는 4xx지만 순수 스로틀이라 영구가 아니다 — 여기 넣으면 가장 흔한 일시 실패에
@@ -260,7 +272,7 @@ def fetch_one(market, ticker, target):
     if is_fresh(p, target):
         return "skip"
     try:
-        bars = yahoo_daily(ticker)
+        bars = settled_bars(yahoo_daily(ticker), market)
         p.write_text(json.dumps({"t": ticker, "bars": bars}))
         return "ok"
     except Exception as e:
@@ -687,7 +699,9 @@ def _keep_newer(bucket, ticker, old, new):
     7/23 봉이, 7/22까지만 담긴 Yahoo 응답에 덮여 소실. 대체 소스로 보강해 둔 봉도
     같은 방식으로 날아간다). 같은 소스에서 온 더 짧은 시계열이 더 긴 것의 올바른
     대체본인 경우는 사실상 없으므로 뒤처진 응답은 버린다."""
-    if old and new and new[-1]["d"] < old[-1]["d"]:
+    if not new:
+        return old  # 확정 봉만 거르고 나니 빈 응답 — 캐시를 비우지 않는다
+    if old and new[-1]["d"] < old[-1]["d"]:
         return old
     data_path(bucket, ticker).write_text(json.dumps({"t": ticker, "bars": new}))
     return new
@@ -697,7 +711,7 @@ def load_or_fetch(market, sym):
     bars = load_bars(market, sym)
     if not bars or bars[-1]["d"] < last_expected_session(market):
         try:
-            bars = _keep_newer(market, sym, bars, yahoo_daily(sym))
+            bars = _keep_newer(market, sym, bars, settled_bars(yahoo_daily(sym), market))
         except Exception:
             pass  # 낡았지만 캐시라도 있으면 그걸 쓴다 (as_of로 드러남)
     return bars
@@ -714,7 +728,8 @@ def load_or_fetch_index(label):
     bars = load_bars("index", ticker)
     if not bars or bars[-1]["d"] < last_expected_session(cal_market):
         try:
-            bars = _keep_newer("index", ticker, bars, yahoo_daily(ticker))
+            bars = _keep_newer("index", ticker, bars,
+                               settled_bars(yahoo_daily(ticker), cal_market))
         except Exception:
             pass  # 낡았지만 캐시라도 있으면 그걸 쓴다 (as_of로 드러남)
     return bars
