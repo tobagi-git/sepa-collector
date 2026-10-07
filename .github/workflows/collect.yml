@@ -10,12 +10,11 @@ name: sepa-collect
 on:
   schedule:
     - cron: "7 21 * * 1-5"    # us 1차 (06:07 KST)
-    - cron: "7 22 * * 1-5"    # us 2차
-    - cron: "7 23 * * 1-5"    # us 3차
+    - cron: "7 23 * * 1-5"    # us 2차
     - cron: "43 7 * * 1-5"    # kr 1차 (16:43 KST)
-    - cron: "13 8 * * 1-5"    # kr 2차
-    - cron: "43 8 * * 1-5"    # kr 3차
-    - cron: "43 9 * * 1-5"    # kr 4차
+    - cron: "43 8 * * 1-5"    # kr 2차
+    - cron: "43 9 * * 1-5"    # kr 3차
+    # 2026-10-08 Actions 무료 한도로 7회→5회 (건너뛰는 회차도 1분씩 과금). 공개 저장소 전환으로 과금은 없어졌지만 슬롯은 유지
   workflow_dispatch:
     inputs:
       market:
