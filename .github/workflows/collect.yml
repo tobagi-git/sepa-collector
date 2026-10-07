@@ -107,6 +107,10 @@ jobs:
           done
           echo "gate_failed=${gate_failed# }" >> "$GITHUB_OUTPUT"
 
+      - name: 한국 투자자별 수급 적재 (루틴 보드용)
+        if: contains(steps.mkt.outputs.markets, 'kr')
+        run: SEPA_WS="$GITHUB_WORKSPACE" python3 scripts/kr_flows.py || true
+
       - name: 산출물 커밋
         run: |
           git config user.name "sepa-bot"
