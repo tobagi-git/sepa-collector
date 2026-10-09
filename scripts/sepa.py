@@ -45,7 +45,7 @@ INDEXES = {
 }
 DRAWDOWN_TRIGGER = -8.0   # 252세션 고점 대비 이 이하로 빠지면 조정 국면 시작
 FTD_MIN_DAY, FTD_MAX_DAY = 4, 10
-FTD_MIN_RET = 1.7
+FTD_MIN_RET = 1.25  # IBD 현행 기준(2026-10-09 루틴 보드와 통일, 이전 1.7)
 GAP_MIN_PCT = 1.5   # 시가-전일종가 갭이 이 이상일 때만 갭/되돌림 필드를 채운다 (잡음 제외)
 
 
