@@ -167,7 +167,7 @@
   "222800.KQ": {
    "ticker": "222800.KQ",
    "name": "심텍",
-   "status": "pending",
+   "status": "deferred",
    "first_seen": "2026-10-02",
    "last_seen": "2026-10-02",
    "src": [
@@ -241,7 +241,248 @@
     "accel_rev": true,
     "code33_hint": true,
     "pass_hint": true
-   }
+   },
+   "marked": "2026-10-08",
+   "note": "Code33심층트리아지대상"
+  },
+  "064290.KQ": {
+   "ticker": "064290.KQ",
+   "name": "인텍플러스",
+   "status": "deferred",
+   "first_seen": "2026-10-01",
+   "last_seen": "2026-10-08",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.2,
+   "from_52w_high": -3.2,
+   "dvol_50d": 14536658744,
+   "group": null,
+   "earnings_raw": {
+    "code": "064290",
+    "name": "인텍플러스",
+    "quarters": [
+     {
+      "q": "2025Q1",
+      "rev": 14407118985,
+      "rev_yoy": -23.8,
+      "op": -4476331878,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q2",
+      "rev": 25149574762,
+      "rev_yoy": 9.8,
+      "op": 1575596707,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q3",
+      "rev": 9925509220,
+      "rev_yoy": -43.5,
+      "op": -4916419809,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q4",
+      "rev": 40282889603,
+      "rev_yoy": 64.4,
+      "op": 4082526216,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q1",
+      "rev": 12805345119,
+      "rev_yoy": -11.1,
+      "op": -1907565585,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q2",
+      "rev": 8960989867,
+      "rev_yoy": -64.4,
+      "op": -5117444745,
+      "op_yoy": -424.8
+     }
+    ],
+    "note": "단위 원, 연결 우선. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-10-08",
+   "earnings": {
+    "last_q": "2026Q2",
+    "rev_yoy_2q": [
+     -11.1,
+     -64.4
+    ],
+    "eps_yoy_2q": [
+     -424.8
+    ],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "marked": "2026-10-08",
+   "note": "실적미달재검토"
+  },
+  "092870.KQ": {
+   "ticker": "092870.KQ",
+   "name": "엑시콘",
+   "status": "rejected",
+   "first_seen": "2026-10-07",
+   "last_seen": "2026-10-08",
+   "src": [
+    "전이"
+   ],
+   "rs": 97.1,
+   "from_52w_high": -2.4,
+   "dvol_50d": 10536006469,
+   "group": "반도체 소부장",
+   "earnings_raw": {
+    "code": "092870",
+    "name": "엑시콘",
+    "quarters": [
+     {
+      "q": "2025Q1",
+      "rev": 1915509550,
+      "rev_yoy": -73.2,
+      "op": -5706704076,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q2",
+      "rev": 7567410445,
+      "rev_yoy": -2.1,
+      "op": -2880133626,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q3",
+      "rev": 11411426883,
+      "rev_yoy": 193.5,
+      "op": -2033023458,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q4",
+      "rev": 45132399399,
+      "rev_yoy": 251.3,
+      "op": 10699984906,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q1",
+      "rev": 9805532653,
+      "rev_yoy": 411.9,
+      "op": -1965878026,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q2",
+      "rev": 31468619657,
+      "rev_yoy": 315.8,
+      "op": 4134899033,
+      "op_yoy": null
+     }
+    ],
+    "note": "단위 원, 연결 우선. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-10-08",
+   "earnings": {
+    "last_q": "2026Q2",
+    "rev_yoy_2q": [
+     411.9,
+     315.8
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": false,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "marked": "2026-10-08",
+   "note": "그룹추적"
+  },
+  "036540.KQ": {
+   "ticker": "036540.KQ",
+   "name": "SFA반도체",
+   "status": "rejected",
+   "first_seen": "2026-10-08",
+   "last_seen": "2026-10-08",
+   "src": [
+    "전이"
+   ],
+   "rs": 94.9,
+   "from_52w_high": -6.4,
+   "dvol_50d": 39376162440,
+   "group": "반도체 소부장",
+   "earnings_raw": {
+    "code": "036540",
+    "name": "SFA반도체",
+    "quarters": [
+     {
+      "q": "2025Q1",
+      "rev": 75259068618,
+      "rev_yoy": -38.3,
+      "op": -6014134522,
+      "op_yoy": -344.2
+     },
+     {
+      "q": "2025Q2",
+      "rev": 76104471137,
+      "rev_yoy": -31.7,
+      "op": -6721677481,
+      "op_yoy": -1511.6
+     },
+     {
+      "q": "2025Q3",
+      "rev": 96471790664,
+      "rev_yoy": 1.5,
+      "op": -6300778484,
+      "op_yoy": -2590.5
+     },
+     {
+      "q": "2025Q4",
+      "rev": 119553817574,
+      "rev_yoy": 46.9,
+      "op": -590080688,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q1",
+      "rev": 107319289328,
+      "rev_yoy": 42.6,
+      "op": -6177693323,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q2",
+      "rev": 126288286343,
+      "rev_yoy": 65.9,
+      "op": -6151051762,
+      "op_yoy": null
+     }
+    ],
+    "note": "단위 원, 연결 우선. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-10-08",
+   "earnings": {
+    "last_q": "2026Q2",
+    "rev_yoy_2q": [
+     42.6,
+     65.9
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": false,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   },
+   "marked": "2026-10-08",
+   "note": "그룹추적"
   }
  },
  "log": [
@@ -268,6 +509,30 @@
    "t": "031980.KQ",
    "to": "registered",
    "note": "2026-09-25 사용자 확인·3Q 선행 게이트"
+  },
+  {
+   "d": "2026-10-08",
+   "t": "064290.KQ",
+   "to": "deferred",
+   "note": "실적미달재검토"
+  },
+  {
+   "d": "2026-10-08",
+   "t": "092870.KQ",
+   "to": "rejected",
+   "note": "그룹추적"
+  },
+  {
+   "d": "2026-10-08",
+   "t": "036540.KQ",
+   "to": "rejected",
+   "note": "그룹추적"
+  },
+  {
+   "d": "2026-10-08",
+   "t": "222800.KQ",
+   "to": "deferred",
+   "note": "Code33심층트리아지대상"
   }
  ]
 }
