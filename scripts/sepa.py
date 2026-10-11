@@ -1921,6 +1921,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             c = [b["c"] for b in bars]
             s50 = sma(c, 50)
             rows.append({"ticker": r["ticker"], "name": r["name"], "rs": float(r["rs"] or 0),
+                         "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
                          "pass": _truthy(r["pass_all"]), "hi": float(r["from_52w_high"] or 0),
                          "dvol": float(r["dvol_50d"] or 0), "mcap": float(r["mcap"] or 0),
                          "r1w": _ret(c, 5), "r1m": _ret(c, 21), "r3m": _ret(c, 63),
@@ -1949,7 +1950,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     agg = []
     for k, v in groups.items():
         med = lambda key: statistics.median([r[key] for r in v if r[key] is not None]) if any(r[key] is not None for r in v) else None
-        agg.append({"group": k, "n": len(v), "r1w": med("r1w"), "r1m": med("r1m"), "r3m": med("r3m"),
+        agg.append({"group": k, "n": len(v), "r1d": med("r1d"), "r1w": med("r1w"), "r1m": med("r1m"), "r3m": med("r3m"), "r6m": med("r6m"),
                     "pass_rate": round(sum(r["pass"] for r in v) / len(v), 2),
                     "above50": round(sum(r["above50"] for r in v) / len(v), 2),
                     "near_high": round(sum(1 for r in v if r["pass"] and r["hi"] >= -5) / len(v), 2),
@@ -1988,12 +1989,19 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     buyable = [r for r in cand[:40] if r["tag"] != "연장" and r["hi"] >= -10 and (r["vs50"] is not None and r["vs50"] < 15)][:6]
     # 기간별 랭킹 (텔레그램 메시지 분리용): 섹터 = 자격 통과 업종을 그 기간 수익률로, 종목 = 8/8·유동성 컷을 그 기간 수익률로
     by_h = {}
-    for h, key in (("1w", "r1w"), ("1m", "r1m"), ("3m", "r3m")):
+    # 2026-10-11: 1일(1세션)·6개월(126세션) 추가, movers = 추세 조건과 무관하게 유동성 컷만 통과한 기간 수익률 상위(관심 쏠림용, 매수 후보 아님)
+    liquid = [r for r in rows if r["dvol"] >= cut]
+    SK = ("group", "n", "r1d", "r1w", "r1m", "r3m", "r6m", "pass_rate", "near_high", "above50")
+    TK = ("ticker", "name", "rs", "hi", "r1d", "r1w", "r1m", "r3m", "r6m", "vs50", "tag", "industry", "sector")
+    for h, key in (("1d", "r1d"), ("1w", "r1w"), ("1m", "r1m"), ("3m", "r3m"), ("6m", "r6m")):
         secs = sorted([a for a in qualified if a[key] is not None], key=lambda a: -a[key])[:8]
         stks = sorted([r for r in cand if r[key] is not None], key=lambda r: -r[key])[:8]
-        by_h[h] = {"sectors": [{k: a[k] for k in ("group", "n", "r1w", "r1m", "r3m", "pass_rate", "near_high", "above50")} | {"leaders": [{"ticker": r["ticker"], "rs": r["rs"]} for r in a["leaders"][:2]]} for a in secs],
-                   "stocks": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in stks]}
+        movs = sorted([r for r in liquid if r[key] is not None], key=lambda r: -r[key])[:10]
+        by_h[h] = {"sectors": [{k: a[k] for k in SK} | {"leaders": [{"ticker": r["ticker"], "rs": r["rs"]} for r in a["leaders"][:2]]} for a in secs],
+                   "stocks": [{**{k: r.get(k) for k in TK}, "earn": earn(r["ticker"])} for r in stks],
+                   "movers": [{k: r.get(k) for k in TK if k != "tag"} | {"pass": r["pass"]} for r in movs]}
     result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
+              "sectors_all": [{k: a[k] for k in SK} for a in qualified],
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
               "sectors_top": agg[:top], "sectors_bottom": agg[-3:][::-1] if len(agg) > 3 else [],
               "stocks_top": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "score", "industry", "sector", "dvol", "mcap")},
