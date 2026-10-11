@@ -2000,8 +2000,22 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
         by_h[h] = {"sectors": [{k: a[k] for k in SK} | {"leaders": [{"ticker": r["ticker"], "rs": r["rs"]} for r in a["leaders"][:2]]} for a in secs],
                    "stocks": [{**{k: r.get(k) for k in TK}, "earn": earn(r["ticker"])} for r in stks],
                    "movers": [{k: r.get(k) for k in TK if k != "tag"} | {"pass": r["pass"]} for r in movs]}
+    # 테마별 기간 수익률(구성 중앙값) — groups_{market}.json "themes"만 쓴다(holding_groups는 보유 노출이라 제외)
+    themes_out = []
+    gp = WS / f"groups_{market}.json"
+    if gp.exists():
+        byt = {r["ticker"]: r for r in rows}
+        for name, tks in (json.loads(gp.read_text()).get("themes") or {}).items():
+            mem = [byt[t] for t in tks if t in byt]
+            if len(mem) < 3:
+                continue
+            md = lambda key: round(statistics.median([r[key] for r in mem if r[key] is not None]), 2) if any(r[key] is not None for r in mem) else None
+            themes_out.append({"theme": name, "n": len(mem), **{k: md(k) for k in ("r1d", "r1w", "r1m", "r3m", "r6m")},
+                               "pass_rate": round(sum(r["pass"] for r in mem) / len(mem), 2),
+                               "above50": round(sum(r["above50"] for r in mem) / len(mem), 2),
+                               "top": [{"ticker": r["ticker"], "name": r["name"], "r1m": r["r1m"]} for r in sorted(mem, key=lambda r: -(r["r1m"] or -999))[:3]]})
     result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
-              "sectors_all": [{k: a[k] for k in SK} for a in qualified],
+              "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
               "sectors_top": agg[:top], "sectors_bottom": agg[-3:][::-1] if len(agg) > 3 else [],
               "stocks_top": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "score", "industry", "sector", "dvol", "mcap")},
