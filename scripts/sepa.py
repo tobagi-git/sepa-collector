@@ -2008,6 +2008,19 @@ def _strat_scan(market, r, bars):
     return hits
 
 
+def _nh_streak(bars, look=252, gap=60):
+    """52주 신고가(고가 기준) 연속 일수와 '오랜만의 첫 돌파'(직전 gap세션 동안 신고가 없음) 여부. 2026-10-15 보드 ⑪ 태그.
+    봉이 2년치뿐이라 사상 최고가(ATH)는 판정하지 않는다."""
+    h = [b["h"] for b in bars]
+    def is_nh(k):
+        return k >= look and h[k] >= max(h[k - look:k])
+    n, k = 0, len(h) - 1
+    while k >= look and is_nh(k):
+        n += 1; k -= 1
+    first = n > 0 and not any(is_nh(j) for j in range(max(look, k - gap + 1), k + 1))
+    return (n, first)
+
+
 def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     """섹터·종목 모멘텀 랭킹 (1주/1개월/3개월 = 5/21/63세션) — 텔레그램 모니터링 보고 재료.
 
@@ -2044,6 +2057,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                          "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
                          "strats": _strat_scan(market, r, bars),
                          "nh": _truthy(r.get("new_52w_high")),
+                         "nhs": _nh_streak(bars) if float(r["from_52w_high"] or -99) >= -5 else (0, False),
                          "rsx": (lambda w, bw: round((1 + w) / (1 + bw) * 100) if (w is not None and bw is not None) else None)(_wret(c), _bench_for(bench, r["ticker"])),
                          "pass": _truthy(r["pass_all"]), "hi": float(r["from_52w_high"] or 0),
                          "dvol": float(r["dvol_50d"] or 0), "mcap": float(r["mcap"] or 0),
@@ -2198,14 +2212,35 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
         rsrank[hz] = {"stocks": [mrow(r) + [p, rx] for p, r, rx in st[:25]], "sectors": secs}
     # ⑪ 52주 신고가 근접(George·Hwang 2004: 주가 ÷ 52주 최고가) — 유동성 컷 통과, 고점 5% 안, 근접도 → RS 순. 끝에 [오늘 신고가 여부]
     near = sorted([r for r in liquid if r["hi"] is not None and r["hi"] >= -5], key=lambda r: (-r["hi"], -r["rs"]))
-    nearhi = {"stocks": [mrow(r) + [None, None, int(r["nh"])] for r in near[:40]], "n_within5": len(near),
+    nearhi = {"stocks": [mrow(r) + [None, None, int(r["nh"]), r["nhs"][0], int(r["nhs"][1])] for r in near[:40]], "n_within5": len(near),
               "n_newhigh": sum(1 for r in liquid if r["nh"]), "pool": len(liquid)}
+    # 오른 종목·보합·내린 종목 수(1일) — 스크리닝 모수(가격·거래대금 하한 통과) 기준. 한국은 코스피(.KS)·코스닥(.KQ) 따로
+    def _adv(rs_):
+        v = [r["r1d"] for r in rs_ if r["r1d"] is not None]
+        return {"up": sum(1 for x in v if x > 0), "flat": sum(1 for x in v if x == 0), "down": sum(1 for x in v if x < 0)}
+    adv = {"코스피": _adv([r for r in rows if r["ticker"].endswith(".KS")]), "코스닥": _adv([r for r in rows if r["ticker"].endswith(".KQ")])} \
+        if market == "kr" else {"미국": _adv(rows)}
+    # 미국 대분류 섹터(나스닥 분류 11+기타) 카드 — 한국 sectors_kr의 sector는 세분류라 만들지 않는다
+    bigsec = []
+    if market == "us":
+        bs = {}
+        for r in rows:
+            if r["sector"] and r["sector"] != "Miscellaneous":
+                bs.setdefault(r["sector"], []).append(r)
+        for g, v in bs.items():
+            if len(v) < 5:
+                continue
+            md = lambda key: round(statistics.median([x[key] for x in v if x[key] is not None]), 2) if any(x[key] is not None for x in v) else None
+            bigsec.append({"g": g, "n": len(v), **{k: md(k) for k in ("r1d", "r1w", "r1m", "r3m", "r6m", "rs")},
+                           "pass": round(sum(x["pass"] for x in v) / len(v), 2), "dv": round(sum(x["dv1"] for x in v)), "cap": round(sum(x["mcap"] for x in v)),
+                           "top": [[x["ticker"], x["r1d"], x["r1m"]] for x in sorted(v, key=lambda x: -x["mcap"])[:3]]})
+        bigsec.sort(key=lambda a: -(a["rs"] or 0))
     # 보드 표에 나오는 종목의 거래대금 — {티커: [오늘 거래대금, 전일 대비 배수, 50일 평균 대비 배수]}
     shown = {x[0] for L in [*members.values(), *strategies.values(), *rosters.values(), *(t["members"] for t in themes_out),
                             *(v["stocks"] for v in rsrank.values()), nearhi["stocks"]] for x in L}
     shown |= {x["ticker"] for v in by_h.values() for x in v["stocks"] + v["movers"]}
     liq = {r["ticker"]: [round(r["dv1"]), r["dvx1"], r["dvx50"]] for r in rows if r["ticker"] in shown}
-    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq,
+    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec,
               "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank, "nearhi": nearhi,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
@@ -2237,6 +2272,35 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
         print(f"| {r['ticker'].split('.')[0]} | {r['name'][:14]} | {r['rs']:.0f} | {fmt(r['r1m'])} | {fmt(r['r3m'])} | {r['hi']:.1f}% | {fmt(r['vs50'])} | {r['tag']} |")
     print("\n점수: 섹터 = 0.2·z(1주)+0.4·z(1개월)+0.4·z(3개월)+2·통과율+고점권비율 / 종목 = 0.3·z(1개월)+0.3·z(3개월)+0.4·z(RS). 섹터 매핑: " + str(OUT / f"sectors_{market}.json"))
     return result
+
+
+def cmd_earncal(days=35):
+    """미국 실적 발표 예정일(나스닥 공개 캘린더) → out/earnings_us.json {티커: [YYYY-MM-DD, 'pre'|'post'|'']} — 2026-10-15 보드 카드용.
+    한국은 사전 공개되는 발표 예정일 자료가 없어 만들지 않는다."""
+    import datetime as _dt, urllib.request
+    out, ok, fail = {}, 0, 0
+    d0 = _dt.date.today()
+    for i in range(days):
+        d = d0 + _dt.timedelta(days=i)
+        if d.weekday() >= 5:
+            continue
+        url = f"https://api.nasdaq.com/api/calendar/earnings?date={d:%Y-%m-%d}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json"})
+            rows = (json.loads(urllib.request.urlopen(req, timeout=20).read()).get("data") or {}).get("rows") or []
+            ok += 1
+        except Exception:
+            fail += 1; continue
+        for r in rows:
+            t = (r.get("symbol") or "").strip()
+            if t and t not in out:
+                tm = r.get("time") or ""
+                out[t] = [f"{d:%Y-%m-%d}", "pre" if "pre" in tm else "post" if "after" in tm else ""]
+        time.sleep(0.4)
+    if not ok:
+        sys.exit("나스닥 실적 캘린더 응답 없음")
+    (OUT / "earnings_us.json").write_text(json.dumps({"asof": f"{d0:%Y-%m-%d}", "days": days, "fail": fail, "e": out}, ensure_ascii=False, separators=(",", ":")))
+    print(f"실적 예정 {len(out)}종목 · 날짜 {ok}일 성공 · {fail}일 실패")
 
 
 # ---------------- main ----------------
@@ -2271,6 +2335,7 @@ def main():
     p_gg = sub.add_parser("groupgate"); p_gg.add_argument("market", choices=["us", "kr"])
     p_gg.add_argument("--holdings", action="store_true", help="positions.json 보유 종목을 holding_groups로 대조")
     p_sc = sub.add_parser("sectors"); p_sc.add_argument("market", choices=["us", "kr"])
+    sub.add_parser("earncal")
     p_mo = sub.add_parser("momentum"); p_mo.add_argument("market", choices=["us", "kr"])
     p_mo.add_argument("--top", type=int, default=8); p_mo.add_argument("--stocks", type=int, default=10)
     p_mo.add_argument("--json", action="store_true")
@@ -2300,6 +2365,8 @@ def main():
         cmd_groupgate(a.market, a.holdings)
     elif a.cmd == "sectors":
         cmd_sectors(a.market)
+    elif a.cmd == "earncal":
+        cmd_earncal()
     elif a.cmd == "momentum":
         cmd_momentum(a.market, a.top, a.stocks, a.json)
     elif a.cmd == "regime":

@@ -125,6 +125,8 @@ jobs:
             # 맥은 일봉 캐시가 없으므로 모멘텀 랭킹 결과를 파일로 남긴다 (아침 브리핑이 이 파일을 읽는다)
             python scripts/sepa.py momentum $m --json > out/momentum_$m.json || true
             python scripts/sepa.py groupgate $m --holdings > out/groupgate_$m.md || true
+            # 미국 실적 발표 예정일(나스닥 공개 캘린더, 루틴 보드 카드용 — 2026-10-15)
+            [ "$m" = us ] && { python scripts/sepa.py earncal || echo "earncal 실패(무시)"; }
           done
           echo "gate_failed=${gate_failed# }" >> "$GITHUB_OUTPUT"
 
