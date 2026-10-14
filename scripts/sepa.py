@@ -2056,7 +2056,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     for h, key in (("1d", "r1d"), ("1w", "r1w"), ("1m", "r1m"), ("3m", "r3m"), ("6m", "r6m")):
         secs = sorted([a for a in qualified if a[key] is not None], key=lambda a: -a[key])[:8]
         stks = sorted([r for r in cand if r[key] is not None], key=lambda r: -r[key])[:8]
-        movs = sorted([r for r in liquid if r[key] is not None], key=lambda r: -r[key])[:10]
+        movs = sorted([r for r in liquid if r[key] is not None], key=lambda r: -r[key])[:25]   # 보드가 시총 하한으로 거른 뒤 10개를 보이도록 여유
         by_h[h] = {"sectors": [{k: a[k] for k in SK} | {"leaders": [{"ticker": r["ticker"], "rs": r["rs"]} for r in a["leaders"][:2]]} for a in secs],
                    "stocks": [{**{k: r.get(k) for k in TK}, "earn": earn(r["ticker"])} for r in stks],
                    "movers": [{k: r.get(k) for k in TK if k != "tag"} | {"pass": r["pass"]} for r in movs]}
