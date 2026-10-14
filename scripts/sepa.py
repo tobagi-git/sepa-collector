@@ -1897,6 +1897,27 @@ def _ret(closes, n):
     return round((closes[-1] / closes[-1 - n] - 1) * 100, 1) if len(closes) > n and closes[-1 - n] else None
 
 
+def _wret(c):
+    """IBD식 가중 수익률: 최근 3개월 40% + 그 앞 3개 분기 각 20% (252세션 미만이면 있는 만큼)."""
+    def roc(n):
+        return c[-1] / c[-1 - n] - 1 if len(c) > n and c[-1 - n] else None
+    parts = [(0.4, roc(63)), (0.2, roc(126)), (0.2, roc(189)), (0.2, roc(252))]
+    got = [(w, x) for w, x in parts if x is not None]
+    return sum(w * x for w, x in got) / sum(w for w, _ in got) if got else None
+
+
+def _bench_wret(market):
+    """지수 대비 강도 기준: 한국 = 코스닥(^KQ11, 사용자 지정), 미국 = S&P 500(^GSPC, IBD·미너비니 RS 라인 기준)."""
+    tk = "^KQ11" if market == "kr" else "^GSPC"
+    bars = load_bars("index", tk)
+    if not bars or bars[-1]["d"] < last_expected_session(market):
+        try:
+            bars = _keep_newer("index", tk, bars, settled_bars(yahoo_daily(tk), market))
+        except Exception:
+            pass
+    return (_wret([b["c"] for b in bars]) if bars else None), tk
+
+
 def _strat_scan(market, r, bars):
     """루틴 보드 「전략 스캔」용 — 오늘(마지막 봉) 각 전략 조건에 걸리는지. 정의는 strategy-lab 사전 등록 그대로.
     결과는 참고 라벨이다(기각·후보 전략 포함 — 매수 신호 아님)."""
@@ -1967,6 +1988,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     as_of = json.loads(jp.read_text()).get("as_of", "?") if jp.exists() else "?"
     sec = load_sectors(market)
     cut = QUEUE_CUT[market]["dvol"]
+    bw, btk = _bench_wret(market)
     rows = []
     seen = set()   # screen CSV에 같은 티커가 두 줄 들어오는 경우가 있다(2026-10-14 079650.KQ)
     with open(csv_p, newline="") as f:
@@ -1982,6 +2004,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             rows.append({"ticker": r["ticker"], "name": r["name"], "rs": float(r["rs"] or 0),
                          "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
                          "strats": _strat_scan(market, r, bars),
+                         "rsx": (lambda w: round((1 + w) / (1 + bw) * 100) if (w is not None and bw is not None) else None)(_wret(c)),
                          "pass": _truthy(r["pass_all"]), "hi": float(r["from_52w_high"] or 0),
                          "dvol": float(r["dvol_50d"] or 0), "mcap": float(r["mcap"] or 0),
                          "r1w": _ret(c, 5), "r1m": _ret(c, 21), "r3m": _ret(c, 63),
@@ -2062,7 +2085,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                    "movers": [{k: r.get(k) for k in TK if k != "tag"} | {"pass": r["pass"]} for r in movs]}
     def mrow(r):
         return [r["ticker"], r["name"] if market == "kr" else "", round(r["mcap"]), r["rs"], int(r["pass"]),
-                r["r1d"], r["r1w"], r["r1m"], r["r3m"], r["r6m"]]
+                r["r1d"], r["r1w"], r["r1m"], r["r3m"], r["r6m"], r["rsx"], r["hi"], r["industry"] or r["sector"]]
     # 테마별 기간 수익률(구성 중앙값) — groups_{market}.json "themes"만 쓴다(holding_groups는 보유 노출이라 제외)
     themes_out = []
     gp = WS / f"groups_{market}.json"
@@ -2091,8 +2114,15 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             best.setdefault(r["industry"] or r["sector"] or r["ticker"], r)
         strategies["system"] = list(best.values())
     strategies = {k: [mrow(r) for r in sorted(v, key=lambda r: -r["rs"])[:15]] for k, v in strategies.items()}
+    # ⑤ 강한 업종 대표 표(groups 로스터) 펼치기용 — 로스터 전 종목
+    rosters = {}
+    if gp.exists():
+        byt2 = {r["ticker"]: r for r in rows}
+        for name, tks in (json.loads(gp.read_text()).get("rosters") or {}).items():
+            rosters[name] = [mrow(byt2[t]) for t in tks if t in byt2]
     result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
-              "members": members, "strategies": strategies,
+              "members": members, "strategies": strategies, "rosters": rosters,
+              "bench": {"ticker": btk, "wret": round(bw * 100, 1) if bw is not None else None},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
               "sectors_top": agg[:top], "sectors_bottom": agg[-3:][::-1] if len(agg) > 3 else [],
