@@ -1917,14 +1917,25 @@ def _wret(c):
     return sum(w * x for w, x in got) / sum(w for w, _ in got) if got else None
 
 
-def _index_wret(tk, market):
+_IDX_CACHE = {}
+
+
+def _index_closes(tk, market):
+    if tk in _IDX_CACHE:
+        return _IDX_CACHE[tk]
     bars = load_bars("index", tk)
     if not bars or bars[-1]["d"] < last_expected_session(market):
         try:
             bars = _keep_newer("index", tk, bars, settled_bars(yahoo_daily(tk), market))
         except Exception:
             pass
-    return _wret([b["c"] for b in bars]) if bars else None
+    _IDX_CACHE[tk] = [b["c"] for b in bars] if bars else []
+    return _IDX_CACHE[tk]
+
+
+def _index_wret(tk, market):
+    c = _index_closes(tk, market)
+    return _wret(c) if c else None
 
 
 def _bench_wret(market):
@@ -2144,8 +2155,43 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
         byt2 = {r["ticker"]: r for r in rows}
         for name, tks in (json.loads(gp.read_text()).get("rosters") or {}).items():
             rosters[name] = [mrow(byt2[t]) for t in tks if t in byt2]
+    # 기간별 RS(⑩ RS 상위): 유동성 컷 통과 종목 안에서 그 기간 수익률의 백분위(0~99). 12개월은 기존 RS(IBD 가중).
+    # 업종 RS = 자격 업종 중앙값 수익률의 업종 간 백분위. 기간별 지수 대비 = (1+종목 수익률)/(1+지수 수익률)×100.
+    # 주의: RS 순 선별은 2026-10-03 체계 시험 L2에서 미국 기각·한국 보류 — 발굴 보조용.
+    def pctl(vals):
+        v = sorted(x for x in vals if x is not None)
+        n = len(v)
+        return (lambda x: None if x is None or n < 2 else round(min(99, 99 * bisect.bisect_left(v, x) / (n - 1))))
+    import bisect
+    idx_c = {suf: _index_closes(tk, market) for suf, (_, tk) in bench.items()}
+    def idx_ret(tkr, sess):
+        c = next((v for suf, v in idx_c.items() if suf != "*" and tkr.endswith(suf)), idx_c.get("*"))
+        return (c[-1] / c[-1 - sess] - 1) * 100 if c and len(c) > sess else None
+    rsrank = {}
+    for hz, key, sess in (("1w", "r1w", 5), ("1m", "r1m", 21), ("3m", "r3m", 63), ("6m", "r6m", 126), ("12m", "rs", None)):
+        P = pctl([r[key] for r in liquid])
+        st = []
+        for r in liquid:
+            p = P(r[key]) if key != "rs" else round(r["rs"])
+            if p is None:
+                continue
+            ir = idx_ret(r["ticker"], sess) if sess else None
+            rx = r["rsx"] if sess is None else (round((1 + r[key] / 100) / (1 + ir / 100) * 100) if (ir is not None and r[key] is not None) else None)
+            st.append((p, r, rx))
+        st.sort(key=lambda t: (-t[0], -(t[1][key] or 0)))
+        gk = key if key != "rs" else "rs"
+        gmed = []
+        for g, v in groups.items():
+            if not any(a["group"] == g for a in qualified):
+                continue
+            vals = [x[gk] for x in v if x[gk] is not None]
+            if vals:
+                gmed.append((g, statistics.median(vals), len(v), round(sum(x["pass"] for x in v) / len(v), 2)))
+        GP = pctl([x[1] for x in gmed])
+        secs = sorted(({"g": g, "med": round(md, 2), "p": GP(md), "n": n_, "pass": pr} for g, md, n_, pr in gmed), key=lambda a: -(a["p"] or 0))[:12]
+        rsrank[hz] = {"stocks": [mrow(r) + [p, rx] for p, r, rx in st[:25]], "sectors": secs}
     result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
-              "members": members, "strategies": strategies, "rosters": rosters,
+              "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
