@@ -2039,6 +2039,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             rows.append({"ticker": r["ticker"], "name": r["name"], "rs": float(r["rs"] or 0),
                          "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
                          "strats": _strat_scan(market, r, bars),
+                         "nh": _truthy(r.get("new_52w_high")),
                          "rsx": (lambda w, bw: round((1 + w) / (1 + bw) * 100) if (w is not None and bw is not None) else None)(_wret(c), _bench_for(bench, r["ticker"])),
                          "pass": _truthy(r["pass_all"]), "hi": float(r["from_52w_high"] or 0),
                          "dvol": float(r["dvol_50d"] or 0), "mcap": float(r["mcap"] or 0),
@@ -2190,8 +2191,12 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
         GP = pctl([x[1] for x in gmed])
         secs = sorted(({"g": g, "med": round(md, 2), "p": GP(md), "n": n_, "pass": pr} for g, md, n_, pr in gmed), key=lambda a: -(a["p"] or 0))[:12]
         rsrank[hz] = {"stocks": [mrow(r) + [p, rx] for p, r, rx in st[:25]], "sectors": secs}
+    # ⑪ 52주 신고가 근접(George·Hwang 2004: 주가 ÷ 52주 최고가) — 유동성 컷 통과, 고점 5% 안, 근접도 → RS 순. 끝에 [오늘 신고가 여부]
+    near = sorted([r for r in liquid if r["hi"] is not None and r["hi"] >= -5], key=lambda r: (-r["hi"], -r["rs"]))
+    nearhi = {"stocks": [mrow(r) + [None, None, int(r["nh"])] for r in near[:40]], "n_within5": len(near),
+              "n_newhigh": sum(1 for r in liquid if r["nh"]), "pool": len(liquid)}
     result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
-              "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank,
+              "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank, "nearhi": nearhi,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
