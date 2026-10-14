@@ -273,6 +273,13 @@ def fetch_one(market, ticker, target):
         return "skip"
     try:
         bars = settled_bars(yahoo_daily(ticker), market)
+        if bars and bars[-1]["d"] < target:
+            # 응답은 정상(200)인데 target 확정봉이 아직 없다 = 야후 미공개(전송 실패가 아님).
+            # 2026-10-09~14 실측: 야후는 미국 봉을 마감 후 ~5~6시간(21~22시 ET), 한국 봉을 다음 날
+            # 새벽~오전에야 확정한다(그 전엔 봉이 없거나 close=null). 이걸 스로틀과 같은 '낡음'으로
+            # 세면 수집 게이트가 '대량 실패'로 오진한다 — 따로 표시해 워크플로가 '나중에 재시도'로 가르게 한다.
+            p.write_text(json.dumps({"t": ticker, "bars": bars, "behind": target}))
+            return "lag"
         p.write_text(json.dumps({"t": ticker, "bars": bars}))
         return "ok"
     except Exception as e:
@@ -288,6 +295,7 @@ def fetch_one(market, ticker, target):
             except Exception:
                 prev = {}
         if prev.get("bars"):
+            prev.pop("behind", None)  # 이번 회차는 전송 실패 — 이전 회차의 '미공개' 표시로 세지 않는다
             prev["stale_error"] = msg
             prev["stale_since"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
             p.write_text(json.dumps(prev))
@@ -305,7 +313,7 @@ def cmd_fetch(market, limit=None, threads=6, force=False):
             p = data_path(market, s)
             if p.exists():
                 p.unlink()
-    stats = {"ok": 0, "skip": 0, "fail": 0, "stale": 0}
+    stats = {"ok": 0, "skip": 0, "fail": 0, "stale": 0, "lag": 0}
     t0 = time.time()
     target = last_expected_session(market)
     print(f"신선도 기준 세션: {target}")
@@ -327,7 +335,7 @@ def cmd_fetch(market, limit=None, threads=6, force=False):
                 misses.append(futs[fut])
             if i % 200 == 0 or i == len(futs):
                 emit(f"[{i}/{len(futs)}] ok={stats['ok']} skip={stats['skip']} "
-                     f"fail={stats['fail']} stale={stats['stale']} {time.time()-t0:.0f}s")
+                     f"fail={stats['fail']} stale={stats['stale']} lag={stats['lag']} {time.time()-t0:.0f}s")
             time.sleep(0.02)  # 전역 살짝 감속
 
     # 재시도 스윕 — 1차 실패의 대부분은 종목 문제가 아니라 순간 스로틀이다. 동시성을 낮춰
@@ -345,7 +353,7 @@ def cmd_fetch(market, limit=None, threads=6, force=False):
         emit(f"재시도 회수: {recovered}/{len(misses)}")
 
     # 최종 상태를 파일에서 다시 센다 (스윕 결과 반영)
-    final = {"ok": 0, "stale": 0, "fail": 0}
+    final = {"ok": 0, "stale": 0, "fail": 0, "lag": 0}
     for s, _ in univ:
         p = data_path(market, s)
         try:
@@ -354,11 +362,14 @@ def cmd_fetch(market, limit=None, threads=6, force=False):
             final["fail"] += 1
             continue
         if j.get("bars"):
-            final["stale" if (j["bars"][-1]["d"] < target) else "ok"] += 1
+            if j["bars"][-1]["d"] >= target:
+                final["ok"] += 1
+            else:
+                final["lag" if j.get("behind") == target else "stale"] += 1
         else:
             final["fail"] += 1
     emit(f"fetch {market} 완료 {time.time()-t0:.0f}s | 최신={final['ok']} "
-         f"낡음(이력보존)={final['stale']} 데이터없음={final['fail']}")
+         f"낡음(이력보존)={final['stale']} 데이터없음={final['fail']} 미공개={final['lag']}")
 
 
 # ---------------- 지표 계산 ----------------

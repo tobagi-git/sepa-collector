@@ -52,18 +52,24 @@ jobs:
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             m="${{ github.event.inputs.market }}"
           else
-            h=$(date -u +%H)                      # UTC 시각으로 시장 판별 (크론 문자열 비교보다 지연에 강함)
-            if [ "$h" -ge 19 ] || [ "$h" -lt 4 ]; then m="us"; else m="kr"; fi
+            # 2026-10-14: 모든 슬롯이 두 시장을 다 본다. 야후는 확정봉을 늦게 올려(미국 21~22시 ET,
+            # 한국 다음 날 새벽~오전) 자기 시장 슬롯만으로는 재시도 기회가 없었다 — 10-12~13 KR은
+            # kr 슬롯(실제 실행 23~02시 KST)마다 미공개로 떨어지고, 10:41 KST 수동 실행은 56초 만에 성공.
+            # 이미 받은 시장은 가드 1이 즉시 건너뛰므로 중복 수집은 없다.
+            m="us kr"
           fi
           [ "$m" = "both" ] && m="us kr"
+          h=$(date -u +%H)                        # 월 1회 재구축만 슬롯의 '본 시장'에서 한 번 돈다
+          if [ "$h" -ge 19 ] || [ "$h" -lt 4 ]; then home="us"; else home="kr"; fi
           echo "markets=$m" >> "$GITHUB_OUTPUT"
-          echo "대상: $m"
+          echo "home=$home" >> "$GITHUB_OUTPUT"
+          echo "대상: $m (본 시장 $home)"
 
       - name: 월 1회 유니버스·섹터 재구축 (1일)
         if: ${{ github.event_name == 'schedule' }}
         run: |
           if [ "$(date +%d)" = "01" ]; then
-            for m in ${{ steps.mkt.outputs.markets }}; do
+            for m in ${{ steps.mkt.outputs.home }}; do
               python scripts/sepa.py universe $m || true
               python scripts/sepa.py sectors $m || true
             done
@@ -84,6 +90,22 @@ jobs:
             out=$(python scripts/sepa.py fetch $m --threads 6 2>&1 | tail -3); echo "$out"
             # 가드 2: 그 세션 봉이 하나도 없으면 휴장(또는 데이터 미공개) — 실패가 아니라 정상 종료
             if echo "$out" | grep -q "최신=0 "; then echo "$m: $target 봉 없음 — 휴장 또는 미공개, 스킵"; continue; fi
+            # 가드 2b(2026-10-14): 응답은 정상인데 target 봉이 없는 종목(미공개)이 5% 넘으면 야후가 아직
+            # 확정 중 — screen에 넘기지 않는다. 넘기면 수집 게이트가 '대량 실패(스로틀)'로 오진해 런이 빨개지고
+            # (09-30~10-14 거의 매일), 모수가 70%를 겨우 넘는 날엔 반쪽 스냅샷이 '수집됨'으로 굳는다.
+            # 정상 날의 미공개는 거래정지 몇 종목뿐(실측 1~9). 다음 슬롯이 재시도한다.
+            ok_n=$(echo "$out" | sed -n 's/.*최신=\([0-9]*\).*/\1/p' | tail -1)
+            lag_n=$(echo "$out" | sed -n 's/.*미공개=\([0-9]*\).*/\1/p' | tail -1)
+            if [ -n "$lag_n" ] && [ "$lag_n" -gt 0 ] && [ $((lag_n * 20)) -gt $((ok_n + lag_n)) ]; then
+              # 미공개가 이틀 넘게 이어지면(그 사이 거래일 2개 이상 놓침) 조용히 넘기지 않고 런을 빨갛게 한다
+              missed=$(python -c "import datetime as D; a=D.date.fromisoformat('$have') if '$have'!='none' else None; b=D.date.fromisoformat('$target'); print(0 if a is None else sum(1 for i in range(1,(b-a).days) if (a+D.timedelta(i)).weekday()<5))")
+              echo "$m: $target 확정봉 미공개 ${lag_n}종목(최신 ${ok_n}) — 산출물 미기록, 다음 슬롯 재시도 (놓친 거래일 $missed)"
+              if [ "$missed" -ge 2 ]; then
+                echo "::error::$m 야후 미공개가 $missed 거래일째 — have=$have target=$target"
+                gate_failed="$gate_failed $m"
+              fi
+              continue
+            fi
             echo "=== $m screen"
             # 가드 3(수집 게이트, 2026-09-30): fetch가 대량 실패해 모수가 급감하면 screen이 산출물을 쓰기 전에
             # 종료코드 3으로 멈춘다. 이 시장의 알림·모멘텀·커밋을 건너뛰고, have가 그대로라 다음 크론 슬롯이 재시도한다.
@@ -108,7 +130,11 @@ jobs:
 
       - name: 한국 투자자별 수급 적재 (루틴 보드용)
         if: contains(steps.mkt.outputs.markets, 'kr')
-        run: SEPA_WS="$GITHUB_WORKSPACE" python3 scripts/kr_flows.py || true
+        run: |
+          # 네이버는 '오늘' 값만 준다 — 장중(09~15시 KST)에 적재하면 미완성 값이 그날 행으로 남는다
+          hk=$(date +%H)   # TZ=Asia/Seoul
+          if [ "$hk" -ge 9 ] && [ "$hk" -lt 16 ]; then echo "장중 — 수급 적재 생략"; exit 0; fi
+          SEPA_WS="$GITHUB_WORKSPACE" python3 scripts/kr_flows.py || true
 
       - name: 산출물 커밋
         run: |
@@ -130,5 +156,5 @@ jobs:
         env:
           GATE_FAILED: ${{ steps.collect.outputs.gate_failed }}
         run: |
-          echo "::error::수집 게이트 발동(${GATE_FAILED}) — 모수 급감. 산출물은 기록되지 않았고 다음 크론 슬롯이 재시도한다."
+          echo "::error::수집 게이트 발동(${GATE_FAILED}) — 모수 급감 또는 야후 미공개 2거래일 이상. 산출물은 기록되지 않았고 다음 크론 슬롯이 재시도한다."
           exit 1
