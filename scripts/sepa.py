@@ -1906,16 +1906,29 @@ def _wret(c):
     return sum(w * x for w, x in got) / sum(w for w, _ in got) if got else None
 
 
-def _bench_wret(market):
-    """지수 대비 강도 기준: 한국 = 코스닥(^KQ11, 사용자 지정), 미국 = S&P 500(^GSPC, IBD·미너비니 RS 라인 기준)."""
-    tk = "^KQ11" if market == "kr" else "^GSPC"
+def _index_wret(tk, market):
     bars = load_bars("index", tk)
     if not bars or bars[-1]["d"] < last_expected_session(market):
         try:
             bars = _keep_newer("index", tk, bars, settled_bars(yahoo_daily(tk), market))
         except Exception:
             pass
-    return (_wret([b["c"] for b in bars]) if bars else None), tk
+    return _wret([b["c"] for b in bars]) if bars else None
+
+
+def _bench_wret(market):
+    """지수 대비 강도 기준 (2026-10-14 사용자 지정): 한국 = 소속 시장 지수(.KS → 코스피 ^KS11, .KQ → 코스닥 ^KQ11),
+    미국 = S&P 500(^GSPC, IBD·미너비니 RS 라인 기준). 반환: {접미사 또는 '*': (가중수익률, 지수)}."""
+    if market == "kr":
+        return {".KS": (_index_wret("^KS11", market), "^KS11"), ".KQ": (_index_wret("^KQ11", market), "^KQ11")}
+    return {"*": (_index_wret("^GSPC", market), "^GSPC")}
+
+
+def _bench_for(bench, ticker):
+    for suf, v in bench.items():
+        if suf != "*" and ticker.endswith(suf):
+            return v[0]
+    return (bench.get("*") or (None,))[0]
 
 
 def _strat_scan(market, r, bars):
@@ -1988,7 +2001,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     as_of = json.loads(jp.read_text()).get("as_of", "?") if jp.exists() else "?"
     sec = load_sectors(market)
     cut = QUEUE_CUT[market]["dvol"]
-    bw, btk = _bench_wret(market)
+    bench = _bench_wret(market)
     rows = []
     seen = set()   # screen CSV에 같은 티커가 두 줄 들어오는 경우가 있다(2026-10-14 079650.KQ)
     with open(csv_p, newline="") as f:
@@ -2004,7 +2017,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             rows.append({"ticker": r["ticker"], "name": r["name"], "rs": float(r["rs"] or 0),
                          "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
                          "strats": _strat_scan(market, r, bars),
-                         "rsx": (lambda w: round((1 + w) / (1 + bw) * 100) if (w is not None and bw is not None) else None)(_wret(c)),
+                         "rsx": (lambda w, bw: round((1 + w) / (1 + bw) * 100) if (w is not None and bw is not None) else None)(_wret(c), _bench_for(bench, r["ticker"])),
                          "pass": _truthy(r["pass_all"]), "hi": float(r["from_52w_high"] or 0),
                          "dvol": float(r["dvol_50d"] or 0), "mcap": float(r["mcap"] or 0),
                          "r1w": _ret(c, 5), "r1m": _ret(c, 21), "r3m": _ret(c, 63),
@@ -2122,7 +2135,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             rosters[name] = [mrow(byt2[t]) for t in tks if t in byt2]
     result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
               "members": members, "strategies": strategies, "rosters": rosters,
-              "bench": {"ticker": btk, "wret": round(bw * 100, 1) if bw is not None else None},
+              "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
               "sectors_top": agg[:top], "sectors_bottom": agg[-3:][::-1] if len(agg) > 3 else [],
