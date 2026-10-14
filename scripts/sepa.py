@@ -2036,7 +2036,11 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                 continue
             c = [b["c"] for b in bars]
             s50 = sma(c, 50)
+            dvs = [b["rc"] * b["v"] for b in bars[-51:]]   # 거래대금(원·달러) — 오늘, 전일 대비, 50일 평균 대비 (2026-10-15 보드 열)
+            dv_avg = sum(dvs[:-1]) / len(dvs[:-1]) if len(dvs) > 1 else 0
             rows.append({"ticker": r["ticker"], "name": r["name"], "rs": float(r["rs"] or 0),
+                         "dv1": dvs[-1] if dvs else 0, "dvx1": round(dvs[-1] / dvs[-2], 2) if len(dvs) > 1 and dvs[-2] > 0 else None,
+                         "dvx50": round(dvs[-1] / dv_avg, 2) if dv_avg > 0 else None,
                          "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
                          "strats": _strat_scan(market, r, bars),
                          "nh": _truthy(r.get("new_52w_high")),
@@ -2073,6 +2077,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                     "pass_rate": round(sum(r["pass"] for r in v) / len(v), 2),
                     "above50": round(sum(r["above50"] for r in v) / len(v), 2),
                     "near_high": round(sum(1 for r in v if r["pass"] and r["hi"] >= -5) / len(v), 2),
+                    "dv": round(sum(r["dv1"] for r in v)), "cap": round(sum(r["mcap"] for r in v)),
                     "leaders": sorted([r for r in v if r["pass"]], key=lambda r: -r["rs"])[:3]})
     z1, z2, z3 = z([a["r1w"] for a in agg]), z([a["r1m"] for a in agg]), z([a["r3m"] for a in agg])
     for a in agg:
@@ -2110,7 +2115,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     by_h = {}
     # 2026-10-11: 1일(1세션)·6개월(126세션) 추가, movers = 추세 조건과 무관하게 유동성 컷만 통과한 기간 수익률 상위(관심 쏠림용, 매수 후보 아님)
     liquid = [r for r in rows if r["dvol"] >= cut]
-    SK = ("group", "n", "r1d", "r1w", "r1m", "r3m", "r6m", "pass_rate", "near_high", "above50")
+    SK = ("group", "n", "r1d", "r1w", "r1m", "r3m", "r6m", "pass_rate", "near_high", "above50", "dv", "cap")
     TK = ("ticker", "name", "rs", "hi", "r1d", "r1w", "r1m", "r3m", "r6m", "vs50", "tag", "industry", "sector", "mcap")
     for h, key in (("1d", "r1d"), ("1w", "r1w"), ("1m", "r1m"), ("3m", "r3m"), ("6m", "r6m")):
         secs = sorted([a for a in qualified if a[key] is not None], key=lambda a: -a[key])[:8]
@@ -2195,10 +2200,17 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     near = sorted([r for r in liquid if r["hi"] is not None and r["hi"] >= -5], key=lambda r: (-r["hi"], -r["rs"]))
     nearhi = {"stocks": [mrow(r) + [None, None, int(r["nh"])] for r in near[:40]], "n_within5": len(near),
               "n_newhigh": sum(1 for r in liquid if r["nh"]), "pool": len(liquid)}
-    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
+    # 보드 표에 나오는 종목의 거래대금 — {티커: [오늘 거래대금, 전일 대비 배수, 50일 평균 대비 배수]}
+    shown = {x[0] for L in [*members.values(), *strategies.values(), *rosters.values(), *(t["members"] for t in themes_out),
+                            *(v["stocks"] for v in rsrank.values()), nearhi["stocks"]] for x in L}
+    shown |= {x["ticker"] for v in by_h.values() for x in v["stocks"] + v["movers"]}
+    liq = {r["ticker"]: [round(r["dv1"]), r["dvx1"], r["dvx50"]] for r in rows if r["ticker"] in shown}
+    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq,
               "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank, "nearhi": nearhi,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
+              # 업종 트리맵(보드): 자격 무관 전 업종 [업종, 종목 수, 오늘 거래대금 합, 시총 합, 1일·1주·1개월·3개월·6개월 중앙값]
+              "sectors_tree": [[a["group"], a["n"], a["dv"], a["cap"], a["r1d"], a["r1w"], a["r1m"], a["r3m"], a["r6m"]] for a in agg],
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
               "sectors_top": agg[:top], "sectors_bottom": agg[-3:][::-1] if len(agg) > 3 else [],
               "stocks_top": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "score", "industry", "sector", "dvol", "mcap")},
