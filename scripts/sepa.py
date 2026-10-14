@@ -1933,6 +1933,37 @@ def _index_closes(tk, market):
     return _IDX_CACHE[tk]
 
 
+_IDXD = {}
+
+
+def _index_dc(tk, market):
+    """지수 {날짜: 종가} — 상대강도선(종가 ÷ 지수) 날짜 정렬용."""
+    if tk not in _IDXD:
+        _index_closes(tk, market)
+        b = load_bars("index", tk) or []
+        _IDXD[tk] = {x["d"]: x["c"] for x in b}
+    return _IDXD[tk]
+
+
+def _rs_lead(bars, idx, look=252, within=20):
+    """상대강도선 선행 신고가가 최근 within세션 안에 있었으면 몇 세션 전인지(0=오늘), 없으면 None.
+    정의(strategy-lab 2026-10-15_rs-line-lead PREREG): 상대강도선 ≥ 직전 look세션 최대 ∧ 종가 < 직전 look세션 최고 종가.
+    검증 결과 한국 돌파 개선 보류·나머지 기각 — 보드 ⑩ '미검증 관찰용'으로만 쓴다."""
+    d = [b["d"] for b in bars]; c = [b["c"] for b in bars]
+    rl = [c[i] / idx[d[i]] if idx.get(d[i]) else None for i in range(len(c))]
+    n = len(c)
+    for ago in range(within):
+        i = n - 1 - ago
+        if i < look or rl[i] is None:
+            continue
+        prev = [x for x in rl[i - look:i] if x is not None]
+        if len(prev) < look * 0.9:
+            continue
+        if rl[i] >= max(prev) and c[i] < max(c[i - look:i]):
+            return ago
+    return None
+
+
 def _index_wret(tk, market):
     c = _index_closes(tk, market)
     return _wret(c) if c else None
@@ -2057,6 +2088,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                          "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
                          "strats": _strat_scan(market, r, bars),
                          "nh": _truthy(r.get("new_52w_high")),
+                         "rsl": _rs_lead(bars, _index_dc("^KS11" if r["ticker"].endswith(".KS") else "^KQ11", market)) if market == "kr" and float(r["dvol_50d"] or 0) >= cut else None,
                          "nhs": _nh_streak(bars) if float(r["from_52w_high"] or -99) >= -5 else (0, False),
                          "rsx": (lambda w, bw: round((1 + w) / (1 + bw) * 100) if (w is not None and bw is not None) else None)(_wret(c), _bench_for(bench, r["ticker"])),
                          "pass": _truthy(r["pass_all"]), "hi": float(r["from_52w_high"] or 0),
@@ -2235,12 +2267,14 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                            "pass": round(sum(x["pass"] for x in v) / len(v), 2), "dv": round(sum(x["dv1"] for x in v)), "cap": round(sum(x["mcap"] for x in v)),
                            "top": [[x["ticker"], x["r1d"], x["r1m"]] for x in sorted(v, key=lambda x: -x["mcap"])[:3]]})
         bigsec.sort(key=lambda a: -(a["rs"] or 0))
+    # ⑩ 상대강도선 선행(한국만, 최근 20세션 안 신호) — 검증 보류, 관찰용. 행 끝에 [None, None, 몇 세션 전]
+    rslead = [mrow(r) + [None, None, r["rsl"]] for r in sorted([r for r in rows if r.get("rsl") is not None], key=lambda r: (r["rsl"], -r["rs"]))[:30]]
     # 보드 표에 나오는 종목의 거래대금 — {티커: [오늘 거래대금, 전일 대비 배수, 50일 평균 대비 배수]}
     shown = {x[0] for L in [*members.values(), *strategies.values(), *rosters.values(), *(t["members"] for t in themes_out),
                             *(v["stocks"] for v in rsrank.values()), nearhi["stocks"]] for x in L}
-    shown |= {x["ticker"] for v in by_h.values() for x in v["stocks"] + v["movers"]}
+    shown |= {x["ticker"] for v in by_h.values() for x in v["stocks"] + v["movers"]} | {x[0] for x in rslead}
     liq = {r["ticker"]: [round(r["dv1"]), r["dvx1"], r["dvx50"]] for r in rows if r["ticker"] in shown}
-    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec,
+    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec, "rslead": rslead,
               "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank, "nearhi": nearhi,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
