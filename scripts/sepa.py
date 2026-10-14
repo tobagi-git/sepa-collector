@@ -1897,6 +1897,61 @@ def _ret(closes, n):
     return round((closes[-1] / closes[-1 - n] - 1) * 100, 1) if len(closes) > n and closes[-1 - n] else None
 
 
+def _strat_scan(market, r, bars):
+    """루틴 보드 「전략 스캔」용 — 오늘(마지막 봉) 각 전략 조건에 걸리는지. 정의는 strategy-lab 사전 등록 그대로.
+    결과는 참고 라벨이다(기각·후보 전략 포함 — 매수 신호 아님)."""
+    c = [b["c"] for b in bars]; v = [b.get("v") or 0 for b in bars]; n = len(bars); i = n - 1
+    if n < 60:
+        return []
+    def S(k, at=i):
+        return sum(c[at - k + 1:at + 1]) / k if at + 1 >= k else None
+    s10, s20, s21, s50, s200 = S(10), S(20), S(21), S(50), S(200)
+    v50 = sum(v[i - 50:i]) / 50 if n > 51 else None
+    lo, cl, pc = bars[i]["l"], c[i], c[i - 1]
+    tpass = _truthy(r.get("pass_all"))
+    price7 = all(_truthy(r.get(k)) for k in r if k[:2] in ("1_", "2_", "3_", "4_", "5_", "6_", "7_"))
+    dv = float(r.get("dvol_50d") or 0); liq = dv >= QUEUE_CUT[market]["dvol"]
+    hits = []
+    # 눌림목(2026-07-30): 추세 템플릿 + 저가가 10·21일선 터치 후 종가가 그 위 + 거래량 50일 평균 미만 + 전일 대비 상승
+    if tpass and liq and v50 and any(m and lo <= m <= cl for m in (s10, s21)) and v[i] < v50 and cl > pc:
+        hits.append("pullback")
+    # 포켓피벗(E1): 상승일 거래량 > 직전 10일 최대 하락일 거래량, 종가 10·50일선 위
+    dn = [v[j] for j in range(i - 10, i) if c[j] < c[j - 1]]
+    if liq and cl > pc and dn and v[i] > max(dn) and s10 and s50 and cl > s10 and cl > s50:
+        hits.append("pocket")
+    # 돌파 후 되돌림(E2): 40세션 안 돌파(종가 > 직전 20일 고가, 거래량 1.5배) → 4~12% 되돌림 → 20일선·돌파일 저가 지지 → 오늘 10일선 회복
+    bo = None
+    for k in range(i - 1, max(51, i - 40), -1):
+        vv = sum(v[k - 50:k]) / 50
+        if vv and v[k] >= 1.5 * vv and c[k] > max(b["h"] for b in bars[k - 20:k]):
+            bo = k; break
+    if liq and bo is not None and s10:
+        dd = (min(c[bo + 1:i + 1]) / c[bo] - 1) * 100 if bo < i else 0
+        held = min(b["l"] for b in bars[bo + 1:i + 1]) >= min(bars[bo]["l"], S(20, bo) or 0) * 0.995 if bo < i else False
+        if -12 <= dd <= -4 and held and cl > s10 and pc <= (S(10, i - 1) or 0):
+            hits.append("pb_breakout")
+    # 20일선 눌림(T01): 가격 템플릿 7기준(RS 제외)+유동성, 최근 40세션 안 252일 신고가 종가 뒤 첫 20일선 터치 지지(저가 ≤ 20일선 ≤ 종가, 종가 > 50일선)
+    if price7 and liq and s20 and s50 and lo <= s20 <= cl and cl > s50 and n > 260:
+        nh = [k for k in range(i - 40, i) if c[k] > max(b["h"] for b in bars[k - 252:k])]
+        if nh:
+            b0 = nh[-1]
+            touched_before = any(bars[k]["l"] <= (S(20, k) or 0) for k in range(b0 + 1, i))
+            if not touched_before:
+                hits.append("ma20_dip")
+    # 거래대금 신고가(T04): 템플릿 + 252일 신고가 돌파 + 당일 거래대금 > 직전 20일 최대 + 하한(한국 500억 / 미국 $100M)
+    if tpass and liq and n > 253 and cl > max(b["h"] for b in bars[i - 252:i]):
+        dvt = cl * v[i]; floor = 5e10 if market == "kr" else 1e8
+        if dvt >= floor and dvt > max(c[k] * v[k] for k in range(i - 20, i)):
+            hits.append("dvol_high")
+    # 시총 1조 이상 + 50·200일선 정배열(후보, 한국만)
+    if market == "kr" and float(r.get("mcap") or 0) >= 1e12 and s50 and s200 and cl > s50 > s200:
+        hits.append("bigcap_aligned")
+    # 체계 시험(후보) 1단계: 현행 돌파 신호(BASE: 템플릿 + 252일 신고가 + 거래량 1.5배) + RS 상위 10% — 업종 선두·국면 게이트는 집계 단계에서
+    if tpass and liq and v50 and v[i] >= 1.5 * v50 and n > 253 and cl > max(b["h"] for b in bars[i - 252:i]) and float(r.get("rs") or 0) >= 90:
+        hits.append("system")
+    return hits
+
+
 def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     """섹터·종목 모멘텀 랭킹 (1주/1개월/3개월 = 5/21/63세션) — 텔레그램 모니터링 보고 재료.
 
@@ -1913,8 +1968,12 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     sec = load_sectors(market)
     cut = QUEUE_CUT[market]["dvol"]
     rows = []
+    seen = set()   # screen CSV에 같은 티커가 두 줄 들어오는 경우가 있다(2026-10-14 079650.KQ)
     with open(csv_p, newline="") as f:
         for r in csv.DictReader(f):
+            if r["ticker"] in seen:
+                continue
+            seen.add(r["ticker"])
             bars = load_bars(market, r["ticker"])
             if not bars or len(bars) < 70:
                 continue
@@ -1922,6 +1981,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             s50 = sma(c, 50)
             rows.append({"ticker": r["ticker"], "name": r["name"], "rs": float(r["rs"] or 0),
                          "r1d": _ret(c, 1), "r6m": _ret(c, 126) if len(c) > 126 else None,
+                         "strats": _strat_scan(market, r, bars),
                          "pass": _truthy(r["pass_all"]), "hi": float(r["from_52w_high"] or 0),
                          "dvol": float(r["dvol_50d"] or 0), "mcap": float(r["mcap"] or 0),
                          "r1w": _ret(c, 5), "r1m": _ret(c, 21), "r3m": _ret(c, 63),
@@ -1992,7 +2052,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     # 2026-10-11: 1일(1세션)·6개월(126세션) 추가, movers = 추세 조건과 무관하게 유동성 컷만 통과한 기간 수익률 상위(관심 쏠림용, 매수 후보 아님)
     liquid = [r for r in rows if r["dvol"] >= cut]
     SK = ("group", "n", "r1d", "r1w", "r1m", "r3m", "r6m", "pass_rate", "near_high", "above50")
-    TK = ("ticker", "name", "rs", "hi", "r1d", "r1w", "r1m", "r3m", "r6m", "vs50", "tag", "industry", "sector")
+    TK = ("ticker", "name", "rs", "hi", "r1d", "r1w", "r1m", "r3m", "r6m", "vs50", "tag", "industry", "sector", "mcap")
     for h, key in (("1d", "r1d"), ("1w", "r1w"), ("1m", "r1m"), ("3m", "r3m"), ("6m", "r6m")):
         secs = sorted([a for a in qualified if a[key] is not None], key=lambda a: -a[key])[:8]
         stks = sorted([r for r in cand if r[key] is not None], key=lambda r: -r[key])[:8]
@@ -2000,6 +2060,9 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
         by_h[h] = {"sectors": [{k: a[k] for k in SK} | {"leaders": [{"ticker": r["ticker"], "rs": r["rs"]} for r in a["leaders"][:2]]} for a in secs],
                    "stocks": [{**{k: r.get(k) for k in TK}, "earn": earn(r["ticker"])} for r in stks],
                    "movers": [{k: r.get(k) for k in TK if k != "tag"} | {"pass": r["pass"]} for r in movs]}
+    def mrow(r):
+        return [r["ticker"], r["name"] if market == "kr" else "", round(r["mcap"]), r["rs"], int(r["pass"]),
+                r["r1d"], r["r1w"], r["r1m"], r["r3m"], r["r6m"]]
     # 테마별 기간 수익률(구성 중앙값) — groups_{market}.json "themes"만 쓴다(holding_groups는 보유 노출이라 제외)
     themes_out = []
     gp = WS / f"groups_{market}.json"
@@ -2013,8 +2076,23 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
             themes_out.append({"theme": name, "n": len(mem), **{k: md(k) for k in ("r1d", "r1w", "r1m", "r3m", "r6m")},
                                "pass_rate": round(sum(r["pass"] for r in mem) / len(mem), 2),
                                "above50": round(sum(r["above50"] for r in mem) / len(mem), 2),
-                               "top": [{"ticker": r["ticker"], "name": r["name"], "r1m": r["r1m"]} for r in sorted(mem, key=lambda r: -(r["r1m"] or -999))[:3]]})
+                               "top": [{"ticker": r["ticker"], "name": r["name"], "r1m": r["r1m"]} for r in sorted(mem, key=lambda r: -(r["r1m"] or -999))[:3]],
+                               "members": [mrow(r) for r in sorted(mem, key=lambda r: -r["rs"])[:25]]})
+    # 펼치기용 구성 종목(그룹당 RS 상위 12) — 압축 배열 [ticker, name(미국은 생략), mcap, rs, pass, r1d, r1w, r1m, r3m, r6m]
+    members = {k: [mrow(r) for r in sorted(v, key=lambda r: -r["rs"])[:12]] for k, v in groups.items() if any(a["group"] == k for a in qualified)}
+    # 전략 스캔 결과(전략별 RS 순 15종목). 체계 시험은 업종당 1종목(RS 최고)만 남긴다.
+    strategies = {}
+    for r in rows:
+        for sid in r["strats"]:
+            strategies.setdefault(sid, []).append(r)
+    if "system" in strategies:
+        best = {}
+        for r in sorted(strategies["system"], key=lambda r: -r["rs"]):
+            best.setdefault(r["industry"] or r["sector"] or r["ticker"], r)
+        strategies["system"] = list(best.values())
+    strategies = {k: [mrow(r) for r in sorted(v, key=lambda r: -r["rs"])[:15]] for k, v in strategies.items()}
     result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h,
+              "members": members, "strategies": strategies,
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
               "stocks_buyable": [{**{k: r[k] for k in ("ticker", "name", "rs", "hi", "r1w", "r1m", "r3m", "vs50", "tag", "industry", "sector")}, "earn": earn(r["ticker"])} for r in buyable],
               "sectors_top": agg[:top], "sectors_bottom": agg[-3:][::-1] if len(agg) > 3 else [],
