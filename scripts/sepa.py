@@ -1964,6 +1964,26 @@ def _rs_lead(bars, idx, look=252, within=20):
     return None
 
 
+def _turn_counts(bars, idx, sess=60, look=252, gap=60):
+    """최근 sess세션마다 [52주 신고가(종가), 첫 돌파(직전 gap세션 신고가 없음), 상대강도선 선행] 여부 — 전환 감시 패널 이력용(2026-10-16)."""
+    d = [b["d"] for b in bars]; c = [b["c"] for b in bars]; n = len(c)
+    if n < look + sess:
+        return {}
+    rl = [c[i] / idx[d[i]] if idx and idx.get(d[i]) else None for i in range(n)]
+    nh = [False] * n
+    for i in range(look, n):
+        nh[i] = c[i] >= max(c[i - look:i])
+    out = {}
+    for i in range(n - sess, n):
+        first = nh[i] and not any(nh[i - gap:i])
+        lead = False
+        if rl[i] is not None:
+            prev = [x for x in rl[i - look:i] if x is not None]
+            lead = len(prev) >= look * 0.9 and rl[i] >= max(prev) and not nh[i]
+        out[d[i]] = (int(nh[i]), int(first), int(lead))
+    return out
+
+
 def _index_wret(tk, market):
     c = _index_closes(tk, market)
     return _wret(c) if c else None
@@ -2069,6 +2089,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     cut = QUEUE_CUT[market]["dvol"]
     bench = _bench_wret(market)
     rows = []
+    turn = {}   # 날짜 → [신고가 수, 첫 돌파 수, 상대강도선 선행 수] (유동성 컷 통과 종목)
     seen = set()   # screen CSV에 같은 티커가 두 줄 들어오는 경우가 있다(2026-10-14 079650.KQ)
     with open(csv_p, newline="") as f:
         for r in csv.DictReader(f):
@@ -2080,6 +2101,11 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                 continue
             c = [b["c"] for b in bars]
             s50 = sma(c, 50)
+            if float(r["dvol_50d"] or 0) >= cut:
+                _ix = _index_dc(("^KS11" if r["ticker"].endswith(".KS") else "^KQ11") if market == "kr" else "^GSPC", market)
+                for _d, _t in _turn_counts(bars, _ix).items():
+                    _a = turn.setdefault(_d, [0, 0, 0])
+                    _a[0] += _t[0]; _a[1] += _t[1]; _a[2] += _t[2]
             dvs = [b["rc"] * b["v"] for b in bars[-51:]]   # 거래대금(원·달러) — 오늘, 전일 대비, 50일 평균 대비 (2026-10-15 보드 열)
             dv_avg = sum(dvs[:-1]) / len(dvs[:-1]) if len(dvs) > 1 else 0
             rows.append({"ticker": r["ticker"], "name": r["name"], "rs": float(r["rs"] or 0),
@@ -2274,7 +2300,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                             *(v["stocks"] for v in rsrank.values()), nearhi["stocks"]] for x in L}
     shown |= {x["ticker"] for v in by_h.values() for x in v["stocks"] + v["movers"]} | {x[0] for x in rslead}
     liq = {r["ticker"]: [round(r["dv1"]), r["dvx1"], r["dvx50"]] for r in rows if r["ticker"] in shown}
-    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec, "rslead": rslead,
+    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec, "rslead": rslead, "turn": [[k] + v for k, v in sorted(turn.items())],
               "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank, "nearhi": nearhi,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
