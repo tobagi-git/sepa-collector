@@ -167,7 +167,7 @@
   "222800.KQ": {
    "ticker": "222800.KQ",
    "name": "심텍",
-   "status": "deferred",
+   "status": "expired",
    "first_seen": "2026-10-02",
    "last_seen": "2026-10-02",
    "src": [
@@ -243,7 +243,9 @@
     "pass_hint": true
    },
    "marked": "2026-10-08",
-   "note": "Code33심층트리아지대상"
+   "note": "Code33심층트리아지대상",
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "064290.KQ": {
    "ticker": "064290.KQ",
@@ -483,6 +485,83 @@
    },
    "marked": "2026-10-08",
    "note": "그룹추적"
+  },
+  "396300.KQ": {
+   "ticker": "396300.KQ",
+   "name": "HT로보틱스",
+   "status": "pending",
+   "first_seen": "2026-10-15",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 97.7,
+   "from_52w_high": -1.9,
+   "dvol_50d": 25500785843,
+   "group": null,
+   "earnings_raw": {
+    "code": "396300",
+    "name": "HT로보틱스",
+    "quarters": [
+     {
+      "q": "2025Q1",
+      "rev": 19601620011,
+      "rev_yoy": -16.8,
+      "op": -607362050,
+      "op_yoy": -239.8
+     },
+     {
+      "q": "2025Q2",
+      "rev": 18303270105,
+      "rev_yoy": -18.0,
+      "op": -1301808105,
+      "op_yoy": -674.6
+     },
+     {
+      "q": "2025Q3",
+      "rev": 23330052945,
+      "rev_yoy": -4.7,
+      "op": -344107034,
+      "op_yoy": null
+     },
+     {
+      "q": "2025Q4",
+      "rev": 24592092594,
+      "rev_yoy": 11.8,
+      "op": 403013223,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q1",
+      "rev": 33618105725,
+      "rev_yoy": 71.5,
+      "op": 1653636860,
+      "op_yoy": null
+     },
+     {
+      "q": "2026Q2",
+      "rev": 37448791370,
+      "rev_yoy": 104.6,
+      "op": 2040595964,
+      "op_yoy": null
+     }
+    ],
+    "note": "단위 원, 연결 우선. YoY는 전년 동기 양수일 때만."
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "last_q": "2026Q2",
+    "rev_yoy_2q": [
+     71.5,
+     104.6
+    ],
+    "eps_yoy_2q": [],
+    "profit_pos": true,
+    "accel_eps": false,
+    "accel_rev": true,
+    "code33_hint": false,
+    "pass_hint": false
+   }
   }
  },
  "log": [
@@ -533,6 +612,12 @@
    "t": "222800.KQ",
    "to": "deferred",
    "note": "Code33심층트리아지대상"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "222800.KQ",
+   "to": "expired",
+   "note": "템플릿 이탈"
   }
  ]
 }

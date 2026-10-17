@@ -4136,7 +4136,7 @@
   "AVT": {
    "ticker": "AVT",
    "name": "Avnet, Inc. - Common Stock",
-   "status": "deferred",
+   "status": "expired",
    "first_seen": "2026-09-23",
    "last_seen": "2026-10-02",
    "src": [
@@ -4233,7 +4233,9 @@
     "pass_hint": true
    },
    "marked": "2026-09-25",
-   "note": "등록 제안(약) — 매출 +34→+48 가속, EPS 기저 착시, 5.65% 채권 $550M(희석 아님), 사용자 결정"
+   "note": "등록 제안(약) — 매출 +34→+48 가속, EPS 기저 착시, 5.65% 채권 $550M(희석 아님), 사용자 결정",
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "S": {
    "ticker": "S",
@@ -4337,7 +4339,7 @@
   "HPE": {
    "ticker": "HPE",
    "name": "Hewlett Packard Enterprise Company Common Stock",
-   "status": "deferred",
+   "status": "expired",
    "first_seen": "2026-09-24",
    "last_seen": "2026-10-09",
    "src": [
@@ -4434,7 +4436,9 @@
     "pass_hint": true
    },
    "marked": "2026-09-25",
-   "note": "등록 제안 — Code33·수급 클린(144 이사 소량), 사용자 결정"
+   "note": "등록 제안 — Code33·수급 클린(144 이사 소량), 사용자 결정",
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "HAE": {
    "ticker": "HAE",
@@ -5135,7 +5139,7 @@
   "KEYS": {
    "ticker": "KEYS",
    "name": "Keysight Technologies Inc. Common Stock",
-   "status": "pending",
+   "status": "expired",
    "first_seen": "2026-10-01",
    "last_seen": "2026-10-09",
    "src": [
@@ -5230,12 +5234,14 @@
     "accel_rev": true,
     "code33_hint": true,
     "pass_hint": true
-   }
+   },
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "NUTX": {
    "ticker": "NUTX",
    "name": "Nutex Health Inc. - Common Stock",
-   "status": "pending",
+   "status": "expired",
    "first_seen": "2026-10-01",
    "last_seen": "2026-10-02",
    "src": [
@@ -5302,7 +5308,9 @@
     "accel_rev": false,
     "code33_hint": false,
     "pass_hint": true
-   }
+   },
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "LITE": {
    "ticker": "LITE",
@@ -5699,7 +5707,7 @@
   "MTRN": {
    "ticker": "MTRN",
    "name": "Materion Corporation",
-   "status": "pending",
+   "status": "expired",
    "first_seen": "2026-10-02",
    "last_seen": "2026-10-02",
    "src": [
@@ -5794,12 +5802,14 @@
     "accel_rev": true,
     "code33_hint": true,
     "pass_hint": true
-   }
+   },
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "ALNT": {
    "ticker": "ALNT",
    "name": "Allient Inc. - Common Stock",
-   "status": "pending",
+   "status": "expired",
    "first_seen": "2026-10-02",
    "last_seen": "2026-10-02",
    "src": [
@@ -5894,7 +5904,9 @@
     "accel_rev": true,
     "code33_hint": false,
     "pass_hint": true
-   }
+   },
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "CHEF": {
    "ticker": "CHEF",
@@ -6101,7 +6113,7 @@
   "XMTR": {
    "ticker": "XMTR",
    "name": "Xometry, Inc. - Class A Common Stock",
-   "status": "pending",
+   "status": "expired",
    "first_seen": "2026-10-05",
    "last_seen": "2026-10-09",
    "src": [
@@ -6118,7 +6130,9 @@
    "earnings_asof": "2026-10-09",
    "earnings": {
     "error": "HTTP Error 403: Forbidden"
-   }
+   },
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "HAFN": {
    "ticker": "HAFN",
@@ -6171,12 +6185,12 @@
    "name": "Petroleo Brasileiro S.A. Petrobras ADS",
    "status": "pending",
    "first_seen": "2026-10-05",
-   "last_seen": "2026-10-09",
+   "last_seen": "2026-10-16",
    "src": [
     "신고가"
    ],
-   "rs": 94.2,
-   "from_52w_high": -1.2,
+   "rs": 96.8,
+   "from_52w_high": -0.4,
    "dvol_50d": 453543361,
    "group": null,
    "earnings_raw": {
@@ -6433,7 +6447,7 @@
   "CMBT": {
    "ticker": "CMBT",
    "name": "CMB.TECH NV Ordinary Shares",
-   "status": "pending",
+   "status": "expired",
    "first_seen": "2026-10-08",
    "last_seen": "2026-10-09",
    "src": [
@@ -6450,7 +6464,9 @@
    "earnings_asof": "2026-10-09",
    "earnings": {
     "error": "HTTP Error 403: Forbidden"
-   }
+   },
+   "expired": "2026-10-16",
+   "expire_reason": "템플릿 이탈"
   },
   "AMPL": {
    "ticker": "AMPL",
@@ -6590,6 +6606,318 @@
    },
    "marked": "2026-10-09",
    "note": "RS하위_상한초과"
+  },
+  "SU": {
+   "ticker": "SU",
+   "name": "Suncor Energy  Inc. Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-12",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.1,
+   "from_52w_high": -2.0,
+   "dvol_50d": 280084256,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "SU",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "APA": {
+   "ticker": "APA",
+   "name": "APA Corporation - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-13",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 95.9,
+   "from_52w_high": -0.2,
+   "dvol_50d": 242435071,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "APA",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "CBRL": {
+   "ticker": "CBRL",
+   "name": "Cracker Barrel Old Country Store, Inc. - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-13",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.5,
+   "from_52w_high": -1.9,
+   "dvol_50d": 52433524,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "CBRL",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "ECPG": {
+   "ticker": "ECPG",
+   "name": "Encore Capital Group Inc - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-13",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.8,
+   "from_52w_high": -4.1,
+   "dvol_50d": 32100130,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "ECPG",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "VEEV": {
+   "ticker": "VEEV",
+   "name": "Veeva Systems Inc. Class A Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-13",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가",
+    "전이"
+   ],
+   "rs": 93.2,
+   "from_52w_high": -3.0,
+   "dvol_50d": 464276903,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "VEEV",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "CNC": {
+   "ticker": "CNC",
+   "name": "Centene Corporation Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-13",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 92.2,
+   "from_52w_high": -2.9,
+   "dvol_50d": 275640979,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "CNC",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "PCRX": {
+   "ticker": "PCRX",
+   "name": "Pacira BioSciences, Inc. - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-14",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.8,
+   "from_52w_high": -0.9,
+   "dvol_50d": 43304351,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "PCRX",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "CNQ": {
+   "ticker": "CNQ",
+   "name": "Canadian Natural Resources Limited Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-14",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 91.1,
+   "from_52w_high": -0.2,
+   "dvol_50d": 306198135,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "CNQ",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "ANF": {
+   "ticker": "ANF",
+   "name": "Abercrombie & Fitch Company Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-14",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가",
+    "전이"
+   ],
+   "rs": 96.2,
+   "from_52w_high": -2.2,
+   "dvol_50d": 236824020,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "ANF",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "SN": {
+   "ticker": "SN",
+   "name": "SharkNinja, Inc. Ordinary Shares",
+   "status": "pending",
+   "first_seen": "2026-10-15",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 92.7,
+   "from_52w_high": -5.0,
+   "dvol_50d": 297884818,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "SN",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "NHC": {
+   "ticker": "NHC",
+   "name": "National HealthCare Corporation Common Stock",
+   "status": "rejected",
+   "first_seen": "2026-10-15",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 92.8,
+   "from_52w_high": -1.7,
+   "dvol_50d": 23469594,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "NHC",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "marked": "2026-10-16",
+   "note": "RS하위 403미확인 상한정리"
+  },
+  "CAKE": {
+   "ticker": "CAKE",
+   "name": "The Cheesecake Factory Incorporated - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-16",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 96.7,
+   "from_52w_high": -3.1,
+   "dvol_50d": 160698839,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "CAKE",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "AVTR": {
+   "ticker": "AVTR",
+   "name": "Avantor, Inc. Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-16",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 93.5,
+   "from_52w_high": -0.2,
+   "dvol_50d": 120299281,
+   "group": "생명과학툴·진단·CRO",
+   "earnings_raw": {
+    "ticker": "AVTR",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
+  },
+  "SLDE": {
+   "ticker": "SLDE",
+   "name": "Slide Insurance Holdings, Inc. - Common Stock",
+   "status": "pending",
+   "first_seen": "2026-10-16",
+   "last_seen": "2026-10-16",
+   "src": [
+    "신고가"
+   ],
+   "rs": 92.6,
+   "from_52w_high": -0.7,
+   "dvol_50d": 28815261,
+   "group": null,
+   "earnings_raw": {
+    "ticker": "SLDE",
+    "error": "HTTP Error 403: Forbidden"
+   },
+   "earnings_asof": "2026-10-16",
+   "earnings": {
+    "error": "HTTP Error 403: Forbidden"
+   }
   }
  },
  "log": [
@@ -7210,6 +7538,60 @@
    "t": "AMN",
    "to": "rejected",
    "note": "RS하위_상한초과"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "AVT",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "HPE",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "KEYS",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "NUTX",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "MTRN",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "ALNT",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "XMTR",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "CMBT",
+   "to": "expired",
+   "note": "템플릿 이탈"
+  },
+  {
+   "d": "2026-10-16",
+   "t": "NHC",
+   "to": "rejected",
+   "note": "RS하위 403미확인 상한정리"
   }
  ]
 }
