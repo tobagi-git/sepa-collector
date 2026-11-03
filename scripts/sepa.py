@@ -14,6 +14,7 @@ sepa.py — 미너비니 SEPA 발굴 엔진 (토큰 0 계산기)
   python3 sepa.py vcp <티커>                   # 베이스/VCP 수축 분석 (수치만 — 판정은 스킬)
   python3 sepa.py daily us|kr                 # 전일 대비 diff + 브레드스 추이 (데일리 리포트 원재료)
   python3 sepa.py groups us|kr                # 그룹 로테이션 — 핵심 로스터 통과율·테마 분포·Stage 1→2 전환 (주말 구조 패스용)
+  python3 sepa.py stage us|kr [--json]        # 와인스타인 4단계 지도 — 종목·업종 분포·지수/섹터 ETF 단계·이번 주 전환 → out/stage_{m}.json
 
 데이터: ~/.claude/skills/minervini-workspace/ 아래 (universe/, data/, out/)
 의존성: 표준 라이브러리만. Yahoo v8 chart API + nasdaqtrader + KRX kind.
@@ -2334,6 +2335,165 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     return result
 
 
+# ---------------- 와인스타인 4단계 (2026-11-03) ----------------
+# 규칙은 strategy-lab/studies/2026-11-03_weinstein-stage-check/PREREG.md에 고정. 임계값을 바꾸려면 재등록.
+STAGE_MA, STAGE_SLOPE_N, STAGE_SLOPE_PCT, STAGE_STEP = 150, 50, 1.5, 5
+STAGE_ETF_US = {"Technology": "XLK", "Finance": "XLF", "Health Care": "XLV", "Consumer Discretionary": "XLY",
+                "Consumer Staples": "XLP", "Industrials": "XLI", "Energy": "XLE", "Utilities": "XLU",
+                "Real Estate": "XLRE", "Basic Materials": "XLB", "Telecommunications": "XLC"}
+
+
+def weinstein_stages(closes, step=STAGE_STEP):
+    """수정종가 열 → [(index, stage)] 주간(5세션) 순차 분류. 직전 단계를 기억한다(1/3 구분은 이력으로만 가능).
+    상승&위=2, 하락&아래=4, 상승&아래=3(초기), 하락&위=1(초기), 평평=직전이 4·1이면 1, 2·3이면 3. 첫 분류는 첫 상승/하락 주."""
+    n = len(closes)
+    if n < STAGE_MA + STAGE_SLOPE_N + 1:
+        return []
+    ma, s = [None] * n, 0.0
+    for i, v in enumerate(closes):
+        s += v
+        if i >= STAGE_MA:
+            s -= closes[i - STAGE_MA]
+        if i >= STAGE_MA - 1:
+            ma[i] = s / STAGE_MA
+    out, prev = [], None
+    start = n - 1 - ((n - 1 - (STAGE_MA + STAGE_SLOPE_N - 1)) // step) * step   # 마지막 봉에 맞춰 정렬
+    for i in range(start, n, step):
+        m0, m1 = ma[i - STAGE_SLOPE_N], ma[i]
+        if not m0 or not m1:
+            continue
+        sl = (m1 / m0 - 1) * 100
+        up, down, above = sl > STAGE_SLOPE_PCT, sl < -STAGE_SLOPE_PCT, closes[i] > m1
+        if up:
+            st = 2 if above else 3
+        elif down:
+            st = 4 if not above else 1
+        elif prev is None:
+            continue
+        else:
+            st = 1 if prev in (1, 4) else 3
+        out.append((i, st))
+        prev = st
+    return out
+
+
+def stage_summary(bars, idx_dc=None):
+    """종목 하나의 현재 단계 요약. idx_dc = {날짜: 지수 종가}(26주 상대수익 RS 꼬리표용)."""
+    c = [b["c"] for b in bars]
+    seq = weinstein_stages(c)
+    if not seq:
+        return None
+    i_last, st = seq[-1]
+    wk, since_i, prev = 0, i_last, None
+    for i, s in reversed(seq):
+        if s != st:
+            prev = s
+            break
+        wk += 1
+        since_i = i
+    trans = None   # 최근 2주 안의 전환
+    if prev is not None and wk <= 2:
+        trans = f"{prev}→{st}"
+    ma = sma(c, STAGE_MA)
+    ma0 = sma(c, STAGE_MA, at=-1 - STAGE_SLOPE_N) if len(c) > STAGE_MA + STAGE_SLOPE_N else None
+    rs_ok = None
+    if idx_dc and len(c) > 126:
+        d0, d1 = bars[-127]["d"], bars[-1]["d"]
+        if d0 in idx_dc and d1 in idx_dc and idx_dc[d0] > 0:
+            rs_ok = (c[-1] / c[-127]) > (idx_dc[d1] / idx_dc[d0])
+    return {"st": st, "wk": wk, "since": bars[since_i]["d"], "prev": prev, "trans": trans,
+            "slope": round((ma / ma0 - 1) * 100, 1) if ma and ma0 else None,
+            "vs150": round((c[-1] / ma - 1) * 100, 1) if ma else None, "rs_ok": rs_ok}
+
+
+def _stage_of_index(tk, market):
+    bars = load_bars("index", tk)
+    if not bars or bars[-1]["d"] < last_expected_session(market):
+        try:
+            bars = _keep_newer("index", tk, bars, settled_bars(yahoo_daily(tk), market))
+        except Exception:
+            pass
+    return stage_summary(bars) if bars else None
+
+
+def cmd_stage(market, as_json=False):
+    """와인스타인 4단계 지도 → out/stage_{market}.json. 종목(유동성 컷) + 업종 분포(구성 5종+) + 지수/섹터 ETF 단계 + 이번 주 전환 목록.
+    주봉 이론이라 금요일 종가 기준이 정본이지만 평일에도 계산은 한다(보드는 주 1회만 갱신 표시)."""
+    snaps = sorted(OUT.glob(f"screen_{market}_*.csv"))
+    if not snaps:
+        sys.exit("screen CSV 없음")
+    csv_p = snaps[-1]
+    jp = Path(str(csv_p).replace(".csv", ".json"))
+    as_of = json.loads(jp.read_text()).get("as_of", "?") if jp.exists() else "?"
+    sec = load_sectors(market)
+    cut = QUEUE_CUT[market]["dvol"]
+    idx_tk = "^KS11" if market == "kr" else "^IXIC"
+    idx_dc = _index_dc(idx_tk, market)
+    stocks, seen = {}, set()
+    with open(csv_p, newline="") as f:
+        for r in csv.DictReader(f):
+            t = r["ticker"]
+            if t in seen or float(r["dvol_50d"] or 0) < cut:
+                continue
+            seen.add(t)
+            bars = load_bars(market, t)
+            if not bars:
+                continue
+            ss = stage_summary(bars, idx_dc if market == "us" or t.endswith(".KS") else _index_dc("^KQ11", market))
+            if not ss:
+                continue
+            ss["name"] = r["name"]; ss["rs"] = float(r["rs"] or 0); ss["mcap"] = float(r["mcap"] or 0)
+            ss["sector"] = (sec.get(t) or {}).get("sector", "") or "(미분류)"
+            stocks[t] = ss
+    # 업종 분포
+    by = {}
+    for t, s in stocks.items():
+        by.setdefault(s["sector"], []).append((t, s))
+    sectors = []
+    for g, mem in by.items():
+        if len(mem) < 5:
+            continue
+        cnt = [0, 0, 0, 0]
+        for _, s in mem:
+            cnt[s["st"] - 1] += 1
+        n = len(mem)
+        row = {"group": g, "n": n, "cnt": cnt, "pct2": round(cnt[1] / n * 100), "pct4": round(cnt[3] / n * 100),
+               "trans": {k: [t for t, s in mem if s["trans"] == k] for k in ("1→2", "3→4", "2→3", "4→1")},
+               "leaders": [t for t, s in sorted(mem, key=lambda x: -x[1]["rs"]) if s["st"] == 2][:3]}
+        if market == "us" and g in STAGE_ETF_US:
+            e = _stage_of_index(STAGE_ETF_US[g], "us")
+            if e:
+                row["etf"] = {"tk": STAGE_ETF_US[g], "st": e["st"], "wk": e["wk"], "slope": e["slope"]}
+        sectors.append(row)
+    sectors.sort(key=lambda r: (-r["pct2"], r["pct4"]))
+    idx = {}
+    for tk in (["^KS11", "^KQ11"] if market == "kr" else ["^GSPC", "^IXIC"]):
+        e = _stage_of_index(tk, market)
+        if e:
+            idx[tk] = e
+    tot = [0, 0, 0, 0]
+    for s in stocks.values():
+        tot[s["st"] - 1] += 1
+    trans = {k: sorted([t for t, s in stocks.items() if s["trans"] == k], key=lambda t: -stocks[t]["rs"]) for k in ("1→2", "3→4", "2→3", "4→1")}
+    result = {"as_of": as_of, "market": market, "rule": f"SMA{STAGE_MA} 기울기 {STAGE_SLOPE_N}세션 ±{STAGE_SLOPE_PCT}% · 5세션 순차",
+              "total": {"n": len(stocks), "cnt": tot}, "index": idx, "sectors": sectors, "trans": trans,
+              "stocks": {t: [s["st"], s["wk"], s["since"], s["trans"], s["slope"], s["vs150"], s["rs_ok"], s["name"], s["rs"], s["sector"]] for t, s in stocks.items()}}
+    p = OUT / f"stage_{market}.json"
+    p.write_text(json.dumps(result, ensure_ascii=False))
+    if as_json:
+        print(json.dumps(result, ensure_ascii=False, indent=1))
+    else:
+        n = len(stocks) or 1
+        print(f"{market} {as_of} 단계 분포(유동성 컷 {len(stocks)}종): " + " · ".join(f"{i+1}단계 {c} ({c/n*100:.0f}%)" for i, c in enumerate(tot)))
+        for tk, e in idx.items():
+            print(f"  {tk}: {e['st']}단계 {e['wk']}주째 (기울기 {e['slope']}%, 150MA 대비 {e['vs150']}%)")
+        for k, v in trans.items():
+            if v:
+                print(f"  {k} 최근 2주: {len(v)}종 — " + ", ".join(v[:8]) + (" …" if len(v) > 8 else ""))
+        print(f"  업종(5종+) {len(sectors)}개 → {p}")
+    return result
+
+
 def cmd_earncal(days=35):
     """미국 실적 발표 예정일(나스닥 공개 캘린더) → out/earnings_us.json {티커: [YYYY-MM-DD, 'pre'|'post'|'']} — 2026-10-15 보드 카드용.
     한국은 사전 공개되는 발표 예정일 자료가 없어 만들지 않는다."""
@@ -2400,6 +2560,7 @@ def main():
     p_mo.add_argument("--top", type=int, default=8); p_mo.add_argument("--stocks", type=int, default=10)
     p_mo.add_argument("--json", action="store_true")
     sub.add_parser("regime")
+    p_st = sub.add_parser("stage"); p_st.add_argument("market", choices=["us", "kr"]); p_st.add_argument("--json", action="store_true")
     a = ap.parse_args()
     if a.cmd == "universe":
         (universe_us if a.market == "us" else universe_kr)()
@@ -2431,6 +2592,8 @@ def main():
         cmd_momentum(a.market, a.top, a.stocks, a.json)
     elif a.cmd == "regime":
         cmd_regime()
+    elif a.cmd == "stage":
+        cmd_stage(a.market, a.json)
 
 
 if __name__ == "__main__":
