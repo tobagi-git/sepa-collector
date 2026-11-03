@@ -123,10 +123,17 @@ jobs:
             echo "=== $m notify"
             python alerts/sepa_notify.py $m || echo "notify 실패(무시)"
             # 맥은 일봉 캐시가 없으므로 모멘텀 랭킹 결과를 파일로 남긴다 (아침 브리핑이 이 파일을 읽는다)
-            python scripts/sepa.py momentum $m --json > out/momentum_$m.json || true
-            python scripts/sepa.py groupgate $m --holdings > out/groupgate_$m.md || true
+            # 가드 4(2026-11-03): 산출물은 임시 파일에 쓰고 성공·비어 있지 않을 때만 교체한다. 실패를 삼키되(||) 빈 파일을
+            # 커밋하지 않는다 — 11-03 momentum 예외로 0바이트 momentum_us.json이 커밋돼 보드 시장 탭 미국이 깨졌다.
+            keep_nonempty() { # 사용: keep_nonempty <목적지> <명령...>
+              local dst="$1"; shift; local tmp="$dst.tmp"
+              if "$@" > "$tmp" 2> "$tmp.err" && [ -s "$tmp" ]; then mv "$tmp" "$dst"; rm -f "$tmp.err"
+              else echo "::warning::$dst 생성 실패 — 이전 파일 유지"; tail -3 "$tmp.err" 2>/dev/null; rm -f "$tmp" "$tmp.err"; fi
+            }
+            keep_nonempty out/momentum_$m.json python scripts/sepa.py momentum $m --json
+            keep_nonempty out/groupgate_$m.md python scripts/sepa.py groupgate $m --holdings
             # 와인스타인 4단계 지도(루틴 보드 흐름 탭, 2026-11-03) — 분류 표시용, 매수 근거 아님
-            python scripts/sepa.py stage $m || echo "stage 실패(무시)"
+            python scripts/sepa.py stage $m > /dev/null || echo "::warning::stage $m 실패 — 이전 stage_$m.json 유지"
             # 미국 실적 발표 예정일(나스닥 공개 캘린더, 루틴 보드 카드용 — 2026-10-15)
             [ "$m" = us ] && { python scripts/sepa.py earncal || echo "earncal 실패(무시)"; }
           done
