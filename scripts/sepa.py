@@ -2040,7 +2040,7 @@ def _strat_scan(market, r, bars):
             hits.append("pb_breakout")
     # 20일선 눌림(T01): 가격 템플릿 7기준(RS 제외)+유동성, 최근 40세션 안 252일 신고가 종가 뒤 첫 20일선 터치 지지(저가 ≤ 20일선 ≤ 종가, 종가 > 50일선)
     if price7 and liq and s20 and s50 and lo <= s20 <= cl and cl > s50 and n > 260:
-        nh = [k for k in range(i - 40, i) if c[k] > max(b["h"] for b in bars[k - 252:k])]
+        nh = [k for k in range(max(i - 40, 252), i) if c[k] > max(b["h"] for b in bars[k - 252:k])]   # 신규 상장(봉 261~291개)은 k-252<0 → 빈 슬라이스로 2026-11-03 미국 momentum 전체가 죽었다
         if nh:
             b0 = nh[-1]
             touched_before = any(bars[k]["l"] <= (S(20, k) or 0) for k in range(b0 + 1, i))
