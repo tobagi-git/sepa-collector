@@ -2522,6 +2522,123 @@ def cmd_stage(market, as_json=False):
     return result
 
 
+def _ma_series(c, n):
+    out, s = [None] * len(c), 0.0
+    for i, v in enumerate(c):
+        s += v
+        if i >= n:
+            s -= c[i - n]
+        if i >= n - 1:
+            out[i] = s / n
+    return out
+
+
+def _xy(c, ma, i):
+    """단계 지도 좌표: x = 종가의 150MA 대비 %, y = 150MA의 50세션 기울기 %. 자료 부족이면 None."""
+    if i < 0 or i - STAGE_SLOPE_N < 0 or not ma[i] or not ma[i - STAGE_SLOPE_N]:
+        return None
+    return [round((c[i] / ma[i] - 1) * 100, 1), round((ma[i] / ma[i - STAGE_SLOPE_N] - 1) * 100, 1)]
+
+
+def cmd_stagemap(market, weeks=104, as_json=False):
+    """와인스타인 단계 지도(산점도) → out/stagemap_{market}.json — 2026-11-04 보드 흐름 탭.
+    점 = 유동성 컷 통과 전 종목: [tk, 이름, 업종, x, y, 꼬리 4점(5·10·15·20세션 전 x,y), 거래대금(50일), 10일 폭%, 5일/50일 거래량, RS, 단계]
+    업종 = 구성 5종+ 중앙값 좌표·꼬리·조여진 비율. 지수 = 좌표·꼬리. hist = 주간(5세션) 단계 분포·전환 수(1→2 / 2→3·3→4·2→4)·지수 종가, 최근 weeks주.
+    좌표는 원자료(분류기 라벨 아님) — 판단은 사람이 한다."""
+    import statistics
+    snaps = sorted(OUT.glob(f"screen_{market}_*.csv"))
+    if not snaps:
+        sys.exit("screen CSV 없음")
+    csv_p = snaps[-1]
+    jp = Path(str(csv_p).replace(".csv", ".json"))
+    as_of = json.loads(jp.read_text()).get("as_of", "?") if jp.exists() else "?"
+    sec = load_sectors(market)
+    cut = QUEUE_CUT[market]["dvol"]
+    pts, seen, seqs, gidx, gnames = [], set(), [], {}, []
+    with open(csv_p, newline="") as f:
+        for r in csv.DictReader(f):
+            t = r["ticker"]
+            if t in seen or float(r["dvol_50d"] or 0) < cut:
+                continue
+            seen.add(t)
+            bars = load_bars(market, t)
+            if not bars or len(bars) < STAGE_MA + STAGE_SLOPE_N + 25:
+                continue
+            c = [b["c"] for b in bars]
+            ma = _ma_series(c, STAGE_MA)
+            now = _xy(c, ma, len(c) - 1)
+            if not now:
+                continue
+            tail = [(_xy(c, ma, len(c) - 1 - 5 * k) or [None, None]) for k in (1, 2, 3, 4)]
+            seq = weinstein_stages(c)
+            st = seq[-1][1] if seq else 0
+            seqs.append(seq)
+            vols = [b["v"] for b in bars]
+            v50 = sum(vols[-50:]) / 50 if len(vols) >= 50 else None
+            v5 = sum(vols[-5:]) / 5
+            g = (sec.get(t) or {}).get("sector", "") or "(미분류)"
+            if g not in gidx:
+                gidx[g] = len(gnames); gnames.append(g)
+            pts.append([t, r["name"] if market == "kr" else "", gidx[g], now[0], now[1],
+                        tail[0][0], tail[0][1], tail[1][0], tail[1][1], tail[2][0], tail[2][1], tail[3][0], tail[3][1],
+                        round(float(r["dvol_50d"] or 0) / (1e8 if market == "kr" else 1e6)), _rng10(bars), round(v5 / v50, 2) if v50 else None, round(float(r["rs"] or 0)), st])
+    # 업종 중앙값 좌표·꼬리
+    by = {}
+    for p in pts:
+        by.setdefault(p[2], []).append(p)
+    sectors = []
+    for gi, mem in by.items():
+        g = gnames[gi]
+        if len(mem) < 5:
+            continue
+        def med(k):
+            v = [p[k] for p in mem if p[k] is not None]
+            return round(statistics.median(v), 1) if v else None
+        tight = [p for p in mem if p[14] is not None]
+        sectors.append([g, len(mem), med(3), med(4), med(5), med(6), med(7), med(8), med(9), med(10), med(11), med(12),
+                        round(sum(1 for p in tight if p[14] < 8) / len(tight) * 100) if tight else None])
+    sectors.sort(key=lambda s: -s[1])
+    # 지수
+    idx = {}
+    for tk in (["^KS11", "^KQ11"] if market == "kr" else ["^GSPC", "^IXIC"]):
+        _index_dc(tk, market)
+        ib = load_bars("index", tk) or []
+        if len(ib) < STAGE_MA + STAGE_SLOPE_N + 25:
+            continue
+        c = [b["c"] for b in ib]; ma = _ma_series(c, STAGE_MA)
+        now = _xy(c, ma, len(c) - 1)
+        if now:
+            idx[tk] = {"x": now[0], "y": now[1], "tail": [(_xy(c, ma, len(c) - 1 - 5 * k) or [None, None]) for k in (1, 2, 3, 4)],
+                       "close": [[ib[i]["d"], round(c[i], 2)] for i in range(len(c) - 1 - 5 * (weeks - 1), len(c), 5) if i >= 0]}
+    # 주간 단계 분포·전환 수 (각 종목 seq는 마지막 봉에 정렬돼 있어 뒤에서부터 k번째가 같은 주)
+    share, trans = [], []
+    for k in range(weeks - 1, -1, -1):
+        cnt = [0, 0, 0, 0]; up = dn = 0
+        for seq in seqs:
+            if len(seq) <= k:
+                continue
+            st = seq[-1 - k][1]
+            cnt[st - 1] += 1
+            if len(seq) > k + 1:
+                pv = seq[-2 - k][1]
+                if pv == 1 and st == 2:
+                    up += 1
+                elif (pv, st) in ((2, 3), (3, 4), (2, 4)):
+                    dn += 1
+        n = sum(cnt) or 1
+        share.append([round(x / n * 100, 1) for x in cnt]); trans.append([up, dn, sum(cnt)])
+    result = {"as_of": as_of, "market": market, "weeks": weeks, "idx": idx, "pts": pts, "sectors": sectors, "groups": gnames,
+              "hist": {"share": share, "trans": trans}, "dvol_unit": "억원" if market == "kr" else "백만달러",
+              "cols": ["tk", "name", "gi", "x", "y", "t1x", "t1y", "t2x", "t2y", "t3x", "t3y", "t4x", "t4y", "dvol", "t10", "v5v50", "rs", "st"]}
+    p = OUT / f"stagemap_{market}.json"
+    p.write_text(json.dumps(result, ensure_ascii=False, separators=(",", ":")))
+    if as_json:
+        print(json.dumps(result, ensure_ascii=False))
+    else:
+        print(f"{market} {as_of} 지도 점 {len(pts)} · 업종 {len(sectors)} · 지수 {list(idx)} · {p.stat().st_size//1024}KB → {p}")
+    return result
+
+
 def cmd_earncal(days=35):
     """미국 실적 발표 예정일(나스닥 공개 캘린더) → out/earnings_us.json {티커: [YYYY-MM-DD, 'pre'|'post'|'']} — 2026-10-15 보드 카드용.
     한국은 사전 공개되는 발표 예정일 자료가 없어 만들지 않는다."""
@@ -2589,6 +2706,7 @@ def main():
     p_mo.add_argument("--json", action="store_true")
     sub.add_parser("regime")
     p_st = sub.add_parser("stage"); p_st.add_argument("market", choices=["us", "kr"]); p_st.add_argument("--json", action="store_true")
+    p_sm = sub.add_parser("stagemap"); p_sm.add_argument("market", choices=["us", "kr"]); p_sm.add_argument("--weeks", type=int, default=104); p_sm.add_argument("--json", action="store_true")
     a = ap.parse_args()
     if a.cmd == "universe":
         (universe_us if a.market == "us" else universe_kr)()
@@ -2622,6 +2740,8 @@ def main():
         cmd_regime()
     elif a.cmd == "stage":
         cmd_stage(a.market, a.json)
+    elif a.cmd == "stagemap":
+        cmd_stagemap(a.market, a.weeks, a.json)
 
 
 if __name__ == "__main__":

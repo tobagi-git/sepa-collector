@@ -134,6 +134,7 @@ jobs:
             keep_nonempty out/groupgate_$m.md python scripts/sepa.py groupgate $m --holdings
             # 와인스타인 4단계 지도(루틴 보드 흐름 탭, 2026-11-03) — 분류 표시용, 매수 근거 아님
             python scripts/sepa.py stage $m > /dev/null || echo "::warning::stage $m 실패 — 이전 stage_$m.json 유지"
+            python scripts/sepa.py stagemap $m > /dev/null || echo "::warning::stagemap $m 실패 — 이전 stagemap_$m.json 유지"
             # 미국 실적 발표 예정일(나스닥 공개 캘린더, 루틴 보드 카드용 — 2026-10-15)
             [ "$m" = us ] && { python scripts/sepa.py earncal || echo "earncal 실패(무시)"; }
           done
