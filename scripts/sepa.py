@@ -2540,6 +2540,25 @@ def _xy(c, ma, i):
     return [round((c[i] / ma[i] - 1) * 100, 1), round((ma[i] / ma[i - STAGE_SLOPE_N] - 1) * 100, 1)]
 
 
+def _zone(x, y):
+    """보드 「단계 띠」 구역: atan2(y/3, x/10)+90° → 0=①(0~3시) 1=② 2=③ 3=④."""
+    import math
+    return int(((math.degrees(math.atan2(y / 3, x / 10)) + 90 + 360) % 360) // 90)
+
+
+def _conf_path(zs):
+    """주간 구역 열(옛→최근, None=결측) → 확정 경로. 2주 연속 같은 구역이면 확정.
+    반환 (확정 구역 목록, 마지막 확정 변화가 몇 주 전인지, [순행, 역행, 건너뜀] 수)."""
+    conf, cur, last, prev = [], None, None, None
+    for k, z in enumerate(zs):
+        if z is not None and z == prev and z != cur:
+            conf.append(z); cur = z; last = k
+        prev = z
+    ch = list(zip(conf, conf[1:]))
+    cnt = [sum(1 for a, b in ch if (b - a) % 4 == 1), sum(1 for a, b in ch if (b - a) % 4 == 3), sum(1 for a, b in ch if (b - a) % 4 == 2)]
+    return conf, (len(zs) - 1 - last) if last is not None else None, cnt
+
+
 def cmd_stagemap(market, weeks=104, as_json=False):
     """와인스타인 단계 지도(산점도) → out/stagemap_{market}.json — 2026-11-04 보드 흐름 탭.
     점 = 유동성 컷 통과 전 종목: [tk, 이름, 업종, x, y, 꼬리 4점(5·10·15·20세션 전 x,y), 거래대금(50일), 10일 폭%, 5일/50일 거래량, RS, 단계]
@@ -2554,7 +2573,7 @@ def cmd_stagemap(market, weeks=104, as_json=False):
     as_of = json.loads(jp.read_text()).get("as_of", "?") if jp.exists() else "?"
     sec = load_sectors(market)
     cut = QUEUE_CUT[market]["dvol"]
-    pts, seen, seqs, gidx, gnames = [], set(), [], {}, []
+    pts, seen, seqs, gidx, gnames, xyh = [], set(), [], {}, [], []
     with open(csv_p, newline="") as f:
         for r in csv.DictReader(f):
             t = r["ticker"]
@@ -2573,6 +2592,11 @@ def cmd_stagemap(market, weeks=104, as_json=False):
             seq = weinstein_stages(c)
             st = seq[-1][1] if seq else 0
             seqs.append(seq)
+            hist = []   # 최근 weeks주, 5세션 간격(옛→최근) 좌표
+            for k in range(weeks - 1, -1, -1):
+                hist.append(_xy(c, ma, len(c) - 1 - 5 * k))
+            xyh.append(hist)
+            conf, ago, cnt = _conf_path([_zone(*q) if q else None for q in hist])
             vols = [b["v"] for b in bars]
             v50 = sum(vols[-50:]) / 50 if len(vols) >= 50 else None
             v5 = sum(vols[-5:]) / 5
@@ -2581,7 +2605,8 @@ def cmd_stagemap(market, weeks=104, as_json=False):
                 gidx[g] = len(gnames); gnames.append(g)
             pts.append([t, r["name"] if market == "kr" else "", gidx[g], now[0], now[1],
                         tail[0][0], tail[0][1], tail[1][0], tail[1][1], tail[2][0], tail[2][1], tail[3][0], tail[3][1],
-                        round(float(r["dvol_50d"] or 0) / (1e8 if market == "kr" else 1e6)), _rng10(bars), round(v5 / v50, 2) if v50 else None, round(float(r["rs"] or 0)), st])
+                        round(float(r["dvol_50d"] or 0) / (1e8 if market == "kr" else 1e6)), _rng10(bars), round(v5 / v50, 2) if v50 else None, round(float(r["rs"] or 0)), st,
+                        "".join(str(z + 1) for z in conf[-6:]), ago, cnt])
     # 업종 중앙값 좌표·꼬리
     by = {}
     for p in pts:
@@ -2595,8 +2620,15 @@ def cmd_stagemap(market, weeks=104, as_json=False):
             v = [p[k] for p in mem if p[k] is not None]
             return round(statistics.median(v), 1) if v else None
         tight = [p for p in mem if p[14] is not None]
+        mi = [pts.index(p) for p in mem]
+        szs = []
+        for k in range(weeks):
+            xs = [xyh[i][k][0] for i in mi if xyh[i][k]]; ys = [xyh[i][k][1] for i in mi if xyh[i][k]]
+            szs.append(_zone(statistics.median(xs), statistics.median(ys)) if len(xs) >= 5 else None)
+        sconf, sago, scnt = _conf_path(szs)
         sectors.append([g, len(mem), med(3), med(4), med(5), med(6), med(7), med(8), med(9), med(10), med(11), med(12),
-                        round(sum(1 for p in tight if p[14] < 8) / len(tight) * 100) if tight else None])
+                        round(sum(1 for p in tight if p[14] < 8) / len(tight) * 100) if tight else None,
+                        "".join(str(z + 1) for z in sconf[-6:]), sago, scnt])
     sectors.sort(key=lambda s: -s[1])
     # 지수
     idx = {}
@@ -2629,7 +2661,7 @@ def cmd_stagemap(market, weeks=104, as_json=False):
         share.append([round(x / n * 100, 1) for x in cnt]); trans.append([up, dn, sum(cnt)])
     result = {"as_of": as_of, "market": market, "weeks": weeks, "idx": idx, "pts": pts, "sectors": sectors, "groups": gnames,
               "hist": {"share": share, "trans": trans}, "dvol_unit": "억원" if market == "kr" else "백만달러",
-              "cols": ["tk", "name", "gi", "x", "y", "t1x", "t1y", "t2x", "t2y", "t3x", "t3y", "t4x", "t4y", "dvol", "t10", "v5v50", "rs", "st"]}
+              "cols": ["tk", "name", "gi", "x", "y", "t1x", "t1y", "t2x", "t2y", "t3x", "t3y", "t4x", "t4y", "dvol", "t10", "v5v50", "rs", "st", "path", "ago", "cnt"]}
     p = OUT / f"stagemap_{market}.json"
     p.write_text(json.dumps(result, ensure_ascii=False, separators=(",", ":")))
     if as_json:
