@@ -157,7 +157,7 @@ def load_universe(market):
 
 # ---------------- fetch ----------------
 
-def yahoo_daily(ticker, rng="2y"):
+def yahoo_daily(ticker, rng="5y"):   # 2026-11-04 2y→5y: 단계 경로·시장 전환 패널이 150일선+50일 기울기(200봉) 뒤 약 4년을 보도록
     url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{urllib.request.quote(ticker)}"
            f"?range={rng}&interval=1d&events=div%2Csplit")
     # HTTP 200인데 본문이 잘려 오는 경우가 있다("Expecting ',' delimiter" — 2026-07 실측 KR/US 합 6건).
@@ -2559,7 +2559,7 @@ def _conf_path(zs):
     return conf, (len(zs) - 1 - last) if last is not None else None, cnt
 
 
-def cmd_stagemap(market, weeks=104, as_json=False):
+def cmd_stagemap(market, weeks=156, as_json=False):
     """와인스타인 단계 지도(산점도) → out/stagemap_{market}.json — 2026-11-04 보드 흐름 탭.
     점 = 유동성 컷 통과 전 종목: [tk, 이름, 업종, x, y, 꼬리 4점(5·10·15·20세션 전 x,y), 거래대금(50일), 10일 폭%, 5일/50일 거래량, RS, 단계]
     업종 = 구성 5종+ 중앙값 좌표·꼬리·조여진 비율. 지수 = 좌표·꼬리. hist = 주간(5세션) 단계 분포·전환 수(1→2 / 2→3·3→4·2→4)·지수 종가, 최근 weeks주.
@@ -2659,7 +2659,8 @@ def cmd_stagemap(market, weeks=104, as_json=False):
                     dn += 1
         n = sum(cnt) or 1
         share.append([round(x / n * 100, 1) for x in cnt]); trans.append([up, dn, sum(cnt)])
-    result = {"as_of": as_of, "market": market, "weeks": weeks, "idx": idx, "pts": pts, "sectors": sectors, "groups": gnames,
+    cov = sorted(sum(1 for q in h if q) for h in xyh)
+    result = {"as_of": as_of, "market": market, "weeks": weeks, "path_weeks": cov[len(cov) // 2] if cov else 0, "idx": idx, "pts": pts, "sectors": sectors, "groups": gnames,
               "hist": {"share": share, "trans": trans}, "dvol_unit": "억원" if market == "kr" else "백만달러",
               "cols": ["tk", "name", "gi", "x", "y", "t1x", "t1y", "t2x", "t2y", "t3x", "t3y", "t4x", "t4y", "dvol", "t10", "v5v50", "rs", "st", "path", "ago", "cnt"]}
     p = OUT / f"stagemap_{market}.json"
@@ -2738,7 +2739,7 @@ def main():
     p_mo.add_argument("--json", action="store_true")
     sub.add_parser("regime")
     p_st = sub.add_parser("stage"); p_st.add_argument("market", choices=["us", "kr"]); p_st.add_argument("--json", action="store_true")
-    p_sm = sub.add_parser("stagemap"); p_sm.add_argument("market", choices=["us", "kr"]); p_sm.add_argument("--weeks", type=int, default=104); p_sm.add_argument("--json", action="store_true")
+    p_sm = sub.add_parser("stagemap"); p_sm.add_argument("market", choices=["us", "kr"]); p_sm.add_argument("--weeks", type=int, default=156); p_sm.add_argument("--json", action="store_true")
     a = ap.parse_args()
     if a.cmd == "universe":
         (universe_us if a.market == "us" else universe_kr)()
