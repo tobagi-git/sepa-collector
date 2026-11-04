@@ -2073,6 +2073,31 @@ def _nh_streak(bars, look=252, gap=60):
     return (n, first)
 
 
+def _rng10(bars):
+    """최근 10봉 (고가 최대 − 저가 최소) ÷ 마지막 종가 %. 타이트함 지표(VCP 10일 폭)."""
+    if len(bars) < 10 or not bars[-1]["c"]:
+        return None
+    hs = [b.get("h", b["c"]) for b in bars[-10:]]; ls = [b.get("l", b["c"]) for b in bars[-10:]]
+    return round((max(hs) - min(ls)) / bars[-1]["c"] * 100, 1)
+
+
+def _vol_block(market, rows, n=30):
+    """흐름 탭 변동성 수축 숫자: {pass_n, tight_n, tight_pct, idx, idx_atr:[[d, ATR%14]…n]}. 예측력 미검증 — 보드는 숫자만 보여준다."""
+    pas = [r for r in rows if r["pass"] and r.get("t10") is not None]
+    tight = sum(1 for r in pas if r["t10"] < 8)
+    tk = "^GSPC" if market == "us" else "^KS11"
+    try:
+        _index_dc(tk, market)
+        ib = load_bars("index", tk) or []
+    except Exception:
+        ib = []
+    out = []
+    for i in range(max(14, len(ib) - n), len(ib)):
+        trs = [max(ib[j]["h"] - ib[j]["l"], abs(ib[j]["h"] - ib[j-1]["c"]), abs(ib[j]["l"] - ib[j-1]["c"])) for j in range(i-13, i+1)]
+        out.append([ib[i]["d"], round(sum(trs) / 14 / ib[i]["c"] * 100, 2)])
+    return {"pass_n": len(pas), "tight_n": tight, "tight_pct": round(tight / len(pas) * 100, 1) if pas else None, "idx": tk, "idx_atr": out}
+
+
 def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     """섹터·종목 모멘텀 랭킹 (1주/1개월/3개월 = 5/21/63세션) — 텔레그램 모니터링 보고 재료.
 
@@ -2124,7 +2149,8 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                          "vs50": round((c[-1] / s50 - 1) * 100, 1) if s50 else None,
                          "above50": bool(s50 and c[-1] > s50),
                          "sector": (sec.get(r["ticker"]) or {}).get("sector", ""),
-                         "industry": (sec.get(r["ticker"]) or {}).get("industry", "")})
+                         "industry": (sec.get(r["ticker"]) or {}).get("industry", ""),
+                         "t10": _rng10(bars)})
     # ---- 섹터 집계 (업종 우선, 구성 5종 미만이면 섹터로 합침) ----
     def z(vals):
         v = [x for x in vals if x is not None]
@@ -2301,7 +2327,9 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                             *(v["stocks"] for v in rsrank.values()), nearhi["stocks"]] for x in L}
     shown |= {x["ticker"] for v in by_h.values() for x in v["stocks"] + v["movers"]} | {x[0] for x in rslead}
     liq = {r["ticker"]: [round(r["dv1"]), r["dvx1"], r["dvx50"]] for r in rows if r["ticker"] in shown}
-    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec, "rslead": rslead, "turn": [[k] + v for k, v in sorted(turn.items())],
+    # 변동성 수축(보드 흐름 탭, 2026-11-04 — 숫자만, 판정 없음): 템플릿 통과 종목 중 10일 폭 8% 미만 비율 + 대표 지수 ATR%(14) 최근 30세션
+    vol = _vol_block(market, rows)
+    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec, "rslead": rslead, "turn": [[k] + v for k, v in sorted(turn.items())], "vol": vol,
               "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank, "nearhi": nearhi,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
