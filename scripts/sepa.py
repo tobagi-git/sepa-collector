@@ -2073,6 +2073,21 @@ def _nh_streak(bars, look=252, gap=60):
     return (n, first)
 
 
+def _volhz(bars):
+    """하루 변동폭(True Range ÷ 종가 %) 평균 — 최근 [1주(5)·1개월(21)·3개월(63)·6개월(126)]세션. 봉이 127개 미만이면 None.
+    보드 변동성 막대(2026-11-11): 지수·업종·종목을 같은 식으로 잰다. 숫자만, 판정 없음."""
+    if len(bars) < 127:
+        return None
+    tr = []
+    for i in range(len(bars) - 126, len(bars)):
+        b, pc = bars[i], bars[i - 1]["c"]
+        h, l = b.get("h", b["c"]), b.get("l", b["c"])
+        if not b["c"] or not pc:
+            return None
+        tr.append(max(h - l, abs(h - pc), abs(l - pc)) / b["c"] * 100)
+    return [round(sum(tr[-n:]) / n, 2) for n in (5, 21, 63, 126)]
+
+
 def _rng10(bars):
     """최근 10봉 (고가 최대 − 저가 최소) ÷ 마지막 종가 %. 타이트함 지표(VCP 10일 폭)."""
     if len(bars) < 10 or not bars[-1]["c"]:
@@ -2150,7 +2165,7 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
                          "above50": bool(s50 and c[-1] > s50),
                          "sector": (sec.get(r["ticker"]) or {}).get("sector", ""),
                          "industry": (sec.get(r["ticker"]) or {}).get("industry", ""),
-                         "t10": _rng10(bars)})
+                         "t10": _rng10(bars), "hz": _volhz(bars)})
     # ---- 섹터 집계 (업종 우선, 구성 5종 미만이면 섹터로 합침) ----
     def z(vals):
         v = [x for x in vals if x is not None]
@@ -2329,7 +2344,17 @@ def cmd_momentum(market, top=8, top_stocks=10, as_json=False):
     liq = {r["ticker"]: [round(r["dv1"]), r["dvx1"], r["dvx50"]] for r in rows if r["ticker"] in shown}
     # 변동성 수축(보드 흐름 탭, 2026-11-04 — 숫자만, 판정 없음): 템플릿 통과 종목 중 10일 폭 8% 미만 비율 + 대표 지수 ATR%(14) 최근 30세션
     vol = _vol_block(market, rows)
-    result = {"market": market, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec, "rslead": rslead, "turn": [[k] + v for k, v in sorted(turn.items())], "vol": vol,
+    # 기간별 변동성(2026-11-11): 표에 나오는 종목 {티커: [1주,1개월,3개월,6개월]} + 업종·대분류 {이름: 구성 종목 중앙값(5종 이상)}
+    volhz = {r["ticker"]: r["hz"] for r in rows if r["ticker"] in shown and r.get("hz")}
+    _sg = {}
+    for r in rows:
+        if not r.get("hz"):
+            continue
+        for g in {r["industry"] or r["sector"], r["sector"]}:
+            if g:
+                _sg.setdefault(g, []).append(r["hz"])
+    sechz = {g: [round(statistics.median(x[k] for x in v), 2) for k in range(4)] for g, v in _sg.items() if len(v) >= 5}
+    result = {"market": market, "volhz": volhz, "sechz": sechz, "as_of": as_of, "pool": len(rows), "by_horizon": by_h, "liq": liq, "adv": adv, "bigsec": bigsec, "rslead": rslead, "turn": [[k] + v for k, v in sorted(turn.items())], "vol": vol,
               "members": members, "strategies": strategies, "rosters": rosters, "rsrank": rsrank, "nearhi": nearhi,
               "bench": {v[1]: (round(v[0] * 100, 1) if v[0] is not None else None) for v in bench.values()},
               "sectors_all": [{k: a[k] for k in SK} for a in qualified], "themes": themes_out,
